@@ -1,0 +1,584 @@
+/* ══ Page shell ══════════════════════════════════════════════════════════════ */
+.layout {
+  display: flex;
+  min-height: 100vh;
+  max-width: 1920px;
+  margin: 0 auto;
+  background: var(--container-page-bg);
+  font-family: var(--font-family-sans, 'SF Pro Text', system-ui, sans-serif);
+}
+
+.sidebar {
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 100;
+}
+
+.sidebarBackdrop {
+  display: none;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+/* ══ Header ══════════════════════════════════════════════════════════════════ */
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  height: 73px;
+  padding: 0 var(--spacing-32);
+  background: var(--container-primary);
+  border-bottom: 1px solid var(--stroke-white);
+  box-shadow: 1px 1px 1px 0px rgba(26, 1, 38, 0.06), 0px 0px 6px 0px rgba(26, 1, 38, 0.04);
+  flex-shrink: 0;
+}
+
+.pageTitle {
+  font-size: var(--text-title-h2-font-size, 24px);
+  line-height: var(--text-title-h2-line-height, 32px);
+  font-weight: var(--text-title-h2-font-weight, 600);
+  color: var(--text-primary);
+  margin: 0;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.headerSearch {
+  width: 400px;
+  flex-shrink: 0;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  flex-shrink: 0;
+}
+
+/* ══ Page body ═══════════════════════════════════════════════════════════════ */
+.body {
+  flex: 1;
+  padding: var(--spacing-32);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+}
+
+/* ══ Stat cards — 3-column row ══════════════════════════════════════════════ */
+.statsRow {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-16);
+}
+
+.statCard {
+  background: var(--container-primary);
+  border-radius: var(--radius-4);
+  padding: var(--spacing-20);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  box-shadow: 1px 1px 1px 0px rgba(26, 1, 38, 0.06), 0px 0px 6px 0px rgba(26, 1, 38, 0.04);
+}
+
+.statLabel {
+  font-size: var(--text-body-regular-font-size);
+  line-height: var(--text-body-regular-line-height);
+  font-weight: var(--text-body-regular-font-weight);
+  color: var(--text-secondary);
+}
+
+.statBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.statValue {
+  font-size: var(--text-title-h1-font-size, 32px);
+  line-height: var(--text-title-h1-line-height, 32px);
+  font-weight: var(--text-title-h1-font-weight, 600);
+  color: var(--text-primary);
+}
+
+.statChangeWrap {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  height: 34px;
+}
+
+.statDivider {
+  width: 1px;
+  height: 100%;
+  background: var(--stroke-tertiary);
+  flex-shrink: 0;
+}
+
+.statChange {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.statChangePct {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.statPctPositive {
+  font-size: var(--text-caption-regular-font-size, 12px);
+  font-weight: var(--text-caption-medium-font-weight, 500);
+  color: var(--text-success);
+}
+
+.statPctNegative {
+  font-size: var(--text-caption-regular-font-size, 12px);
+  font-weight: var(--text-caption-medium-font-weight, 500);
+  color: var(--text-error);
+}
+
+.statSubtext {
+  font-size: var(--text-caption-regular-font-size, 11px);
+  line-height: var(--text-caption-regular-line-height);
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+/* ══ Filter bar ══════════════════════════════════════════════════════════════ */
+.filterBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-16);
+  padding: var(--spacing-8) 0;
+  margin-top: 16px;
+  margin-bottom: 4px;
+}
+
+/* ══ Table ═══════════════════════════════════════════════════════════════════ */
+.tableWrap {
+  background: var(--container-primary);
+  border-radius: var(--radius-8, 8px);
+  box-shadow: 1px 1px 1px 0px rgba(26, 1, 38, 0.06), 0px 0px 6px 0px rgba(26, 1, 38, 0.04);
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+/* Shared column template for header and data rows */
+.tableHeader,
+.tableRow {
+  display: grid;
+  grid-template-columns: 44px 100px minmax(160px, 1fr) 130px 140px 150px minmax(160px, 1.3fr) 130px 44px;
+}
+
+/* Remove right border from last cell in every row */
+.tableHeader > *:last-child,
+.tableRow > *:last-child {
+  border-right: none;
+}
+
+/* Remove bottom border from last data row */
+.tableRow:last-child > * {
+  border-bottom: none;
+}
+
+/* Selected row highlight */
+.tableRowSelected > * {
+  background: var(--container-secondary, #faf7ff) !important;
+}
+
+/* ── Actions cell (three-dots) ────────────────────────────────────────────── */
+.actionsCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--stroke-tertiary);
+  background: var(--container-primary);
+  min-height: 48px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.moreBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.moreBtn:hover {
+  background: var(--container-secondary);
+  color: var(--text-primary);
+}
+
+/* ══ Sort dropdown — fixed width so it doesn't resize on selection ═══════════ */
+.sortDropdown {
+  width: 190px;
+  flex-shrink: 0;
+}
+
+.sortDropdown [class*="trigger"] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ══ Page-size dropdown (72px fixed width) ═══════════════════════════════════ */
+.pageSizeDropdown {
+  width: 72px !important;
+  min-width: 0 !important;
+  flex-shrink: 0;
+}
+
+/* Override DS trigger min-width inside this specific dropdown */
+.pageSizeDropdown [class*="trigger"] {
+  min-width: 0 !important;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ══ Pagination ══════════════════════════════════════════════════════════════ */
+.paginationBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-16);
+  padding: var(--spacing-8) 0;
+}
+
+.paginationLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+}
+
+.totalText {
+  font-size: var(--text-body-regular-font-size);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.paginationRight {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pageBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 6px;
+  border: 1px solid var(--stroke-tertiary);
+  border-radius: var(--radius-4, 4px);
+  background: var(--container-primary);
+  color: var(--text-secondary);
+  font-size: var(--text-body-regular-font-size, 14px);
+  font-family: var(--font-family-sans);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.pageBtn:hover:not(:disabled):not(.pageBtnActive) {
+  background: var(--container-secondary);
+  color: var(--text-primary);
+}
+
+.pageBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pageBtnActive {
+  background: var(--button-primary-default-bg, #FFB600);
+  border-color: var(--button-primary-default-bg, #FFB600);
+  color: var(--button-primary-default-text, #1A0126);
+  font-weight: 600;
+  cursor: default;
+}
+
+.pageDots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  color: var(--text-tertiary);
+  font-size: var(--text-body-regular-font-size);
+}
+
+/* ══ Bulk action bar — floating card ════════════════════════════════════════ */
+.bulkBar {
+  position: sticky;
+  bottom: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 40px;
+  padding: 8px 8px 8px 12px;
+  background: var(--container-primary);
+  border-radius: var(--radius-6, 6px);
+  box-shadow: 1px 1px 1px 0px rgba(26, 1, 38, 0.06), 0px 0px 2px 0px rgba(26, 1, 38, 0.04);
+  z-index: 10;
+  flex-shrink: 0;
+  align-self: center;
+  margin-bottom: var(--spacing-16);
+}
+
+.bulkLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.bulkCloseBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 2px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  border-radius: var(--radius-4, 4px);
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.bulkCloseBtn:hover {
+  background: var(--container-secondary);
+}
+
+.bulkCount {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.bulkCountNum {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.bulkRight {
+  display: flex;
+  align-items: stretch;
+  gap: 24px;
+  flex-shrink: 0;
+}
+
+.bulkPrintGroup {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
+}
+
+.bulkAction {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text-primary);
+  font-family: var(--font-family-sans);
+  font-size: var(--text-button-font-size, 14px);
+  font-weight: var(--text-button-font-weight, 500);
+  border-radius: var(--radius-4, 4px);
+}
+
+.bulkAction:hover {
+  background: var(--container-secondary);
+}
+
+.bulkActionText {
+  padding: 0 6px;
+}
+
+.bulkDivider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--stroke-secondary, #dadadc);
+  flex-shrink: 0;
+}
+
+/* ── Mark-as dropdown ─────────────────────────────────────────────────────── */
+.markAsWrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.markAsPanel {
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 0;
+  min-width: 100%;
+  background: var(--container-primary);
+  border-radius: var(--radius-4, 4px);
+  overflow: hidden;
+  box-shadow: 1px 1px 1px 0px rgba(26, 1, 38, 0.02), 0px 0px 12px 0px rgba(26, 1, 38, 0.04);
+  z-index: 200;
+}
+
+.markAsItem {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 6px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.markAsItem:hover {
+  background: var(--container-secondary);
+}
+
+.markAsItemText {
+  padding: 0 8px;
+  color: var(--text-primary);
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.markAsItemTextError {
+  color: var(--text-error);
+}
+
+.markAsItemDivided {
+  border-bottom: 1px solid var(--stroke-tertiary);
+}
+
+.markAsBtn {
+  height: 32px;
+  padding: 8px 12px;
+  background: transparent;
+  border: 1px solid var(--stroke-secondary, #dadadc);
+  border-radius: var(--radius-4, 4px);
+  cursor: pointer;
+  font-family: var(--font-family-sans);
+  font-size: var(--text-button-font-size, 14px);
+  font-weight: var(--text-button-font-weight, 500);
+  line-height: var(--text-button-line-height, 14px);
+  color: var(--text-primary, #0A0A0A);
+  white-space: nowrap;
+  box-sizing: border-box;
+}
+
+.markAsBtnOpen {
+  background: var(--button-primary-default-bg, #FFD05C);
+  border-color: var(--button-primary-default-stroke, #A36D00);
+}
+
+/* ══ Mobile (≤ 767px) ═══════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+
+  .sidebarBackdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 99;
+  }
+
+  .main {
+    padding-left: 56px;
+    height: 100dvh;
+  }
+
+  .header {
+    padding: 0 var(--spacing-32);
+    height: auto;
+    min-height: 60px;
+    padding-block: var(--spacing-10);
+    gap: var(--spacing-8);
+    flex-wrap: wrap;
+  }
+
+  .pageTitle {
+    font-size: 18px;
+    line-height: 24px;
+    flex-shrink: 0;
+  }
+
+  .headerSearch {
+    order: 3;
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .headerActions {
+    margin-left: auto;
+  }
+
+  .body {
+    padding: var(--spacing-32);
+    gap: var(--spacing-12);
+  }
+
+  .statsRow {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-8);
+  }
+
+  .filterBar {
+    flex-wrap: wrap;
+    gap: var(--spacing-8);
+  }
+
+  .paginationBar {
+    flex-wrap: wrap;
+    gap: var(--spacing-8);
+  }
+
+  .paginationRight {
+    flex-wrap: wrap;
+    gap: 4px;
+  }
+
+  .bulkBar {
+    flex-wrap: wrap;
+    padding: var(--spacing-12) var(--spacing-32);
+    gap: var(--spacing-8);
+  }
+}

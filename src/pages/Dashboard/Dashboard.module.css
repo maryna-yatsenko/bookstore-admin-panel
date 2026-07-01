@@ -1,0 +1,729 @@
+/* ══ Page shell ══════════════════════════════════════════════════════════════ */
+.layout {
+  display: flex;
+  min-height: 100vh;
+  max-width: 1920px;
+  margin: 0 auto;
+  background: var(--container-page-bg);
+  font-family: var(--font-family-sans, 'SF Pro Text', system-ui, sans-serif);
+}
+
+.sidebar {
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 100;
+}
+
+.sidebarBackdrop {
+  display: none;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+/* ══ Header ══════════════════════════════════════════════════════════════════ */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 73px;
+  padding: 0 var(--spacing-32);
+  background: var(--container-primary);
+  border-bottom: 1px solid var(--stroke-white);
+  box-shadow: 1px 1px 1px 0px rgba(26, 1, 38, 0.06), 0px 0px 6px 0px rgba(26, 1, 38, 0.04);
+  flex-shrink: 0;
+}
+
+.headerSearch {
+  width: 400px;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+/* ══ Page body ═══════════════════════════════════════════════════════════════ */
+.body {
+  flex: 1;
+  padding: var(--spacing-32);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-32);
+}
+
+/* ══ Top row: stat cards + quick actions ════════════════════════════════════ */
+.topRow {
+  display: flex;
+  gap: var(--spacing-16);
+}
+
+/* Stat cards — 2×2 grid, grows to fill remaining space */
+.statGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--spacing-8);
+  flex: 1;
+}
+
+.statCard {
+  background: var(--container-primary);
+  border-radius: var(--radius-4);
+  padding: var(--spacing-20);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+  box-shadow: 1px 1px 1px 0px rgba(26, 1, 38, 0.06), 0px 0px 6px 0px rgba(26, 1, 38, 0.04);
+}
+
+.statLabel {
+  font-size: var(--text-body-regular-font-size);
+  line-height: var(--text-body-regular-line-height);
+  font-weight: var(--text-body-regular-font-weight);
+  color: var(--text-secondary);
+}
+
+.statBottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.statValue {
+  font-size: var(--text-title-h1-font-size, 32px);
+  line-height: var(--text-title-h1-line-height, 32px);
+  font-weight: var(--text-title-h1-font-weight, 600);
+  color: var(--text-primary);
+}
+
+.statChangeWrap {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  height: 34px;
+}
+
+.statDivider {
+  width: 1px;
+  height: 100%;
+  background: var(--stroke-tertiary);
+  flex-shrink: 0;
+}
+
+.statChange {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-4);
+}
+
+.statChangePct {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.statPctPositive {
+  font-size: var(--text-body-semibold-font-size);
+  line-height: var(--text-body-semibold-line-height);
+  font-weight: var(--text-body-semibold-font-weight);
+  color: var(--text-success);
+  white-space: nowrap;
+}
+
+.statPctNegative {
+  font-size: var(--text-body-semibold-font-size);
+  line-height: var(--text-body-semibold-line-height);
+  font-weight: var(--text-body-semibold-font-weight);
+  color: var(--text-error);
+  white-space: nowrap;
+}
+
+.statSubtext {
+  font-size: var(--text-caption-regular-font-size);
+  line-height: var(--text-caption-regular-line-height);
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+/* Quick-action buttons — 2×2 grid, fixed 440px right column */
+.quickGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: var(--spacing-4);
+  flex: 0 0 440px;
+  flex-shrink: 0;
+  padding: var(--spacing-6);
+  background: var(--container-tertiary);
+  border: 1px dashed var(--stroke-white);
+  border-radius: var(--radius-4);
+  box-shadow: 1px 1px 1px 0px rgba(26, 1, 38, 0.02), 0px 0px 12px 0px rgba(26, 1, 38, 0.04);
+}
+
+.quickBtn {
+  width: 100%;
+}
+
+/* ══ Filter bar ══════════════════════════════════════════════════════════════ */
+.filterBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 38px;
+  margin-bottom: -12px;
+}
+
+.filterRight {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+}
+
+/* ══ Two-column section ══════════════════════════════════════════════════════ */
+.twoCol {
+  display: grid;
+  grid-template-columns: 1fr 440px;
+  gap: var(--spacing-16);
+}
+
+/* ══ Card ════════════════════════════════════════════════════════════════════ */
+.card {
+  background: var(--container-primary);
+  border-radius: var(--radius-4);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 1px 1px 1px 0px rgba(26, 1, 38, 0.06), 0px 0px 4px 0px rgba(26, 1, 38, 0.08);
+}
+
+.cardHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-12) var(--spacing-12) var(--spacing-6) var(--spacing-20);
+  flex-shrink: 0;
+}
+
+.cardTitle {
+  font-size: var(--text-title-h3-regular-font-size);
+  line-height: var(--text-title-h3-regular-line-height);
+  font-weight: var(--text-title-h3-regular-font-weight);
+  color: var(--text-primary);
+}
+
+/* ══ Tables ══════════════════════════════════════════════════════════════════ */
+.tableWrap {
+  padding: var(--spacing-6);
+}
+
+.tableInnerBorder {
+  border: 1px solid #eceae8;
+  border-bottom: none;
+  border-radius: var(--radius-2);
+  overflow: hidden;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.table thead tr,
+.table tbody tr {
+  display: flex;
+}
+
+.table tbody tr {
+  height: 56px;
+}
+
+.table thead tr > *,
+.table tbody tr > * {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.table thead tr > *:last-child,
+.table tbody tr > *:last-child {
+  border-right: none;
+}
+
+/* ══ Chart card heading (different padding from table cards) ═════════════════ */
+.cardHeadingChart {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-16) var(--spacing-20) var(--spacing-12);
+  flex-shrink: 0;
+}
+
+/* ══ Chart wrapper ═══════════════════════════════════════════════════════════ */
+.chartOuterWrap {
+  padding: var(--spacing-6);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.chartInnerBox {
+  background: var(--container-secondary);
+  border: 1px solid var(--stroke-tertiary);
+  border-radius: var(--radius-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8);
+  padding: var(--spacing-16) var(--spacing-8) var(--spacing-8);
+  flex: 1;
+}
+
+/* ══ Chart legend ════════════════════════════════════════════════════════════ */
+.chartLegend {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-16);
+  padding: 0 var(--spacing-4);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+}
+
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 1.6px;
+  flex-shrink: 0;
+}
+
+.legendDotSales     { background: #734588; }
+.legendDotReturns   { background: #c894dd; }
+.legendDotExchanges { background: #f5bfff; }
+.legendDotYellow    { background: #ffbe1f; }
+.legendDotGray      { background: #a09fa1; }
+
+.legendLabel {
+  font-size: var(--text-caption-regular-font-size);
+  line-height: var(--text-caption-regular-line-height);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* ══ Line chart ══════════════════════════════════════════════════════════════ */
+.lineChartWrap {
+  flex: 1;
+}
+
+.lineChartSvg {
+  display: block;
+  width: 100%;
+  height: 296px;
+}
+
+.chartAxisText {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-caption-regular-font-size);
+  font-weight: var(--text-caption-regular-font-weight);
+  fill: var(--text-tertiary);
+}
+
+.chartDropdown {
+  width: 140px;
+}
+
+/* Override Datepicker trigger height and icon for chart headers */
+.chartDropdown :global([class*="trigger"]) {
+  height: 24px;
+  min-width: unset;
+  padding-right: 6px;
+}
+
+.chartDropdown :global([class*="calIcon"]) {
+  width: 16px;
+  height: 16px;
+}
+
+.chartDropdown :global([class*="panel"]) {
+  left: auto;
+  right: 0;
+}
+
+/* ══ Donut chart (node 70:8382) ══════════════════════════════════════════════ */
+.donutBox {
+  background: var(--container-secondary);
+  border: 1px solid var(--stroke-tertiary);
+  border-radius: var(--radius-2);
+  flex: 1;
+  width: 100%;
+  padding: var(--spacing-16);
+  box-sizing: border-box;
+}
+
+.donutSvg {
+  display: block;
+  width: 100%;
+}
+
+.donutLabelGroup {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  font-family: var(--font-family-sans);
+}
+
+.donutLabelRight {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.donutLabelLeft {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.donutCatName {
+  font-size: var(--text-caption-regular-font-size);
+  line-height: var(--text-caption-regular-line-height);
+  font-weight: var(--text-caption-regular-font-weight);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.donutValRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+}
+
+.donutAmount {
+  font-size: var(--text-body-semibold-font-size);
+  line-height: var(--text-body-semibold-line-height);
+  font-weight: var(--text-body-semibold-font-weight);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.donutPctBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 4px;
+  border-radius: var(--radius-1, 4px);
+  background: var(--badge-gray-bg, #f2f2f3);
+  font-size: var(--text-caption-regular-font-size);
+  line-height: var(--text-caption-regular-line-height);
+  font-weight: var(--text-caption-regular-font-weight);
+  color: var(--badge-gray-text, #242425);
+  white-space: nowrap;
+}
+
+/* ══ Bar chart ═══════════════════════════════════════════════════════════════ */
+.barSurface {
+  display: flex;
+  gap: var(--spacing-16);
+  flex: 1;
+  align-items: flex-start;
+}
+
+.barYAxis {
+  display: flex;
+  flex-direction: column;
+  width: 32px;
+  height: 240px;
+  padding-bottom: var(--spacing-16);
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.barYRow {
+  flex: 1 0 0;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.barYLabel {
+  font-size: var(--text-caption-regular-font-size);
+  line-height: var(--text-caption-regular-line-height);
+  font-weight: var(--text-caption-regular-font-weight);
+  color: var(--text-tertiary);
+}
+
+.barGroups {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 24px;
+  height: 240px;
+  position: relative;
+}
+
+.barGrid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 240px; /* mirrors y-axis height */
+  padding-bottom: 16px; /* mirrors y-axis pb-16 so rows align exactly with labels */
+  box-sizing: border-box;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.barGridRow {
+  flex: 1 0 0;
+  min-height: 0;
+  display: flex;
+  align-items: center; /* centers the line at the same y as the y-axis label text */
+}
+
+.barGridLine {
+  width: 100%;
+  border-top: 1px dashed var(--stroke-secondary);
+}
+
+.barGridLineBaseline {
+  border-top-color: var(--chart-yellow-500);
+}
+
+.barGroup {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20.5px;
+  height: 100%;
+  position: relative;
+}
+
+.barsContainer {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.bar {
+  flex: 1;
+  border-radius: 2px 2px 0 0;
+  min-height: 4px;
+}
+
+.barSales     { background: var(--chart-purple-800); }
+.barReturns   { background: #f6d0fe; }
+.barExchanges { background: var(--chart-yellow-500); }
+
+.barLabel {
+  font-size: var(--text-caption-regular-font-size);
+  line-height: var(--text-caption-regular-line-height);
+  font-weight: var(--text-caption-regular-font-weight);
+  color: var(--text-tertiary);
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* ══ Top cities ══════════════════════════════════════════════════════════════ */
+.citiesInner {
+  background: var(--container-secondary);
+  border: 1px solid var(--stroke-tertiary);
+  border-radius: var(--radius-2);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: var(--spacing-8);
+  height: 286px;
+  padding: var(--spacing-16) var(--spacing-8) var(--spacing-8);
+  flex: 1;
+  position: relative;
+}
+
+.citiesInner::before {
+  content: '';
+  position: absolute;
+  left: calc(var(--spacing-8) + 42px + var(--spacing-16));
+  top: var(--spacing-16);
+  bottom: var(--spacing-8);
+  width: 1px;
+  background: var(--stroke-secondary);
+}
+
+.cityRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-16);
+  flex: 1;
+  min-height: 0;
+}
+
+.cityName {
+  font-size: var(--text-caption-regular-font-size);
+  line-height: var(--text-caption-regular-line-height);
+  font-weight: var(--text-caption-regular-font-weight);
+  color: var(--text-tertiary);
+  width: 42px;
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.cityBarTrack {
+  flex: 1;
+  height: 100%;
+  background: var(--container-tertiary);
+  border-radius: 0 2px 2px 0;
+  overflow: hidden;
+  position: relative;
+}
+
+.cityBarFill {
+  height: 100%;
+  border-radius: 0 2px 2px 0;
+  transition: width 0.4s ease;
+}
+
+.cityBarFillKyiv  { background: var(--chart-purple-800); }
+.cityBarFillOther { background: #f6d0fe; }
+
+.cityMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+  flex-shrink: 0;
+  width: 90px;
+  justify-content: flex-end;
+}
+
+.cityAmount {
+  font-size: var(--text-caption-semibold-font-size, 12px);
+  line-height: var(--text-caption-semibold-line-height, 14px);
+  font-weight: var(--text-caption-semibold-font-weight, 600);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.cityPct {
+  font-size: var(--text-caption-regular-font-size);
+  line-height: var(--text-caption-regular-line-height);
+  font-weight: var(--text-caption-regular-font-weight);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* ══ Wide-screen adaptation (≥ 1600 px) ═════════════════════════════════════
+ * At 1920 px the sidebar + 32px body padding leaves ~1648 px of content width.
+ * Strategy: let stat-cards grow proportionally with the rest of the page
+ * instead of staying fixed at 592 px; widen the donut column; expand search.
+ * ══════════════════════════════════════════════════════════════════════════ */
+@media (min-width: 1600px) {
+  /* Stat grid: switch from fixed-width to flex-grow so it scales with the
+     content area — at 1920 px each card ends up ~404 px wide, still readable. */
+  .statGrid {
+    flex: 1 1 592px;
+  }
+
+  /* Keep quick-actions from growing indefinitely */
+  .quickGrid {
+    flex: 1 1 auto;
+    max-width: 760px;
+  }
+
+  /* Search bar: give it more room on wide screens */
+  .headerSearch {
+    width: 560px;
+  }
+
+  /* Two-column section: wider donut column looks better at large viewports */
+  .twoCol {
+    grid-template-columns: 1fr 520px;
+  }
+
+  /* Body padding: slightly more breathing room */
+  .body {
+    padding: var(--spacing-32) 40px;
+  }
+}
+
+/* ══ Mobile (≤ 767px) ═══════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+  /* Sidebar is always fixed on mobile (overlay), doesn't take up space in flow */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+
+  /* Backdrop is shown only when the sidebar is expanded */
+  .sidebarBackdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 99;
+  }
+
+  /* Main gets a 56px left offset for the folded sidebar */
+  .main {
+    padding-left: 56px;
+    height: 100dvh;
+  }
+
+  .header {
+    padding: 0 var(--spacing-32);
+    height: 60px;
+    gap: var(--spacing-8);
+  }
+
+  .headerSearch {
+    flex: 1;
+    min-width: 0;
+    width: auto;
+  }
+
+  .body {
+    padding: var(--spacing-32);
+    gap: var(--spacing-16);
+  }
+
+  .statGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .topRow {
+    flex-direction: column;
+  }
+
+  .quickGrid {
+    grid-template-columns: repeat(2, 1fr);
+    width: 100%;
+  }
+
+  .twoCol {
+    grid-template-columns: 1fr;
+  }
+
+  .lineChartCard,
+  .barChartCard {
+    min-width: 0;
+  }
+}

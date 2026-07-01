@@ -1,0 +1,483 @@
+/* ══ Page shell ══════════════════════════════════════════════════════════════ */
+.layout {
+  display: flex;
+  min-height: 100vh;
+  max-width: 1920px;
+  margin: 0 auto;
+  background: var(--container-page-bg);
+  font-family: var(--font-family-sans, 'SF Pro Text', system-ui, sans-serif);
+}
+
+.sidebar {
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 100;
+}
+
+.sidebarBackdrop {
+  display: none;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+/* ══ Header ══════════════════════════════════════════════════════════════════ */
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  height: 73px;
+  padding: 0 var(--spacing-32);
+  background: var(--container-primary);
+  border-bottom: 1px solid var(--stroke-white);
+  box-shadow: 1px 1px 1px 0px rgba(26, 1, 38, 0.06), 0px 0px 6px 0px rgba(26, 1, 38, 0.04);
+  flex-shrink: 0;
+}
+
+.pageTitle {
+  font-size: var(--text-title-h2-font-size, 24px);
+  line-height: var(--text-title-h2-line-height, 32px);
+  font-weight: var(--text-title-h2-font-weight, 600);
+  color: var(--text-primary);
+  margin: 0;
+  white-space: nowrap;
+  flex: 1;
+  min-width: 0;
+}
+
+.headerSearch {
+  width: 500px;
+  flex-shrink: 0;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8);
+  flex-shrink: 0;
+}
+
+/* ══ Page body ═══════════════════════════════════════════════════════════════ */
+.body {
+  flex: 1;
+  padding: var(--spacing-32);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16);
+}
+
+/* ══ Filter bar ══════════════════════════════════════════════════════════════ */
+.filterBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-16);
+  padding: var(--spacing-8) 0;
+  margin-bottom: 4px;
+}
+
+/* ── Filter button + panel anchor ─────────────────────────────────────────── */
+.filterRight {
+  position: relative;
+  flex-shrink: 0;
+}
+
+/* ── Filter panel ─────────────────────────────────────────────────────────── */
+.filterPanel {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  width: 300px;
+  background: var(--container-primary, white);
+  border-radius: var(--radius-8, 8px);
+  box-shadow: 0px 4px 24px 0px rgba(26, 1, 38, 0.14);
+  z-index: 200;
+}
+
+.filterPanelFields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-20, 20px);
+  padding: var(--spacing-16, 16px);
+}
+
+.filterPanelField {
+  width: 100%;
+}
+
+.priceRow {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.priceInput {
+  flex: 1;
+  min-width: 0;
+}
+
+.filterPanelCount {
+  background: var(--container-tertiary, #f2f2f3);
+  padding: var(--spacing-8, 8px) var(--spacing-16, 16px);
+  text-align: center;
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-secondary);
+}
+
+.filterPanelActions {
+  padding: var(--spacing-16, 16px);
+}
+
+.filterPanelBtns {
+  display: flex;
+  gap: 12px;
+}
+
+.filterPanelBtn {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ══ Table ═══════════════════════════════════════════════════════════════════ */
+.tableWrap {
+  background: var(--container-primary);
+  border-radius: var(--radius-8, 8px);
+  box-shadow: 1px 1px 1px 0px rgba(26, 1, 38, 0.06), 0px 0px 6px 0px rgba(26, 1, 38, 0.04);
+  overflow: hidden;
+  overflow-x: auto;
+}
+
+/* 8 columns: checkbox | product | isbn | stock | availability | price | category | actions */
+.tableHeader,
+.tableRow {
+  display: grid;
+  grid-template-columns: 44px minmax(200px, 1.5fr) 160px 120px 148px 120px 160px 44px;
+}
+
+.tableHeader > *:last-child,
+.tableRow > *:last-child {
+  border-right: none;
+}
+
+.tableRow:last-child > * {
+  border-bottom: none;
+}
+
+.tableRowSelected > * {
+  background: var(--container-secondary, #faf7ff) !important;
+}
+
+/* ── Actions cell ──────────────────────────────────────────────────────────── */
+.actionsCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--stroke-tertiary);
+  background: var(--container-primary);
+  min-height: 64px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.moreBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+}
+
+.moreBtn:hover {
+  background: var(--container-secondary);
+  color: var(--text-primary);
+}
+
+/* ══ Pagination ══════════════════════════════════════════════════════════════ */
+.paginationBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-16);
+  padding: var(--spacing-8) 0;
+}
+
+.paginationLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12);
+}
+
+/* Native select styled to match DS Dropdown size S */
+.pageSizeWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.pageSizeSelect {
+  appearance: none;
+  -webkit-appearance: none;
+  height: 24px;
+  padding: 0 24px 0 8px;
+  border: 1px solid var(--stroke-secondary, #dadadc);
+  border-radius: var(--radius-4, 4px);
+  background: var(--container-primary);
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  color: var(--text-primary);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.pageSizeWrap::after {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  right: 7px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 5px solid var(--text-tertiary, #747479);
+}
+
+.totalText {
+  font-size: var(--text-body-regular-font-size);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.paginationRight {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pageBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 6px;
+  border: 1px solid var(--stroke-tertiary);
+  border-radius: var(--radius-4, 4px);
+  background: var(--container-primary);
+  color: var(--text-secondary);
+  font-size: var(--text-body-regular-font-size, 14px);
+  font-family: var(--font-family-sans);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.pageBtn:hover:not(:disabled):not(.pageBtnActive) {
+  background: var(--container-secondary);
+  color: var(--text-primary);
+}
+
+.pageBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pageBtnActive {
+  background: var(--button-primary-default-bg, #FFB600);
+  border-color: var(--button-primary-default-bg, #FFB600);
+  color: var(--button-primary-default-text, #1A0126);
+  font-weight: 600;
+  cursor: default;
+}
+
+.pageDots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  color: var(--text-tertiary);
+  font-size: var(--text-body-regular-font-size);
+}
+
+/* ══ Bulk action bar ═════════════════════════════════════════════════════════ */
+.bulkBar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 40px;
+  padding: 8px 8px 8px 12px;
+  background: var(--container-primary);
+  border-radius: var(--radius-6, 6px);
+  box-shadow: 0px 4px 24px 0px rgba(26, 1, 38, 0.14);
+  z-index: 50;
+  white-space: nowrap;
+}
+
+.bulkLeft {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.bulkCloseBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 2px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  border-radius: var(--radius-4, 4px);
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.bulkCloseBtn:hover {
+  background: var(--container-secondary);
+}
+
+.bulkCount {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.bulkCountNum {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.bulkActions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.bulkBtn {
+  height: 32px;
+  padding: 0 12px;
+  border: 1px solid var(--stroke-secondary, #b6b6b9);
+  border-radius: var(--radius-4, 4px);
+  background: var(--container-primary);
+  color: var(--text-primary);
+  font-family: var(--font-family-sans);
+  font-size: var(--text-button-font-size, 14px);
+  font-weight: var(--text-button-font-weight, 500);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.bulkBtn:hover {
+  background: var(--container-secondary);
+}
+
+.bulkBtnDanger {
+  border-color: var(--text-error, #ff575a);
+  color: var(--text-error, #b50003);
+}
+
+.bulkBtnDanger:hover {
+  background: var(--badge-red-bg, #fff0f0);
+}
+
+.bulkBtnIcon {
+  padding: 0 8px;
+}
+
+.bulkDivider {
+  width: 1px;
+  height: 32px;
+  background: var(--stroke-secondary, #dadadc);
+  flex-shrink: 0;
+}
+
+/* ══ Mobile ══════════════════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+  }
+
+  .sidebarBackdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    z-index: 99;
+  }
+
+  .main {
+    padding-left: 56px;
+    height: 100dvh;
+  }
+
+  .header {
+    height: auto;
+    min-height: 60px;
+    padding-block: var(--spacing-10);
+    gap: var(--spacing-8);
+    flex-wrap: wrap;
+  }
+
+  .headerSearch {
+    order: 3;
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+
+  .headerActions {
+    margin-left: auto;
+  }
+
+  .body {
+    padding: var(--spacing-16);
+    gap: var(--spacing-12);
+  }
+
+  .paginationBar {
+    flex-wrap: wrap;
+  }
+
+  .bulkBar {
+    left: 16px;
+    right: 16px;
+    transform: none;
+    flex-wrap: wrap;
+    padding: 12px;
+    gap: var(--spacing-8);
+  }
+}

@@ -1,0 +1,525 @@
+/* ── Overlay ───────────────────────────────────────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 25, 27, 0.12);
+  backdrop-filter: blur(2px);
+  z-index: 200;
+}
+
+/* ── Panel ─────────────────────────────────────────────────────────────────── */
+.panel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 600px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background: var(--container-secondary, #fafafa);
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* ── Header ────────────────────────────────────────────────────────────────── */
+.header {
+  background: var(--container-primary);
+  border-bottom: 1px solid var(--stroke-secondary, #dadadc);
+  padding: var(--spacing-16, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-32, 32px);
+  flex-shrink: 0;
+  z-index: 3;
+}
+
+.headerTop {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12, 12px);
+}
+
+.headerLeft {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-24, 24px);
+}
+
+.logoPlaceholder {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-4, 4px);
+  background: #eceae8;
+  flex-shrink: 0;
+}
+
+.headerMeta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4, 4px);
+}
+
+.titleRow {
+  display: flex;
+  align-items: baseline;
+  gap: var(--spacing-8, 8px);
+  white-space: nowrap;
+}
+
+.titleMain {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-title-h2-font-size, 24px);
+  font-weight: 600;
+  line-height: 30px;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.titleId {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-title-h2-font-size, 24px);
+  font-weight: 500;
+  line-height: 30px;
+  color: var(--text-tertiary);
+}
+
+.headerDate {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-tertiary);
+}
+
+.tabs {
+  align-self: flex-start !important;
+  border: 1px solid var(--stroke-tertiary, #f2f2f3) !important;
+  box-shadow: none !important;
+}
+
+.closeBtn {
+  align-self: flex-start !important;
+  flex-shrink: 0;
+}
+
+/* ── Body ──────────────────────────────────────────────────────────────────── */
+.body {
+  flex: 1;
+  overflow-y: auto;
+  background: var(--container-secondary, #fafafa);
+  padding: var(--spacing-32, 32px) var(--spacing-16, 16px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24, 24px);
+  z-index: 2;
+}
+
+/* ── Info row ──────────────────────────────────────────────────────────────── */
+.infoRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-24, 24px);
+}
+
+.infoRowTop {
+  align-items: flex-start;
+}
+
+.infoLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100px;
+  flex-shrink: 0;
+  color: var(--text-tertiary);
+}
+
+.labelText {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: 20px;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.infoValue {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── Divider ───────────────────────────────────────────────────────────────── */
+.divider {
+  height: 0;
+  border-top: 1px dashed var(--stroke-secondary, #dadadc);
+  flex-shrink: 0;
+}
+
+/* ── Value text ────────────────────────────────────────────────────────────── */
+.valueText {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-primary);
+}
+
+/* ── Client block ──────────────────────────────────────────────────────────── */
+.clientBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.clientNameRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-tertiary);
+}
+
+.clientName {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.clientPhone {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-secondary, #454548);
+}
+
+.clientEmail {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  font-weight: 400;
+  line-height: var(--text-body-regular-line-height, 18px);
+  text-decoration: underline;
+  color: #291aff;
+}
+
+/* ── Delivery / logistics blocks ───────────────────────────────────────────── */
+.stackBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.subText {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-secondary, #454548);
+}
+
+/* ── Track row ─────────────────────────────────────────────────────────────── */
+.trackRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+}
+
+/* ── Logistics tab — timeline ──────────────────────────────────────────────── */
+.logisticsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.eventList {
+  display: flex;
+  flex-direction: column;
+}
+
+.eventRow {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.eventRowEnd {
+  align-items: flex-end;
+}
+
+/* Step column */
+.stepCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  width: 24px;
+}
+
+.stepColFirst {
+  height: 88px;
+}
+
+.stepCircle {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px dashed var(--component\/stepper\/default\/stroke, #ffc229);
+  background: var(--component\/stepper\/default\/bg, #fffcf5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.stepCircleActive {
+  border-color: var(--component\/stepper\/hover\/stroke, #5b3d00);
+  background: var(--component\/stepper\/hover\/bg, #ffd05c);
+}
+
+.stepLineTop {
+  width: 1px;
+  height: 24px;
+  background: var(--stroke-secondary, #dadadc);
+  flex-shrink: 0;
+}
+
+.stepLineBottom {
+  width: 1px;
+  height: 58px;
+  background: var(--stroke-secondary, #dadadc);
+  flex-shrink: 0;
+}
+
+.stepLineBottomFlex {
+  flex: 1;
+  height: unset;
+  min-height: 0;
+}
+
+.stepLineBottomHidden {
+  background: transparent;
+}
+
+/* Event content */
+.eventContent {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+.eventInfo {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+}
+
+.eventMeta {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.eventTitle {
+  font-family: var(--font-family-sans);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  display: block;
+}
+
+.eventExecutorRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.eventExecutorLabel {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-tertiary, #747479);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.eventExecutorLink {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: #212fe3;
+  text-decoration: underline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.eventDate {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-end;
+  flex-shrink: 0;
+}
+
+.eventDatePrimary {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.eventDateSecondary {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-tertiary, #747479);
+  white-space: nowrap;
+}
+
+/* ── Products tab ──────────────────────────────────────────────────────────── */
+.productsSection {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.sectionLabel {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-secondary, #454548);
+}
+
+.productList {
+  background: var(--container-primary, white);
+  border: 1px solid var(--stroke-tertiary, #f2f2f3);
+  border-radius: 4px;
+  overflow: hidden;
+  width: 100%;
+}
+
+.productRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 18px 8px 8px;
+}
+
+.productRowBordered {
+  border-bottom: 1px solid var(--stroke-tertiary, #f2f2f3);
+}
+
+.productThumb {
+  width: 56px;
+  height: 56px;
+  border-radius: 2.8px;
+  background: var(--container-page-bg, #f2f2f3);
+  flex-shrink: 0;
+}
+
+.productInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.productName {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-primary, #0a0a0a);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.productSub {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-tertiary, #747479);
+}
+
+.productPrice {
+  font-family: var(--font-family-sans);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 20px;
+  color: var(--text-primary, #0a0a0a);
+  text-align: right;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* ── Edit form ─────────────────────────────────────────────────────────────── */
+.formRow {
+  display: flex;
+  gap: var(--spacing-16, 16px);
+  align-items: flex-start;
+  width: 100%;
+}
+
+.formField {
+  flex: 1;
+  min-width: 0;
+}
+
+.formStack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16, 16px);
+  width: 100%;
+}
+
+.fullWidth {
+  width: 100%;
+}
+
+.deliveryDropdown {
+  width: 214px;
+}
+
+/* ── Status dropdown — DS Dropdown with badge trigger ──────────────────────── */
+.statusDropdown {
+  width: 214px;
+}
+
+/* neutralise the DS mint badge-wrapper in the trigger AND in each option row */
+.statusDropdown [class*="trigger"] > [class*="badge"],
+.statusDropdown [class*="item"] > [class*="badge"] {
+  background: transparent !important;
+  padding: 0 !important;
+}
+
+/* ── Footer ────────────────────────────────────────────────────────────────── */
+.footer {
+  background: var(--container-primary);
+  border-top: 1px solid var(--stroke-tertiary, #f2f2f3);
+  padding: var(--spacing-16, 16px);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-12, 12px);
+  flex-shrink: 0;
+  z-index: 1;
+}

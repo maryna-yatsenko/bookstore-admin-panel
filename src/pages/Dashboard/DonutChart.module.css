@@ -1,0 +1,156 @@
+.wrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: visible;
+}
+
+.chartArea {
+  flex: 1;
+  min-height: 0;
+  overflow: visible;
+  display: flex;
+}
+
+.svg {
+  display: block;
+  width: 100%;
+  flex: 1;
+  overflow: visible;
+}
+
+/* ── Center text ────────────────────────────────────────────────────────────── */
+.centerLabel {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-caption-regular-font-size);
+  font-weight: var(--text-caption-regular-font-weight);
+  line-height: var(--text-caption-regular-line-height);
+  fill: var(--text-secondary);
+}
+
+.centerValue {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-caption-semibold-font-size);
+  font-weight: var(--text-caption-semibold-font-weight);
+  line-height: var(--text-caption-semibold-line-height);
+  fill: var(--text-primary);
+}
+
+/* ── Callout label block (inside foreignObject) ─────────────────────────────── */
+.labelBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-family: var(--font-family-sans);
+}
+
+.catName {
+  font-size: var(--text-caption-regular-font-size);
+  line-height: var(--text-caption-regular-line-height);
+  font-weight: var(--text-caption-regular-font-weight);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.valRow {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.amount {
+  font-size: var(--text-body-semibold-font-size);
+  line-height: var(--text-body-semibold-line-height);
+  font-weight: var(--text-body-semibold-font-weight);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.pctBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 4px;
+  border-radius: var(--radius-4);
+  background: var(--container-tertiary);
+  font-size: var(--text-caption-regular-font-size);
+  line-height: var(--text-caption-regular-line-height);
+  font-weight: var(--text-caption-regular-font-weight);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+/* ── Tooltip ─────────────────────────────────────────────────────────────────── */
+.tooltip {
+  position: absolute;
+  pointer-events: none;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 10px;
+  background: var(--container-primary);
+  border: 1px solid var(--stroke-tertiary);
+  border-radius: var(--radius-6);
+  box-shadow: 0 4px 12px rgba(26, 1, 38, 0.12);
+  font-family: var(--font-family-sans);
+}
+
+.tooltipLabel {
+  font-size: var(--text-caption-regular-font-size);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.tooltipValue {
+  font-size: var(--text-body-semibold-font-size);
+  font-weight: var(--text-body-semibold-font-weight);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.tooltipPct {
+  font-size: var(--text-caption-regular-font-size);
+  color: var(--text-tertiary);
+}
+
+/* ── Legend row (narrow / hidden toggles) ────────────────────────────────────── */
+.legendRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 12px;
+  padding: 8px 12px 4px;
+}
+
+.legendBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-family-sans);
+  font-size: var(--text-caption-regular-font-size);
+  color: var(--text-secondary);
+  opacity: 1;
+  transition: opacity 200ms ease;
+}
+
+.legendBtnHidden {
+  opacity: 0.4;
+  text-decoration: line-through;
+}
+
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.legendBtnLabel {
+  white-space: nowrap;
+}

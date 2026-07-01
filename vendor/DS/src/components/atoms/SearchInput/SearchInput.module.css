@@ -1,0 +1,157 @@
+/* =============================================================================
+   SEARCH INPUT — CSS Module
+   Reuses --input-* tokens. Height 40px, search icon left, mic right.
+   ============================================================================= */
+
+.field {
+  --_bg:     var(--input-default-bg);
+  --_stroke: var(--input-default-stroke);
+  --_text:   var(--input-default-placeholder-text);
+  --_icon:   var(--input-default-icon);
+  --_radius: var(--input-default-corner-radius);
+
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 40px;
+  padding: 8px 12px;
+  border: 1px solid var(--_stroke);
+  border-radius: var(--_radius);
+  background-color: var(--_bg);
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+/* ── Real pseudo-class states ─────────────────────────────────────────────── */
+.field:hover:not(.stateDisabled) {
+  --_bg:     var(--input-hover-bg);
+  --_stroke: var(--input-hover-stroke);
+}
+
+.field:focus-within:not(.stateDisabled) {
+  --_bg:     var(--input-focused-bg);
+  --_stroke: var(--input-focused-stroke);
+  --_text:   var(--input-focused-placeholder-text);
+}
+
+.field:focus-within:not(.stateDisabled)::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 2px solid white;
+  border-radius: 8px;
+  filter: blur(0.25px);
+  pointer-events: none;
+}
+
+/* ── Forced visual states (Storybook) ─────────────────────────────────────── */
+.stateHover {
+  --_bg:     var(--input-hover-bg);
+  --_stroke: var(--input-hover-stroke);
+  --_text:   var(--input-hover-placeholder-text);
+}
+
+.stateFocused {
+  --_bg:     var(--input-focused-bg);
+  --_stroke: var(--input-focused-stroke);
+  --_text:   var(--input-focused-placeholder-text);
+}
+
+.stateFocused::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 2px solid white;
+  border-radius: 8px;
+  filter: blur(0.25px);
+  pointer-events: none;
+}
+
+.stateTyping {
+  --_bg:     var(--input-typing-bg);
+  --_stroke: var(--input-typing-stroke);
+  --_text:   var(--input-typing-placeholder-text);
+}
+
+.stateTyping::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 2px solid white;
+  border-radius: 8px;
+  filter: blur(0.25px);
+  pointer-events: none;
+}
+
+.stateEntered {
+  --_bg:     var(--input-entered-bg);
+  --_stroke: var(--input-entered-stroke);
+  --_text:   var(--input-entered-placeholder-text);
+}
+
+.stateDisabled {
+  --_bg:     var(--input-disabled-bg);
+  --_stroke: var(--input-disabled-stroke);
+  --_text:   var(--input-disabled-placeholder-text);
+  --_icon:   var(--input-disabled-icon);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Buttons group (cross + mic) shown in typing / entered ────────────────── */
+.buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* ── Icon slots ───────────────────────────────────────────────────────────── */
+.iconSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--_icon);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.iconSlot svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Native <input> ───────────────────────────────────────────────────────── */
+.input {
+  flex: 1 0 0;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--text-body-paragraph-font-family);
+  font-size: var(--text-body-paragraph-font-size);
+  font-weight: var(--text-body-paragraph-font-weight);
+  line-height: var(--text-body-paragraph-line-height);
+  color: var(--_text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.input::placeholder {
+  color: var(--input-default-placeholder-text);
+}
+
+.input:disabled {
+  cursor: not-allowed;
+  color: var(--input-disabled-placeholder-text);
+}
+
+.input:disabled::placeholder {
+  color: var(--input-disabled-placeholder-text);
+}

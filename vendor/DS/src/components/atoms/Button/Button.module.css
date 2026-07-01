@@ -1,0 +1,322 @@
+/* =============================================================================
+   BUTTON — CSS Module
+   All colors reference CSS custom properties from semantic.css token layer.
+   State cascade pattern: set --_btn-* locals per variant+state, apply once.
+   ============================================================================= */
+
+/* ── Base ──────────────────────────────────────────────────────────────────── */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--_btn-stroke, transparent);
+  background-color: var(--_btn-bg, transparent);
+  color: var(--_btn-text);
+  border-radius: var(--_btn-radius, 4px);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-14);
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+  text-decoration: none;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    border-radius 0.15s ease;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+}
+
+/* ── Sizes ─────────────────────────────────────────────────────────────────── */
+
+/* L / 40px — from Figma: px=12, py=8, icon=20px */
+.sizeL {
+  height: 40px;
+  padding: 8px 12px;
+  gap: 6px;
+}
+
+/* M / 32px */
+.sizeM {
+  height: 32px;
+  padding: 6px 10px;
+  gap: 4px;
+}
+
+/* S / 24px */
+.sizeS {
+  height: 24px;
+  padding: 4px 8px;
+  gap: 4px;
+}
+
+/* ── Icon slot ─────────────────────────────────────────────────────────────── */
+.iconSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--_btn-icon, currentColor);
+}
+
+/* SVG inside icon slot inherits color via currentColor */
+.iconSlot svg {
+  display: block;
+  fill: currentColor;
+}
+
+.sizeL .iconSlot { width: 20px; height: 20px; font-size: 20px; }
+.sizeM .iconSlot { width: 16px; height: 16px; font-size: 16px; }
+.sizeS .iconSlot { width: 14px; height: 14px; font-size: 14px; }
+
+/* ── Icon-only (square) ────────────────────────────────────────────────────── */
+.iconOnly {
+  padding: 0;
+}
+
+.sizeL.iconOnly { width: 40px; }
+.sizeM.iconOnly { width: 32px; }
+.sizeS.iconOnly { width: 24px; }
+
+/* Larger icon in icon-only mode (no text to compete with) */
+.sizeL.iconOnly .iconSlot { width: 24px; height: 24px; font-size: 24px; }
+.sizeM.iconOnly .iconSlot { width: 20px; height: 20px; font-size: 20px; }
+.sizeS.iconOnly .iconSlot { width: 16px; height: 16px; font-size: 16px; }
+
+/* ── PRIMARY ───────────────────────────────────────────────────────────────── */
+.variantPrimary {
+  --_btn-bg:     var(--btn-primary-default-bg);
+  --_btn-stroke: var(--btn-primary-default-stroke);
+  --_btn-text:   var(--btn-primary-default-text);
+  --_btn-icon:   var(--btn-primary-default-icon);
+  --_btn-radius: var(--btn-primary-default-corner-radius);
+}
+.variantPrimary:hover:not(:disabled) {
+  --_btn-bg:     var(--btn-primary-hover-bg);
+  --_btn-stroke: var(--btn-primary-hover-stroke);
+  --_btn-text:   var(--btn-primary-hover-text);
+  --_btn-icon:   var(--btn-primary-hover-icon);
+  --_btn-radius: var(--btn-primary-hover-corner-radius);
+}
+.variantPrimary:focus-visible:not(:disabled) {
+  --_btn-bg:     var(--btn-primary-focused-bg);
+  --_btn-stroke: var(--btn-primary-focused-stroke);
+  --_btn-text:   var(--btn-primary-focused-text);
+  --_btn-icon:   var(--btn-primary-focused-icon);
+  --_btn-radius: var(--btn-primary-focused-corner-radius);
+}
+.variantPrimary:active:not(:disabled) {
+  --_btn-bg:     var(--btn-primary-selected-bg);
+  --_btn-stroke: var(--btn-primary-selected-stroke);
+  --_btn-text:   var(--btn-primary-selected-text);
+  --_btn-icon:   var(--btn-primary-selected-icon);
+  --_btn-radius: var(--btn-primary-selected-corner-radius);
+}
+.variantPrimary:disabled {
+  --_btn-bg:     var(--btn-primary-disabled-bg);
+  --_btn-stroke: transparent;
+  --_btn-text:   var(--btn-primary-disabled-text);
+  --_btn-icon:   var(--btn-primary-disabled-icon);
+  --_btn-radius: var(--btn-primary-disabled-corner-radius);
+}
+
+/* ── SECONDARY ─────────────────────────────────────────────────────────────── */
+.variantSecondary {
+  --_btn-bg:     var(--btn-secondary-default-bg);
+  --_btn-stroke: var(--btn-secondary-default-stroke);
+  --_btn-text:   var(--btn-secondary-default-text);
+  --_btn-icon:   var(--btn-secondary-default-icon);
+  --_btn-radius: var(--btn-secondary-default-corner-radius);
+}
+.variantSecondary:hover:not(:disabled) {
+  --_btn-bg:     var(--btn-secondary-hover-bg);
+  --_btn-stroke: var(--btn-secondary-hover-stroke);
+  --_btn-text:   var(--btn-secondary-hover-text);
+  --_btn-icon:   var(--btn-secondary-hover-icon);
+  --_btn-radius: var(--btn-secondary-hover-corner-radius);
+}
+.variantSecondary:focus-visible:not(:disabled) {
+  --_btn-bg:     var(--btn-secondary-focused-bg);
+  --_btn-stroke: var(--btn-secondary-focused-stroke);
+  --_btn-text:   var(--btn-secondary-focused-text);
+  --_btn-icon:   var(--btn-secondary-focused-icon);
+  --_btn-radius: var(--btn-secondary-focused-corner-radius);
+}
+.variantSecondary:active:not(:disabled) {
+  --_btn-bg:     var(--btn-secondary-selected-bg);
+  --_btn-stroke: var(--btn-secondary-selected-stroke);
+  --_btn-text:   var(--btn-secondary-selected-text);
+  --_btn-icon:   var(--btn-secondary-selected-icon);
+  --_btn-radius: var(--btn-secondary-selected-corner-radius);
+}
+.variantSecondary:disabled {
+  --_btn-bg:     var(--btn-secondary-disabled-bg);
+  --_btn-stroke: transparent;
+  --_btn-text:   var(--btn-secondary-disabled-text);
+  --_btn-icon:   var(--btn-secondary-disabled-icon);
+  --_btn-radius: var(--btn-secondary-disabled-corner-radius);
+}
+
+/* ── TRANSPARENT ───────────────────────────────────────────────────────────── */
+/* Note: default has no bg/stroke; cornerRadius=2 (unique vs other variants) */
+.variantTransparent {
+  --_btn-bg:     transparent;
+  --_btn-stroke: transparent;
+  --_btn-text:   var(--btn-transparent-default-text);
+  --_btn-icon:   var(--btn-transparent-default-icon);
+  --_btn-radius: var(--btn-transparent-default-corner-radius);
+}
+.variantTransparent:hover:not(:disabled) {
+  --_btn-bg:     var(--btn-transparent-hover-bg);
+  --_btn-stroke: transparent;
+  --_btn-text:   var(--btn-transparent-hover-text);
+  --_btn-icon:   var(--btn-transparent-hover-icon);
+  --_btn-radius: var(--btn-transparent-hover-corner-radius);
+}
+.variantTransparent:focus-visible:not(:disabled) {
+  --_btn-bg:     var(--btn-transparent-focused-bg);
+  --_btn-stroke: transparent;
+  --_btn-text:   var(--btn-transparent-focused-text);
+  --_btn-icon:   var(--btn-transparent-focused-icon);
+  --_btn-radius: var(--btn-transparent-focused-corner-radius);
+}
+.variantTransparent:active:not(:disabled) {
+  --_btn-bg:     var(--btn-transparent-selected-bg);
+  --_btn-stroke: transparent;
+  --_btn-text:   var(--btn-transparent-selected-text);
+  --_btn-icon:   var(--btn-transparent-selected-icon);
+  --_btn-radius: var(--btn-transparent-selected-corner-radius);
+}
+.variantTransparent:disabled {
+  --_btn-bg:     var(--btn-transparent-disabled-bg);
+  --_btn-stroke: transparent;
+  --_btn-text:   var(--btn-transparent-disabled-text);
+  --_btn-icon:   var(--btn-transparent-disabled-icon);
+  --_btn-radius: var(--btn-transparent-disabled-corner-radius);
+}
+
+/* ── SUCCESS ───────────────────────────────────────────────────────────────── */
+.variantSuccess {
+  --_btn-bg:     var(--btn-success-default-bg);
+  --_btn-stroke: var(--btn-success-default-stroke);
+  --_btn-text:   var(--btn-success-default-text);
+  --_btn-icon:   var(--btn-success-default-icon);
+  --_btn-radius: var(--btn-success-default-corner-radius);
+}
+.variantSuccess:hover:not(:disabled) {
+  --_btn-bg:     var(--btn-success-hover-bg);
+  --_btn-stroke: var(--btn-success-hover-stroke);
+  --_btn-text:   var(--btn-success-hover-text);
+  --_btn-icon:   var(--btn-success-hover-icon);
+  --_btn-radius: var(--btn-success-hover-corner-radius);
+}
+.variantSuccess:focus-visible:not(:disabled) {
+  --_btn-bg:     var(--btn-success-focused-bg);
+  --_btn-stroke: var(--btn-success-focused-stroke);
+  --_btn-text:   var(--btn-success-focused-text);
+  --_btn-icon:   var(--btn-success-focused-icon);
+  --_btn-radius: var(--btn-success-focused-corner-radius);
+}
+.variantSuccess:active:not(:disabled) {
+  --_btn-bg:     var(--btn-success-selected-bg);
+  --_btn-stroke: var(--btn-success-selected-stroke);
+  --_btn-text:   var(--btn-success-selected-text);
+  --_btn-icon:   var(--btn-success-selected-icon);
+  --_btn-radius: var(--btn-success-selected-corner-radius);
+}
+.variantSuccess:disabled {
+  --_btn-bg:     var(--btn-success-disabled-bg);
+  --_btn-stroke: transparent;
+  --_btn-text:   var(--btn-success-disabled-text);
+  --_btn-icon:   var(--btn-success-disabled-icon);
+  --_btn-radius: var(--btn-success-disabled-corner-radius);
+}
+
+/* ── ERROR ─────────────────────────────────────────────────────────────────── */
+.variantError {
+  --_btn-bg:     var(--btn-error-default-bg);
+  --_btn-stroke: var(--btn-error-default-stroke);
+  --_btn-text:   var(--btn-error-default-text);
+  --_btn-icon:   var(--btn-error-default-icon);
+  --_btn-radius: var(--btn-error-default-corner-radius);
+}
+.variantError:hover:not(:disabled) {
+  --_btn-bg:     var(--btn-error-hover-bg);
+  --_btn-stroke: var(--btn-error-hover-stroke);
+  --_btn-text:   var(--btn-error-hover-text);
+  --_btn-icon:   var(--btn-error-hover-icon);
+  --_btn-radius: var(--btn-error-hover-corner-radius);
+}
+.variantError:focus-visible:not(:disabled) {
+  --_btn-bg:     var(--btn-error-focused-bg);
+  --_btn-stroke: var(--btn-error-focused-stroke);
+  --_btn-text:   var(--btn-error-focused-text);
+  --_btn-icon:   var(--btn-error-focused-icon);
+  --_btn-radius: var(--btn-error-focused-corner-radius);
+}
+.variantError:active:not(:disabled) {
+  --_btn-bg:     var(--btn-error-selected-bg);
+  --_btn-stroke: var(--btn-error-selected-stroke);
+  --_btn-text:   var(--btn-error-selected-text);
+  --_btn-icon:   var(--btn-error-selected-icon);
+  --_btn-radius: var(--btn-error-selected-corner-radius);
+}
+.variantError:disabled {
+  --_btn-bg:     var(--btn-error-disabled-bg);
+  --_btn-stroke: transparent;
+  --_btn-text:   var(--btn-error-disabled-text);
+  --_btn-icon:   var(--btn-error-disabled-icon);
+  --_btn-radius: var(--btn-error-disabled-corner-radius);
+}
+
+/* ── GHOST (transparent goast in Figma) ────────────────────────────────────── */
+/* Text + icon only — no bg, no stroke, no radius */
+.variantGhost {
+  --_btn-bg:     transparent;
+  --_btn-stroke: transparent;
+  --_btn-text:   var(--btn-ghost-default-text);
+  --_btn-icon:   var(--btn-ghost-default-icon);
+  --_btn-radius: 0px;
+}
+.variantGhost:hover:not(:disabled) {
+  --_btn-text: var(--btn-ghost-hover-text);
+  --_btn-icon: var(--btn-ghost-hover-icon);
+}
+.variantGhost:focus-visible:not(:disabled) {
+  --_btn-text: var(--btn-ghost-focused-text);
+  --_btn-icon: var(--btn-ghost-focused-icon);
+}
+.variantGhost:active:not(:disabled) {
+  --_btn-text: var(--btn-ghost-selected-text);
+  --_btn-icon: var(--btn-ghost-selected-icon);
+}
+.variantGhost:disabled {
+  --_btn-text: var(--btn-ghost-disabled-text);
+  --_btn-icon: var(--btn-ghost-disabled-icon);
+}
+
+/* ── LINK ──────────────────────────────────────────────────────────────────── */
+.variantLink {
+  --_btn-bg:     transparent;
+  --_btn-stroke: transparent;
+  --_btn-text:   var(--btn-link-default-text);
+  --_btn-icon:   var(--btn-link-default-icon);
+  --_btn-radius: 0px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.variantLink:visited {
+  --_btn-text: var(--btn-link-visited-text);
+  --_btn-icon: var(--btn-link-visited-icon);
+}
+.variantLink:disabled {
+  text-decoration: none;
+  opacity: 0.4;
+}

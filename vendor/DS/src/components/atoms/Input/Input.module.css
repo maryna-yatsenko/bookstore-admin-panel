@@ -1,0 +1,200 @@
+/* =============================================================================
+   INPUT — CSS Module
+   Tokens: --input-{state}-{property} from semantic.css
+   ============================================================================= */
+
+/* ── Root wrapper ─────────────────────────────────────────────────────────── */
+.root {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+/* ── Label row ────────────────────────────────────────────────────────────── */
+.labelRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.label {
+  flex: 1 0 0;
+  font-family: var(--text-body-regular-font-family);
+  font-size: var(--text-body-regular-font-size);
+  font-weight: var(--text-body-regular-font-weight);
+  line-height: var(--text-body-regular-line-height);
+  color: var(--input-default-label-text);
+}
+
+/* When disclaimer icon is shown, label hugs its content */
+.labelHug {
+  flex: none;
+}
+
+.root.stateDisabled .label,
+.root.stateDisabled .disclaimerIcon {
+  color: var(--input-disabled-label-text);
+}
+
+.disclaimerIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  color: var(--icon-tertiary);
+}
+
+.disclaimerIcon svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+/* ── Field container ──────────────────────────────────────────────────────── */
+.field {
+  --_bg:     var(--input-default-bg);
+  --_stroke: var(--input-default-stroke);
+  --_text:   var(--input-default-placeholder-text);
+  --_icon:   var(--input-default-icon);
+  --_radius: var(--input-default-corner-radius);
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 32px;
+  padding: 8px 12px;
+  border: 1px solid var(--_stroke);
+  border-radius: var(--_radius);
+  background-color: var(--_bg);
+  box-sizing: border-box;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+/* ── Real pseudo-class states ─────────────────────────────────────────────── */
+.field:hover:not(.stateDisabled) {
+  --_bg:     var(--input-hover-bg);
+  --_stroke: var(--input-hover-stroke);
+}
+
+.field:focus-within:not(.stateDisabled) {
+  --_bg:     var(--input-focused-bg);
+  --_stroke: var(--input-focused-stroke);
+  --_text:   var(--input-focused-placeholder-text);
+}
+
+/* ── Forced visual states (Storybook) ─────────────────────────────────────── */
+.field.stateHover {
+  --_bg:     var(--input-hover-bg);
+  --_stroke: var(--input-hover-stroke);
+  --_text:   var(--input-hover-placeholder-text);
+}
+
+.field.stateFocused {
+  --_bg:     var(--input-focused-bg);
+  --_stroke: var(--input-focused-stroke);
+  --_text:   var(--input-focused-placeholder-text);
+}
+
+.field.stateTyping {
+  --_bg:     var(--input-typing-bg);
+  --_stroke: var(--input-typing-stroke);
+  --_text:   var(--input-typing-placeholder-text);
+}
+
+.field.stateEntered {
+  --_bg:     var(--input-entered-bg);
+  --_stroke: var(--input-entered-stroke);
+  --_text:   var(--input-entered-placeholder-text);
+}
+
+.field.stateSuccess {
+  --_bg:     var(--input-success-bg);
+  --_stroke: var(--input-success-stroke);
+  --_text:   var(--input-success-placeholder-text);
+  --_icon:   var(--input-success-icon);
+}
+
+.field.stateError {
+  --_bg:     var(--input-error-bg);
+  --_stroke: var(--input-error-stroke);
+  --_text:   var(--input-error-placeholder-text);
+  --_icon:   var(--input-error-icon);
+}
+
+.field.stateDisabled {
+  --_bg:     var(--input-disabled-bg);
+  --_stroke: var(--input-disabled-stroke);
+  --_text:   var(--input-disabled-placeholder-text);
+  --_icon:   var(--input-disabled-icon);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Native <input> ───────────────────────────────────────────────────────── */
+.input {
+  flex: 1 0 0;
+  min-width: 0;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--text-body-paragraph-font-family);
+  font-size: var(--text-body-paragraph-font-size);
+  font-weight: var(--text-body-paragraph-font-weight);
+  line-height: var(--text-body-paragraph-line-height);
+  color: var(--_text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.input::placeholder {
+  color: var(--input-default-placeholder-text);
+}
+
+.input:disabled {
+  cursor: not-allowed;
+  color: var(--input-disabled-placeholder-text);
+}
+
+.input:disabled::placeholder {
+  color: var(--input-disabled-placeholder-text);
+}
+
+/* ── Field with trailing icon — reduce right padding ─────────────────────── */
+.fieldWithIcon {
+  padding-right: 8px;
+}
+
+/* ── Trailing icon ────────────────────────────────────────────────────────── */
+.trailingIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--_icon);
+}
+
+.trailingIcon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Supporting text (success / error) ────────────────────────────────────── */
+.supportingText {
+  font-family: var(--text-caption-regular-font-family);
+  font-size: var(--text-caption-regular-font-size);
+  font-weight: var(--text-caption-regular-font-weight);
+  line-height: var(--text-caption-regular-line-height);
+}
+
+.root.stateSuccess .supportingText {
+  color: var(--input-success-supporting-text);
+}
+
+.root.stateError .supportingText {
+  color: var(--input-error-supporting-text);
+}

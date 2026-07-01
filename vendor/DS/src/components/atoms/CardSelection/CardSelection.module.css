@@ -1,0 +1,182 @@
+/* ── Wrapper (card = clickable label) ──────────────────────────────────── */
+.wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12, 12px);
+  /* Figma: pl=8, pr=12, py=8 */
+  padding: var(--spacing-8, 8px) var(--spacing-12, 12px)
+           var(--spacing-8, 8px) var(--spacing-8, 8px);
+  width: 280px;
+  box-sizing: border-box;
+  border: 1px solid var(--stroke-tertiary);
+  border-radius: var(--radius-4, 4px);
+  background: var(--container-primary);
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+  transition: border-color 0.15s;
+}
+
+/* ── Selected: inner border (secondary) + 1px amber outline-ring outside ── */
+/*
+  outline draws OUTSIDE the border-box — does not affect layout.
+  outline-offset: 1px → 1px transparent gap between card border and ring.
+  border-radius is respected in all modern browsers (Chrome 94+, FF 88+, Safari 15+).
+  Result: card border | 1px gap | 1px amber ring  — exactly as in Figma.
+*/
+.wrapper.selected {
+  border-color: var(--stroke-secondary);
+  outline: 1px solid var(--stroke-brand-color);
+  outline-offset: 1px;
+}
+
+/* ── Disabled ────────────────────────────────────────────────────────────── */
+.wrapper.disabled {
+  border-color: var(--stroke-disable);
+  background: var(--container-disabled);
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ── Thumbnail 40×40 ─────────────────────────────────────────────────────── */
+.thumbnail {
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: var(--radius-2, 2px);
+  background: var(--container-page-bg);
+}
+
+/* ── Text block: title + subtitle ───────────────────────────────────────── */
+.textContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--spacing-2, 2px);
+  flex: 1 0 0;
+  min-width: 1px;
+}
+
+/* body/body-regular 14/18 */
+.title {
+  font-family: var(--text-body-regular-font-family);
+  font-size: var(--text-body-regular-font-size);
+  font-weight: var(--text-body-regular-font-weight);
+  line-height: var(--text-body-regular-line-height);
+  color: var(--text-primary);
+  margin: 0;
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-shrink: 0;
+}
+
+/* caption/caption-regular 12/14 */
+.subtitle {
+  font-family: var(--text-caption-regular-font-family);
+  font-size: var(--text-caption-regular-font-size);
+  font-weight: var(--text-caption-regular-font-weight);
+  line-height: var(--text-caption-regular-line-height);
+  color: var(--text-tertiary);
+  margin: 0;
+  width: 100%;
+  flex-shrink: 0;
+}
+
+/* ── Checkbox indicator: 24×24 hit area ─────────────────────────────────── */
+.indicator {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 2.4px;
+  transition: background 0.15s;
+}
+
+/* Overlay driven by card hover/focus/active — fires for ANY click on the card */
+.wrapper:not(.disabled):hover .indicator,
+.wrapper[data-state="hover"] .indicator {
+  background: var(--state-overlay-hover);
+}
+
+.wrapper:not(.disabled):focus-within .indicator,
+.wrapper[data-state="focused"] .indicator {
+  background: var(--state-overlay-focused);
+}
+
+.wrapper:not(.disabled):active .indicator {
+  background: var(--state-overlay-pressed);
+}
+
+/* ── Hidden native checkbox ──────────────────────────────────────────────── */
+.input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+
+/* ── Visual 16×16 box ────────────────────────────────────────────────────── */
+.box {
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+  border: 1.5px solid var(--checkbox-default-stroke);
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: border-color 0.15s, background 0.15s;
+  pointer-events: none;
+}
+
+.box svg { display: block; flex-shrink: 0; }
+
+/* Hover/focus: darken border of unchecked box */
+.wrapper:not(.disabled):hover .box,
+.wrapper[data-state="hover"] .box {
+  border-color: var(--checkbox-hover-stroke);
+}
+
+.wrapper:not(.disabled):focus-within .box,
+.wrapper[data-state="focused"] .box {
+  border-color: var(--checkbox-focused-stroke);
+}
+
+/* ── Checked (selected) box ─────────────────────────────────────────────── */
+.boxChecked {
+  background: var(--checkbox-default-bg);
+  border-color: var(--checkbox-default-bg);
+}
+
+.wrapper:not(.disabled):hover .boxChecked,
+.wrapper[data-state="hover"] .boxChecked {
+  background: var(--checkbox-hover-bg);
+  border-color: var(--checkbox-hover-bg);
+}
+
+.wrapper:not(.disabled):focus-within .boxChecked,
+.wrapper[data-state="focused"] .boxChecked {
+  background: var(--checkbox-focused-bg);
+  border-color: var(--checkbox-focused-bg);
+}
+
+/* ── Disabled box ────────────────────────────────────────────────────────── */
+.disabled .box {
+  border-color: var(--stroke-secondary);
+  background: var(--container-secondary);
+}
+
+.disabled .boxChecked {
+  background: var(--checkbox-disabled-bg);
+  border-color: var(--checkbox-disabled-bg);
+}

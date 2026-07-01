@@ -1,0 +1,136 @@
+/* ── Wrapper ─────────────────────────────────────────────────────────────── */
+.wrapper {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.wrapper.disabled {
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ── Hit area — 24×24, holds state overlay + 16×16 circle ───────────────── */
+.hitArea {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 50%;
+  transition: background 0.15s;
+}
+
+/* hover */
+.wrapper:not(.disabled):hover .hitArea {
+  background: var(--state-overlay-hover);
+}
+
+/* focus */
+.wrapper:not(.disabled):focus-within .hitArea {
+  background: var(--state-overlay-focused);
+}
+
+/* pressed */
+.wrapper:not(.disabled):active .hitArea {
+  background: var(--state-overlay-pressed);
+}
+
+/* ── Native input — visually hidden ─────────────────────────────────────── */
+.input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  margin: 0;
+}
+
+/* ── Visual radio circle — 16×16 ─────────────────────────────────────────── */
+.box {
+  box-sizing: border-box;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1.5px solid var(--checkbox-default-stroke);
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.15s, background 0.15s;
+  pointer-events: none;
+}
+
+/* inner dot — hidden when unselected */
+.box::after {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: transparent;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+
+/* ── Hover / focus — border darkens ─────────────────────────────────────── */
+.wrapper:not(.disabled):hover .box {
+  border-color: var(--checkbox-hover-stroke);
+}
+
+.wrapper:not(.disabled):focus-within .box {
+  border-color: var(--checkbox-focused-stroke);
+}
+
+/* ── Selected — amber fill + white dot ──────────────────────────────────── */
+.boxSelected {
+  background: var(--checkbox-default-bg);
+  border-color: var(--checkbox-default-bg);
+}
+
+.boxSelected::after {
+  background: white;
+}
+
+/* selected + hover */
+.wrapper:not(.disabled):hover .boxSelected {
+  background: var(--checkbox-hover-bg);
+  border-color: var(--checkbox-hover-bg);
+}
+
+/* selected + focus */
+.wrapper:not(.disabled):focus-within .boxSelected {
+  background: var(--checkbox-focused-bg);
+  border-color: var(--checkbox-focused-bg);
+}
+
+/* ── Disabled ─────────────────────────────────────────────────────────────── */
+.disabled .box {
+  border-color: var(--stroke-secondary);
+  background: var(--container-secondary);
+}
+
+.disabled .boxSelected {
+  background: var(--checkbox-disabled-bg);
+  border-color: var(--checkbox-disabled-bg);
+}
+
+/* ── Label text ──────────────────────────────────────────────────────────── */
+.label {
+  font-family: var(--text-body-regular-font-family);
+  font-size: var(--text-body-regular-font-size);
+  font-weight: var(--text-body-regular-font-weight);
+  line-height: var(--text-body-regular-line-height);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.disabled .label {
+  color: var(--text-disable);
+}

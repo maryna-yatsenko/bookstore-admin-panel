@@ -1,0 +1,143 @@
+/* =============================================================================
+   MENU-ITEM — CSS Module
+   Tokens from semantic.css: --menu-item-{state}-{prop}
+   Local vars pattern: --_mi-* set per state, applied once in base.
+   ============================================================================= */
+
+/* ── Base ──────────────────────────────────────────────────────────────────── */
+.item {
+  --_mi-bg:           transparent;
+  --_mi-text:         var(--menu-item-default-text);
+  --_mi-icon:         var(--menu-item-default-icon);
+  --_mi-radius:       var(--menu-item-default-corner-radius);
+  --_mi-font-weight:  var(--font-weight-regular);
+  --_mi-badge-bg:     var(--badge-gray-bg);
+  --_mi-badge-text:   var(--badge-gray-text);
+  --_mi-badge-shadow: none;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  height: 40px;
+  padding: 8px 12px;
+  border-radius: var(--_mi-radius);
+  background-color: var(--_mi-bg);
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+  box-sizing: border-box;
+  transition:
+    background-color 0.15s ease,
+    border-radius 0.15s ease;
+}
+
+/* ── Type: icon-button (40×40, icon only) ──────────────────────────────────── */
+.iconButton {
+  width: 40px;
+  justify-content: center;
+  gap: 0;
+}
+
+/* ── Type: complex (icon + label + optional badge) ─────────────────────────── */
+.complex {
+  width: 239px;
+}
+
+/* ── Icon slot ─────────────────────────────────────────────────────────────── */
+.iconSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  color: var(--_mi-icon);
+}
+
+/* ── Label ─────────────────────────────────────────────────────────────────── */
+.label {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-14);
+  line-height: var(--line-height-18);
+  font-weight: var(--_mi-font-weight);
+  color: var(--_mi-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Badge ─────────────────────────────────────────────────────────────────── */
+.badge {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 4px;
+  background-color: var(--_mi-badge-bg);
+  color: var(--_mi-badge-text);
+  box-shadow: var(--_mi-badge-shadow);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-14);
+  transition: background-color 0.15s, box-shadow 0.15s;
+}
+
+/* ── Hover ─────────────────────────────────────────────────────────────────── */
+.item:hover:not(.disabled):not(.danger):not(.selected),
+.forceHover {
+  --_mi-bg:           var(--menu-item-hover-bg);
+  --_mi-text:         var(--menu-item-hover-text);
+  --_mi-icon:         var(--menu-item-hover-icon);
+  --_mi-radius:       var(--menu-item-hover-corner-radius);
+  --_mi-badge-bg:     var(--badge-white-bg);
+  --_mi-badge-text:   var(--badge-white-text);
+  --_mi-badge-shadow: 1px 1px 1px rgba(26, 1, 38, 0.06), 0px 0px 2px rgba(26, 1, 38, 0.04);
+}
+
+/* ── Focused ───────────────────────────────────────────────────────────────── */
+.item:focus-visible:not(.disabled):not(.danger):not(.selected),
+.forceFocused {
+  --_mi-bg:           var(--menu-item-focused-bg);
+  --_mi-text:         var(--menu-item-focused-text);
+  --_mi-icon:         var(--menu-item-focused-icon);
+  --_mi-radius:       var(--menu-item-focused-corner-radius);
+  --_mi-badge-bg:     var(--badge-white-bg);
+  --_mi-badge-text:   var(--badge-white-text);
+  --_mi-badge-shadow: 1px 1px 1px rgba(26, 1, 38, 0.06), 0px 0px 2px rgba(26, 1, 38, 0.04);
+}
+
+/* ── Selected ──────────────────────────────────────────────────────────────── */
+.selected {
+  --_mi-bg:           var(--menu-item-selected-bg);
+  --_mi-text:         var(--menu-item-selected-text);
+  --_mi-icon:         var(--menu-item-selected-icon);
+  --_mi-radius:       var(--menu-item-selected-corner-radius);
+  --_mi-font-weight:  var(--font-weight-semibold);
+  --_mi-badge-bg:     var(--badge-white-bg);
+  --_mi-badge-text:   var(--badge-white-text);
+  --_mi-badge-shadow: 1px 1px 1px rgba(26, 1, 38, 0.06), 0px 0px 2px rgba(26, 1, 38, 0.04);
+}
+
+/* ── Disabled ──────────────────────────────────────────────────────────────── */
+.disabled {
+  --_mi-text:         var(--menu-item-disabled-text);
+  --_mi-icon:         var(--menu-item-disabled-icon);
+  --_mi-radius:       var(--menu-item-disabled-corner-radius);
+  --_mi-badge-bg:     var(--badge-gray-bg);
+  --_mi-badge-text:   var(--text-disable);
+  --_mi-badge-shadow: none;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Danger ────────────────────────────────────────────────────────────────── */
+.danger {
+  --_mi-text:   var(--menu-item-danger-text);
+  --_mi-icon:   var(--menu-item-danger-icon);
+  --_mi-radius: var(--menu-item-danger-corner-radius);
+}

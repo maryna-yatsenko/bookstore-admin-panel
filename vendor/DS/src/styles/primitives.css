@@ -1,0 +1,190 @@
+/*
+ * PRIMITIVE COLOR CSS CUSTOM PROPERTIES
+ * Generated from Figma variables — primitives layer.
+ * Do not use these directly in component styles. Reference semantic tokens.
+ */
+
+:root {
+
+  /* ── gray ────────────────────────────────────────────────── */
+  --color-gray-100: #FFFFFF;
+  --color-gray-200: #FAFAFA;
+  --color-gray-300: #F2F2F3;
+  --color-gray-400: #DADADC;
+  --color-gray-500: #D3D3D5;
+  --color-gray-600: #B6B6B9;
+  --color-gray-700: #929297;
+  --color-gray-800: #747479;
+  --color-gray-900: #454548;
+  --color-gray-1000: #242425;
+  --color-gray-1100: #0A0A0A;
+
+  /* ── primary-yellow ──────────────────────────────────────── */
+  --color-primary-yellow-100: #FFFCF5;
+  --color-primary-yellow-200: #FFF8E5;
+  --color-primary-yellow-300: #FFF1CC;
+  --color-primary-yellow-400: #FFE5A3;
+  --color-primary-yellow-500: #FFD05C;
+  --color-primary-yellow-600: #FFC229;
+  --color-primary-yellow-700: #FFB600;
+  --color-primary-yellow-800: #A36D00;
+  --color-primary-yellow-900: #5B3D00;
+  --color-primary-yellow-1000: #402B00;
+  --color-primary-yellow-1100: #2F2200;
+
+  /* ── accent-purple ───────────────────────────────────────── */
+  --color-accent-purple-100: #FDFCFD;
+  --color-accent-purple-200: #F5F2F8;
+  --color-accent-purple-300: #DACDE3;
+  --color-accent-purple-400: #BFA9CF;
+  --color-accent-purple-500: #A284BA;
+  --color-accent-purple-600: #865EA4;
+  --color-accent-purple-700: #69388F;
+  --color-accent-purple-800: #542D72;
+  --color-accent-purple-900: #3F2256;
+  --color-accent-purple-1000: #2A1639;
+  --color-accent-purple-1100: #150B1D;
+
+  /* ── accent-pink ─────────────────────────────────────────── */
+  --color-accent-pink-100: #FCF0FF;
+  --color-accent-pink-200: #FAE6FE;
+  --color-accent-pink-300: #F6D0FE;
+  --color-accent-pink-400: #EFAEFC;
+  --color-accent-pink-500: #E88AFB;
+  --color-accent-pink-600: #E167FA;
+  --color-accent-pink-700: #DA43F9;
+  --color-accent-pink-800: #AE36C7;
+  --color-accent-pink-900: #832895;
+  --color-accent-pink-1000: #571B64;
+  --color-accent-pink-1100: #2C0D32;
+
+  /* ── blue (10 steps) ────────────────────────────────────── */
+  --color-blue-100: #F6F6FE;
+  --color-blue-200: #C8CBF8;
+  --color-blue-300: #A0A6F3;
+  --color-blue-400: #757EEE;
+  --color-blue-500: #4B57E8;
+  --color-blue-600: #212FE3;
+  --color-blue-700: #1A26B6;
+  --color-blue-800: #141C88;
+  --color-blue-900: #0D135B;
+  --color-blue-1000: #07092D;
+
+  /* ── lilac ───────────────────────────────────────────────── */
+  --color-lilac-100: #F2F1F9;
+  --color-lilac-200: #E4E0F5;
+  --color-lilac-300: #D4CDEF;
+  --color-lilac-400: #B4A9E3;
+  --color-lilac-500: #9382D7;
+  --color-lilac-600: #725CCB;
+  --color-lilac-700: #5136BF;
+  --color-lilac-800: #412B99;
+  --color-lilac-900: #312073;
+  --color-lilac-1000: #20164C;
+  --color-lilac-1100: #100B26;
+
+  /* ── green ───────────────────────────────────────────────── */
+  --color-green-100: #E9F7E8;
+  --color-green-200: #D7F1D5;
+  --color-green-300: #C9ECC7;
+  --color-green-400: #A3DF9F;
+  --color-green-500: #7AD175;
+  --color-green-600: #51C24A;
+  --color-green-700: #28B420;
+  --color-green-800: #20901A;
+  --color-green-900: #186C13;
+  --color-green-1000: #10480D;
+  --color-green-1100: #082406;
+
+  /* ── mint ────────────────────────────────────────────────── */
+  --color-mint-100: #E0F7F5;
+  --color-mint-200: #C2EFEB;
+  --color-mint-300: #99E4DE;
+  --color-mint-400: #55D2C8;
+  --color-mint-500: #33BDB2;
+  --color-mint-600: #2BA399;
+  --color-mint-700: #23827B;
+  --color-mint-800: #1A625D;
+  --color-mint-900: #154D49;
+  --color-mint-1000: #0F3633;
+  --color-mint-1100: #0B2826;
+
+  /* ── orange ──────────────────────────────────────────────── */
+  --color-orange-100: #FFEFE9;
+  --color-orange-200: #FFDFD3;
+  --color-orange-300: #FFCBB7;
+  --color-orange-400: #FFAB8A;
+  --color-orange-500: #FF8B5E;
+  --color-orange-600: #FF5B1C;
+  --color-orange-700: #D83C00;
+  --color-orange-800: #A42E00;
+  --color-orange-900: #812400;
+  --color-orange-1000: #5C1A00;
+  --color-orange-1100: #451300;
+
+  /* ── red ─────────────────────────────────────────────────── */
+  --color-red-100: #FFEEEE;
+  --color-red-200: #FFDEDF;
+  --color-red-300: #FFC9CA;
+  --color-red-400: #FFA8A9;
+  --color-red-500: #FF8789;
+  --color-red-600: #FF575A;
+  --color-red-700: #E50003;
+  --color-red-800: #B50003;
+  --color-red-900: #900002;
+  --color-red-1000: #690002;
+  --color-red-1100: #510001;
+
+  /* ─────────────────────────────────────────────────────────── */
+  /* SPACING / NUMBERS                                           */
+  /* ─────────────────────────────────────────────────────────── */
+  --space-0: 0px;
+  --space-2: 2px;
+  --space-4: 4px;
+  --space-6: 6px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-56: 56px;
+  --space-64: 64px;
+  --space-72: 72px;
+  --space-80: 80px;
+  --space-88: 88px;
+  --space-92: 92px;
+  --space-100: 100px;
+  --space-1000: 1000px;
+
+  /* ─────────────────────────────────────────────────────────── */
+  /* TYPOGRAPHY                                                  */
+  /* ─────────────────────────────────────────────────────────── */
+
+  /* font-family */
+  --font-family-sans: 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* font-size */
+  --font-size-12: 12px;
+  --font-size-14: 14px;
+  --font-size-16: 16px;
+  --font-size-24: 24px;
+  --font-size-32: 32px;
+
+  /* line-height */
+  --line-height-14: 14px;
+  --line-height-16: 16px;
+  --line-height-18: 18px;
+  --line-height-20: 20px;
+  --line-height-24: 24px;
+  --line-height-30: 30px;
+  --line-height-32: 32px;
+
+  /* font-weight */
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+}

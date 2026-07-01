@@ -1,0 +1,235 @@
+/* =============================================================================
+   STEPPER — CSS Module
+   States: passed · active · next
+   ============================================================================= */
+
+.stepper {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+/* ── Step row ─────────────────────────────────────────────────────────────── */
+.step {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+}
+
+/* ── Left column: indicator + connector ──────────────────────────────────── */
+.indicatorCol {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  width: 26px;
+}
+
+/* ── Step indicator circle ────────────────────────────────────────────────── */
+.indicator {
+  width: 26px;
+  height: 26px;
+  border: 1px dashed;
+  border-radius: var(--radius-infinity);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+/* passed — light yellow tint, yellow dashed border */
+.passed {
+  background: var(--stepper-default-bg);
+  border-color: var(--stepper-default-stroke);
+  color: var(--stepper-default-icon);
+}
+
+/* active — amber fill, dark dashed border */
+.active {
+  background: var(--stepper-hover-bg);
+  border-color: var(--stepper-hover-stroke);
+  color: var(--stepper-hover-icon);
+}
+
+/* next — white, gray dashed border */
+.next {
+  background: var(--stepper-disabled-bg);
+  border-color: var(--stepper-disabled-stroke);
+  color: var(--stepper-disabled-icon);
+}
+
+/* ── Connector line ───────────────────────────────────────────────────────── */
+.connector {
+  flex: 1;
+  width: 1px;
+  min-height: 24px;
+  background: var(--stroke-tertiary);
+  margin: 0 auto;
+}
+
+/* ── Right column: content ────────────────────────────────────────────────── */
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+  min-width: 0;
+}
+
+.contentSpaced {
+  padding-bottom: 32px;
+}
+
+/* ── Badge ────────────────────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 7px;
+  border-radius: var(--radius-4);
+  border: 1px solid;
+  font-family: var(--text-body-regular-font-family);
+  font-size: var(--text-body-regular-font-size);
+  font-weight: var(--text-body-regular-font-weight);
+  line-height: var(--text-body-regular-line-height);
+  white-space: nowrap;
+  align-self: flex-start;
+}
+
+.badgeWhite {
+  background: var(--container-secondary, #fafafa);
+  color: var(--text-secondary);
+  border-color: var(--stroke-secondary, #929297);
+}
+
+.badgeGray {
+  background: var(--container-tertiary, #f2f2f3);
+  color: var(--text-primary);
+  border-color: var(--stroke-secondary, #929297);
+}
+
+/* ── Body row: title + optional date block ───────────────────────────────── */
+.bodyRow {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+/* When date is present, let textBlock grow and dateBlock sit to the right */
+.bodyRowWithDate .textBlock {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── Text block: label + actor row ──────────────────────────────────────────*/
+.textBlock {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  font-family: var(--text-title-h3-regular-font-family);
+  font-size: var(--text-title-h3-regular-font-size);
+  font-weight: var(--text-title-h3-regular-font-weight);
+  line-height: var(--text-title-h3-regular-line-height);
+  color: var(--text-primary);
+}
+
+.labelActive {
+  font-weight: var(--text-body-semibold-font-weight);
+}
+
+.labelNext {
+  color: var(--text-disable);
+}
+
+/* ── Actor row ────────────────────────────────────────────────────────────── */
+.actorRow {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+.actorRow:hover .actorName {
+  text-decoration: underline;
+}
+
+.actorRowNext {
+  color: var(--text-disable);
+  pointer-events: none;
+}
+
+.actorPrefix {
+  font-family: var(--text-body-regular-font-family);
+  font-size: var(--text-body-regular-font-size);
+  font-weight: var(--text-body-regular-font-weight);
+  line-height: var(--text-body-regular-line-height);
+  color: var(--text-tertiary);
+}
+
+.actorRowNext .actorPrefix {
+  color: var(--text-disable);
+}
+
+.actorName {
+  font-family: var(--text-body-regular-font-family);
+  font-size: var(--text-body-regular-font-size);
+  font-weight: var(--text-body-regular-font-weight);
+  line-height: var(--text-body-regular-line-height);
+  color: #212fe3;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.actorRowNext .actorName {
+  color: var(--text-disable);
+  text-decoration: none;
+}
+
+/* ── Description (simple fallback) ──────────────────────────────────────── */
+.description {
+  font-family: var(--text-caption-regular-font-family);
+  font-size: var(--text-caption-regular-font-size);
+  font-weight: var(--text-caption-regular-font-weight);
+  line-height: var(--text-caption-regular-line-height);
+  color: var(--text-tertiary);
+}
+
+.descriptionNext {
+  color: var(--text-disable);
+}
+
+/* ── Date / time block ───────────────────────────────────────────────────── */
+.dateBlock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.dateBlockNext .dateText,
+.dateBlockNext .timeText {
+  color: var(--text-disable);
+}
+
+.dateText {
+  font-family: var(--text-body-regular-font-family);
+  font-size: var(--text-body-regular-font-size);
+  font-weight: var(--text-body-regular-font-weight);
+  line-height: var(--text-body-regular-line-height);
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.timeText {
+  font-family: var(--text-caption-regular-font-family);
+  font-size: var(--text-caption-regular-font-size);
+  font-weight: var(--text-caption-regular-font-weight);
+  line-height: var(--text-caption-regular-line-height);
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}

@@ -1,0 +1,90 @@
+export const ICON_NAMES = [
+  'add',
+  'ai',
+  'arrow-down',
+  'arrow-down-chevron',
+  'arrow-left',
+  'arrow-left-double',
+  'arrow-left-long',
+  'arrow-right',
+  'arrow-right-double',
+  'arrow-right-long',
+  'arrow-up',
+  'arrow-up-chevron',
+  'barcode',
+  'barcode-02',
+  'bike',
+  'bold',
+  'calendar',
+  'check',
+  'close-large',
+  'close-small',
+  'copy',
+  'dashboard',
+  'delete-bin',
+  'double-quotes',
+  'download',
+  'draft',
+  'edit',
+  'expand-up-down',
+  'external-link',
+  'eye',
+  'filter',
+  'globe',
+  'grid',
+  'hashtag',
+  'icon-basic',
+  'info',
+  'italic',
+  'link',
+  'list-check',
+  'list-ordered',
+  'logout',
+  'mic',
+  'money',
+  'more',
+  'news',
+  'printer',
+  'progress',
+  'question',
+  'refund',
+  'search',
+  'settings',
+  'shopping-bag',
+  'sidebar-fold',
+  'sidebar-unfold',
+  'signpost',
+  'star-filled',
+  'star-outlined',
+  'table',
+  'task-list',
+  'time',
+  'upload',
+  'upload-cloud',
+  'user',
+] as const;
+
+export type IconName = typeof ICON_NAMES[number];
+
+export const ICON_COLOR_TOKENS = {
+  primary:     'var(--icon-primary)',
+  secondary:   'var(--icon-secondary)',
+  tertiary:    'var(--icon-tertiary)',
+  white:       'var(--icon-white)',
+  success:     'var(--icon-success)',
+  warning:     'var(--icon-warning)',
+  error:       'var(--icon-error)',
+  disable:     'var(--icon-disable)',
+  accent:      'var(--icon-accent)',
+  'brand-color': 'var(--icon-brand-color)',
+} as const;
+
+export type IconColorToken = keyof typeof ICON_COLOR_TOKENS;
+
+export interface IconProps {
+  name: IconName;
+  size?: number;
+  color?: string;
+  className?: string;
+  'aria-label'?: string;
+}

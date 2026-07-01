@@ -1,0 +1,209 @@
+/* =============================================================================
+   DROPDOWN ITEM — CSS Module
+   Figma specs:
+     default type  — flex row, gap=12px, padding=6px, text px=8px, icons 20×20
+     complex type  — px=12 py=6, avatar 32×32 circle + name(14px) + position(12px)
+   States: default(transparent) · hover · focused · selected · disabled
+   ============================================================================= */
+
+/* ── Base item ───────────────────────────────────────────────────────────────── */
+.item {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: transparent;
+  color: var(--dropdown-item-default-text);
+  cursor: pointer;
+  outline: none;
+  border: none;
+  text-align: left;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.1s ease;
+}
+
+/* ── DEFAULT type layout ─────────────────────────────────────────────────────── */
+.typeDefault {
+  gap: 0;
+  padding: 6px;
+}
+
+/* ── COMPLEX type layout ─────────────────────────────────────────────────────── */
+.typeComplex {
+  padding: 6px 12px;
+}
+
+/* ── Icon slots (20×20) ─────────────────────────────────────────────────────── */
+.iconSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--dropdown-item-default-icon);
+}
+
+.iconSlot svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+/* ── Text (default type) ─────────────────────────────────────────────────────── */
+.text {
+  flex: 1 0 0;
+  min-width: 0;
+  padding-inline: 8px;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-18);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── Badge — same style as trigger badge ─────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 2px 4px;
+  border-radius: 2px;
+  background-color: var(--badge-mint-bg);
+  color: var(--badge-mint-text);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-14);
+  white-space: nowrap;
+}
+
+.badgeGray {
+  background-color: var(--container-disabled);
+  color: var(--badge-gray-text);
+}
+
+/* ── Complex type inner content ──────────────────────────────────────────────── */
+.complexContent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  overflow: hidden;
+  background-color: var(--container-tertiary);   /* gray/300 on default */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.textColumn {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.name {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-18);
+  color: var(--dropdown-item-default-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.positionText {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-14);
+  color: var(--text-tertiary);                   /* gray/800 always */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── STATE: HOVER ────────────────────────────────────────────────────────────── */
+.item:hover:not([aria-disabled="true"]):not(.selected),
+.item.stateHover {
+  background-color: var(--dropdown-item-hover-bg);
+  color: var(--dropdown-item-hover-text);
+}
+.item:hover:not([aria-disabled="true"]):not(.selected) .iconSlot,
+.item.stateHover .iconSlot {
+  color: var(--dropdown-item-hover-icon);
+}
+.item:hover:not([aria-disabled="true"]):not(.selected) .name,
+.item.stateHover .name {
+  color: var(--dropdown-item-hover-text);
+}
+.item:hover:not([aria-disabled="true"]):not(.selected) .avatar,
+.item.stateHover .avatar {
+  background-color: var(--container-secondary);
+}
+
+/* ── STATE: FOCUSED ──────────────────────────────────────────────────────────── */
+.item:focus-visible:not([aria-disabled="true"]):not(.selected),
+.item.stateFocused {
+  background-color: var(--dropdown-item-focused-bg);
+  color: var(--dropdown-item-focused-text);
+}
+.item:focus-visible:not([aria-disabled="true"]):not(.selected) .iconSlot,
+.item.stateFocused .iconSlot {
+  color: var(--dropdown-item-focused-icon);
+}
+.item:focus-visible:not([aria-disabled="true"]):not(.selected) .name,
+.item.stateFocused .name {
+  color: var(--dropdown-item-focused-text);
+}
+.item:focus-visible:not([aria-disabled="true"]):not(.selected) .avatar,
+.item.stateFocused .avatar {
+  background-color: var(--container-secondary);
+}
+
+/* ── STATE: SELECTED ─────────────────────────────────────────────────────────── */
+.item.selected {
+  background-color: var(--dropdown-item-selected-bg);
+  color: var(--dropdown-item-selected-text);
+}
+.item.selected .iconSlot {
+  color: var(--dropdown-item-selected-icon);     /* gray/900 — darker on selected */
+}
+.item.selected .name {
+  color: var(--dropdown-item-selected-text);
+}
+.item.selected .avatar {
+  background-color: var(--container-secondary);
+}
+
+/* ── STATE: DISABLED ─────────────────────────────────────────────────────────── */
+.item[aria-disabled="true"] {
+  background-color: var(--dropdown-item-disabled-bg);
+  color: var(--dropdown-item-disabled-text);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.item[aria-disabled="true"] .iconSlot {
+  color: var(--dropdown-item-disabled-icon);
+}
+.item[aria-disabled="true"] .name {
+  color: var(--dropdown-item-disabled-text);
+}
+.item[aria-disabled="true"] .avatar {
+  background-color: var(--container-secondary);
+}

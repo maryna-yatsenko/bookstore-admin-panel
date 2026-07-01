@@ -1,0 +1,48 @@
+/* =============================================================================
+   STATUS — CSS Module
+   Sizes: small · big
+   Statuses: success · warning · error · disabled
+   ============================================================================= */
+
+.status {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* ── Sizes ────────────────────────────────────────────────────────────────── */
+.small { gap: 6px; }
+.big   { gap: 8px; }
+
+/* ── Dot ──────────────────────────────────────────────────────────────────── */
+.dot {
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.dotSmall { width: 6px; height: 6px; }
+.dotBig   { width: 8px; height: 8px; }
+
+.dotSuccess { background: var(--status-success); }
+.dotWarning { background: var(--status-warning); }
+.dotError   { background: var(--status-error);   }
+.dotDisable { background: var(--status-disable); }
+
+/* ── Label ────────────────────────────────────────────────────────────────── */
+.text {
+  color: var(--text-tertiary);
+  white-space: nowrap;
+}
+
+.textSmall {
+  font-family: var(--text-caption-regular-font-family);
+  font-size:   var(--text-caption-regular-font-size);
+  font-weight: var(--text-caption-regular-font-weight);
+  line-height: var(--text-caption-regular-line-height);
+}
+
+.textBig {
+  font-family: var(--text-body-regular-font-family);
+  font-size:   var(--text-body-regular-font-size);
+  font-weight: var(--text-body-regular-font-weight);
+  line-height: var(--text-body-regular-line-height);
+}

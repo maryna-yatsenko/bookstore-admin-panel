@@ -1,0 +1,153 @@
+/* =============================================================================
+   SEGMENTED CONTROL — CSS Module
+   Reuses Tab design tokens. Segment states mirror Tab states exactly.
+   ============================================================================= */
+
+/* ── Container ──────────────────────────────────────────────────────────────── */
+.root {
+  display: inline-flex;
+  align-items: stretch;
+  height: 32px;
+  padding: 2px;
+  gap: 4px;
+  background-color: var(--container-primary);
+  border: none;
+  border-radius: var(--radius-6);
+  box-shadow:
+    1px 1px 1px 0px rgba(26, 1, 38, 0.06),
+    0px 0px 2px 0px rgba(26, 1, 38, 0.04);
+}
+
+/* ── Segment button ─────────────────────────────────────────────────────────── */
+.segment {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 100%;
+  padding: 0 6px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-4);
+  background-color: transparent;
+  color: var(--tab-default-text);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-14);
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.label {
+  padding-inline: 6px;
+}
+
+/* ── Icon slot ──────────────────────────────────────────────────────────────── */
+.iconSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--tab-default-icon);
+}
+
+.iconSlot svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+/* ── Badge ──────────────────────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 4px;
+  border-radius: 4px;
+  background-color: var(--badge-gray-bg);
+  color: var(--badge-gray-text);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-14);
+  flex-shrink: 0;
+}
+
+/* ── HOVER ──────────────────────────────────────────────────────────────────── */
+.segment:hover:not(.selected):not(:disabled),
+.segment.stateHover {
+  background-color: var(--tab-hover-bg);
+  color: var(--tab-hover-text);
+}
+.segment:hover:not(.selected):not(:disabled) .iconSlot,
+.segment.stateHover .iconSlot {
+  color: var(--tab-hover-icon);
+}
+.segment:hover:not(.selected):not(:disabled) .badge,
+.segment.stateHover .badge {
+  background-color: var(--badge-white-bg);
+  color: var(--badge-white-text);
+}
+
+/* ── FOCUSED ────────────────────────────────────────────────────────────────── */
+.segment:focus-visible:not(.selected):not(:disabled),
+.segment.stateFocused {
+  background-color: var(--tab-focused-bg);
+  color: var(--tab-focused-text);
+}
+.segment:focus-visible:not(.selected):not(:disabled) .iconSlot,
+.segment.stateFocused .iconSlot {
+  color: var(--tab-focused-icon);
+}
+.segment:focus-visible:not(.selected):not(:disabled) .badge,
+.segment.stateFocused .badge {
+  background-color: var(--badge-white-bg);
+  color: var(--badge-white-text);
+}
+.segment:focus-visible:not(.selected):not(:disabled)::before,
+.segment.stateFocused::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border: 2px solid white;
+  border-radius: 6px;
+  pointer-events: none;
+  filter: blur(0.25px);
+}
+
+/* ── SELECTED ───────────────────────────────────────────────────────────────── */
+.segment.selected {
+  background-color: var(--tab-selected-bg);
+  border-color: var(--tab-selected-stroke);
+  color: var(--tab-selected-text);
+  cursor: default;
+}
+.segment.selected .iconSlot {
+  color: var(--tab-selected-icon);
+}
+.segment.selected .badge {
+  background-color: var(--badge-white-bg);
+  color: var(--badge-white-text);
+}
+
+/* ── DISABLED ───────────────────────────────────────────────────────────────── */
+.segment:disabled,
+.segment.disabled {
+  color: var(--tab-disabled-text);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.segment:disabled .iconSlot,
+.segment.disabled .iconSlot {
+  color: var(--tab-disabled-icon);
+}

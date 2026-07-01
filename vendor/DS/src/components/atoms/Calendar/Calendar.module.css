@@ -1,0 +1,177 @@
+/* =============================================================================
+   CALENDAR — CSS Module
+   ============================================================================= */
+
+.calendar {
+  display: inline-flex;
+  flex-direction: column;
+  box-shadow:
+    1px 1px 1px rgba(26, 1, 38, 0.02),
+    0px 0px 12px rgba(26, 1, 38, 0.04);
+}
+
+/* ── Upper body ───────────────────────────────────────────────────────────── */
+.body {
+  border: 1px solid var(--stroke-tertiary);
+  border-bottom: none;
+  border-radius: var(--radius-8) var(--radius-8) 0 0;
+  padding: var(--spacing-12);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+  background: var(--container-primary);
+}
+
+/* ── Month navigation header ──────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px 0;
+  width: 230px;
+}
+
+.navBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text-primary);
+  flex-shrink: 0;
+  border-radius: var(--radius-2);
+}
+
+.navBtn:hover { color: var(--container-selected); }
+
+.monthLabel {
+  font-family: var(--text-body-semibold-font-family);
+  font-size:   var(--text-body-semibold-font-size);
+  font-weight: var(--text-body-semibold-font-weight);
+  line-height: var(--text-body-semibold-line-height);
+  color: var(--text-primary);
+  white-space: nowrap;
+  user-select: none;
+}
+
+/* ── Day grid ─────────────────────────────────────────────────────────────── */
+.grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  width: 230px;
+}
+
+.week {
+  display: flex;
+  gap: 1px;
+  height: 32px;
+}
+
+/* ── Base day cell ────────────────────────────────────────────────────────── */
+.day {
+  flex: 1 0 0;
+  min-width: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: var(--container-primary);
+  border-radius: var(--radius-4);
+  font-family: var(--text-body-regular-font-family);
+  font-size:   var(--text-body-regular-font-size);
+  font-weight: var(--text-body-regular-font-weight);
+  line-height: var(--text-body-regular-line-height);
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: center;
+  white-space: nowrap;
+  box-sizing: border-box;
+  padding: 0;
+  user-select: none;
+}
+
+/* ── Weekday header cells (Su Mo …) ──────────────────────────────────────── */
+.weekday {
+  cursor: default;
+  pointer-events: none;
+  color: var(--text-primary);
+  background: var(--container-primary);
+}
+
+/* ── Outside-month days ───────────────────────────────────────────────────── */
+.outside {
+  background: transparent;
+  color: var(--text-disable);
+  cursor: default;
+  pointer-events: none;
+}
+
+/* ── Today ────────────────────────────────────────────────────────────────── */
+.today {
+  font-weight: var(--text-body-semibold-font-weight);
+}
+
+/* ── Default hover ────────────────────────────────────────────────────────── */
+.day:not(.outside):not(.weekday):not(.selected):not(.rangeStart):not(.rangeEnd):hover {
+  background: var(--container-hover);
+}
+
+/* ── Single-mode selected ─────────────────────────────────────────────────── */
+.selected {
+  background: var(--container-selected);
+  border-radius: var(--radius-8);
+}
+
+/* ── Range start — 8px left, 4px right ───────────────────────────────────── */
+.rangeStart {
+  background: var(--container-selected);
+  border-radius: var(--radius-8) var(--radius-4) var(--radius-4) var(--radius-8);
+}
+
+/* ── Range end — 4px left, 8px right ─────────────────────────────────────── */
+.rangeEnd {
+  background: var(--container-selected);
+  border-radius: var(--radius-4) var(--radius-8) var(--radius-8) var(--radius-4);
+}
+
+/* ── In-range fill ────────────────────────────────────────────────────────── */
+.inRange {
+  background: var(--container-hover);
+  border-radius: var(--radius-4);
+}
+
+/* ── Apply button ─────────────────────────────────────────────────────────── */
+.applyBtn {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--btn-secondary-default-stroke);
+  background: var(--btn-secondary-default-bg);
+  border-radius: 0 0 var(--btn-secondary-default-corner-radius) var(--btn-secondary-default-corner-radius);
+  font-family: var(--text-button-font-family);
+  font-size:   var(--text-button-font-size);
+  font-weight: var(--text-button-font-weight);
+  line-height: var(--text-button-line-height);
+  color: var(--btn-secondary-default-text);
+  cursor: pointer;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.applyBtn:hover {
+  background: var(--btn-secondary-hover-bg);
+  border-color: var(--btn-secondary-hover-stroke);
+}
+
+.applyBtn:active {
+  background: var(--btn-secondary-selected-bg);
+  border-color: var(--btn-secondary-selected-stroke);
+}

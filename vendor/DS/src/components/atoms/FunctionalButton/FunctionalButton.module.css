@@ -1,0 +1,91 @@
+/* =============================================================================
+   FUNCTIONAL BUTTON — CSS Module
+   Vertical layout: icon on top, label below.
+   Background changes per state; no border.
+   ============================================================================= */
+
+.root {
+  --_bg:   var(--container-primary);
+  --_text: var(--text-primary);
+  --_icon: var(--text-primary);
+
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px 32px;
+  border: none;
+  border-radius: var(--space-2, 2px);
+  background-color: var(--_bg);
+  color: var(--_text);
+  cursor: pointer;
+  outline: none;
+  overflow: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+/* ── Real pseudo-class states ─────────────────────────────────────────────── */
+.root:hover:not(:disabled):not(.stateHover):not(.stateFocused):not(.stateSelected) {
+  --_bg: var(--container-hover);
+}
+
+.root:focus-visible:not(:disabled) {
+  --_bg: var(--container-focused);
+}
+
+.root:active:not(:disabled) {
+  --_bg: var(--container-selected);
+}
+
+/* ── Storybook forced visual states ──────────────────────────────────────── */
+.stateHover {
+  --_bg: var(--container-hover);
+}
+
+.stateFocused {
+  --_bg: var(--container-focused);
+}
+
+.stateSelected {
+  --_bg: var(--container-selected);
+}
+
+/* ── Disabled ─────────────────────────────────────────────────────────────── */
+.root:disabled,
+.root.disabled {
+  --_bg:   var(--container-disabled);
+  --_text: var(--text-disable);
+  --_icon: var(--text-disable);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Icon slot ────────────────────────────────────────────────────────────── */
+.iconSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  color: var(--_icon);
+  flex-shrink: 0;
+}
+
+.iconSlot svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Label ────────────────────────────────────────────────────────────────── */
+.label {
+  font-family: var(--text-button-font-family, var(--font-family-sans));
+  font-size: var(--text-button-font-size, var(--font-size-14));
+  font-weight: var(--text-button-font-weight, var(--font-weight-medium));
+  line-height: var(--text-button-line-height, var(--line-height-14));
+  color: var(--_text);
+  white-space: nowrap;
+}

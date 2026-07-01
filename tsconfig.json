@@ -17,9 +17,9 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
-      "@components/*": ["../DS/src/components/*"],
-      "@tokens/*":     ["../DS/src/tokens/*"],
-      "@styles/*":     ["../DS/src/styles/*"]
+      "@components/*": ["vendor/DS/src/components/*"],
+      "@tokens/*":     ["vendor/DS/src/tokens/*"],
+      "@styles/*":     ["vendor/DS/src/styles/*"]
     }
   },
   "include": ["src"]

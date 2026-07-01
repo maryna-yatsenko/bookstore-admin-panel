@@ -1,0 +1,159 @@
+/* =============================================================================
+   TAB — CSS Module
+   Figma specs: height=32px, padding=4px 6px, gap=4px, icon=20px
+   Selected state uses full 1px border (not just bottom).
+   Focused state has white ring via ::before pseudo-element.
+   ============================================================================= */
+
+/* ── TabGroup container ─────────────────────────────────────────────────────── */
+.tabList {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ── Tab item ───────────────────────────────────────────────────────────────── */
+.tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  height: 32px;
+  padding: 4px 6px;
+  border: 1px solid transparent;
+  border-radius: var(--tab-default-corner-radius, 4px);
+  background-color: transparent;
+  color: var(--tab-default-text);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-14);
+  white-space: nowrap;
+  cursor: pointer;
+  outline: none;
+  -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+/* ── Label (text wrapper with inner padding matching Figma px-6) ────────────── */
+.label {
+  padding-inline: 6px;
+}
+
+/* ── Icon slots ─────────────────────────────────────────────────────────────── */
+.iconSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: var(--tab-default-icon);
+}
+
+.iconSlot svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+/* ── Badge ──────────────────────────────────────────────────────────────────── */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 4px;
+  border-radius: 4px;
+  background-color: var(--badge-gray-bg);
+  color: var(--badge-gray-text);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-14);
+  flex-shrink: 0;
+}
+
+/* ── HOVER ──────────────────────────────────────────────────────────────────── */
+.tab:hover:not(.selected):not(:disabled),
+.tab.stateHover {
+  background-color: var(--tab-hover-bg);
+  color: var(--tab-hover-text);
+  border-radius: var(--tab-hover-corner-radius, 4px);
+}
+.tab:hover:not(.selected):not(:disabled) .iconSlot,
+.tab.stateHover .iconSlot {
+  color: var(--tab-hover-icon);
+}
+.tab:hover:not(.selected):not(:disabled) .badge,
+.tab.stateHover .badge {
+  background-color: var(--badge-white-bg);
+  color: var(--badge-white-text);
+}
+
+/* ── FOCUSED ────────────────────────────────────────────────────────────────── */
+.tab:focus-visible:not(.selected):not(:disabled),
+.tab.stateFocused {
+  background-color: var(--tab-focused-bg);
+  color: var(--tab-focused-text);
+  border-radius: var(--tab-focused-corner-radius, 4px);
+}
+.tab:focus-visible:not(.selected):not(:disabled) .iconSlot,
+.tab.stateFocused .iconSlot {
+  color: var(--tab-focused-icon);
+}
+.tab:focus-visible:not(.selected):not(:disabled) .badge,
+.tab.stateFocused .badge {
+  background-color: var(--badge-white-bg);
+  color: var(--badge-white-text);
+}
+
+/* White focus ring extending 4px outside the element (from Figma) */
+.tab:focus-visible::before,
+.tab.stateFocused::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border: 2px solid white;
+  border-radius: 8px;
+  pointer-events: none;
+  filter: blur(0.25px);
+}
+
+/* ── SELECTED ───────────────────────────────────────────────────────────────── */
+.tab.selected {
+  background-color: var(--tab-selected-bg);
+  border-color: var(--tab-selected-stroke);
+  color: var(--tab-selected-text);
+  border-radius: var(--tab-selected-corner-radius, 4px);
+  cursor: default;
+}
+.tab.selected .iconSlot {
+  color: var(--tab-selected-icon);
+}
+.tab.selected .badge {
+  background-color: var(--badge-white-bg);
+  color: var(--badge-white-text);
+}
+
+/* ── DISABLED ───────────────────────────────────────────────────────────────── */
+.tab:disabled,
+.tab.disabled {
+  background-color: var(--tab-disabled-bg);
+  color: var(--tab-disabled-text);
+  border-radius: var(--tab-disabled-corner-radius, 4px);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.tab:disabled .iconSlot,
+.tab.disabled .iconSlot {
+  color: var(--tab-disabled-icon);
+}
+.tab:disabled .badge,
+.tab.disabled .badge {
+  background-color: var(--badge-gray-bg);
+  color: var(--text-disable);
+}

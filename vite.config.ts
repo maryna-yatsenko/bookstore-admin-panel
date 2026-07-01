@@ -6,19 +6,14 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@components': resolve(__dirname, '../DS/src/components'),
-      '@tokens':     resolve(__dirname, '../DS/src/tokens'),
-      '@styles':     resolve(__dirname, '../DS/src/styles'),
+      '@components': resolve(__dirname, 'vendor/DS/src/components'),
+      '@tokens':     resolve(__dirname, 'vendor/DS/src/tokens'),
+      '@styles':     resolve(__dirname, 'vendor/DS/src/styles'),
     },
   },
   css: {
     modules: {
       localsConvention: 'camelCase',
-    },
-  },
-  server: {
-    fs: {
-      allow: ['..'],
     },
   },
 });

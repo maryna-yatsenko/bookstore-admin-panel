@@ -1,0 +1,107 @@
+/* =============================================================================
+   BADGE — CSS Module
+   8 colors × 2 types (outlined / filled). Colors from --badge-* semantic tokens.
+   ============================================================================= */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 4px;
+  white-space: nowrap;
+  color: var(--_text);
+  background-color: var(--_bg);
+  box-sizing: border-box;
+}
+
+/* ── Types ────────────────────────────────────────────────────────────────── */
+.outlined {
+  padding: 3px 7px;
+  border: 1px solid var(--_stroke);
+  font-family: var(--text-body-regular-font-family);
+  font-size: var(--text-body-regular-font-size);
+  font-weight: var(--text-body-regular-font-weight);
+  line-height: var(--text-body-regular-line-height);
+}
+
+.filled {
+  padding: 2px 4px;
+  font-family: var(--text-caption-regular-font-family);
+  font-size: var(--text-caption-regular-font-size);
+  font-weight: var(--text-caption-regular-font-weight);
+  line-height: var(--text-caption-regular-line-height);
+}
+
+/* White filled gets a subtle shadow instead of border */
+.whiteFilled {
+  box-shadow: 1px 1px 1px 0px rgba(26, 1, 38, 0.06), 0px 0px 2px 0px rgba(26, 1, 38, 0.04);
+}
+
+/* ── Label text ───────────────────────────────────────────────────────────── */
+.label {
+  padding: 0 4px;
+}
+
+/* ── Icon slot (12px container, 6px dot) ─────────────────────────────────── */
+.iconSlot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+.iconSlot svg {
+  display: block;
+  width: 6px;
+  height: 6px;
+}
+
+/* ── Color variants ───────────────────────────────────────────────────────── */
+.blue {
+  --_bg:     var(--badge-blue-bg);
+  --_stroke: var(--badge-blue-stroke);
+  --_text:   var(--badge-blue-text);
+}
+
+.lilac {
+  --_bg:     var(--badge-lilac-bg);
+  --_stroke: var(--badge-lilac-stroke);
+  --_text:   var(--badge-lilac-text);
+}
+
+.green {
+  --_bg:     var(--badge-green-bg);
+  --_stroke: var(--badge-green-stroke);
+  --_text:   var(--badge-green-text);
+}
+
+.orange {
+  --_bg:     var(--badge-orange-bg);
+  --_stroke: var(--badge-orange-stroke);
+  --_text:   var(--badge-orange-text);
+}
+
+.red {
+  --_bg:     var(--badge-red-bg);
+  --_stroke: var(--badge-red-stroke);
+  --_text:   var(--badge-red-text);
+}
+
+.pink {
+  --_bg:     var(--badge-pink-bg);
+  --_stroke: var(--badge-pink-stroke);
+  --_text:   var(--badge-pink-text);
+}
+
+.gray {
+  --_bg:     var(--badge-gray-bg);
+  --_stroke: var(--badge-gray-stroke);
+  --_text:   var(--badge-gray-text);
+}
+
+.white {
+  --_bg:     var(--badge-white-bg);
+  --_stroke: var(--badge-white-stroke);
+  --_text:   var(--badge-white-text);
+}

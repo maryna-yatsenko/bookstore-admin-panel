@@ -1,0 +1,201 @@
+/* =============================================================================
+   TABLE CELL — CSS Module
+   6 variants: Title, TitleCheckbox, Text, Checkbox, Badge, Actions
+   ============================================================================= */
+
+/* ── Base cell ────────────────────────────────────────────────────────────── */
+.cell {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--stroke-tertiary);
+  border-right:  1px solid var(--stroke-tertiary);
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+/* ── Title cells (header row) ─────────────────────────────────────────────── */
+.titleCell {
+  background: var(--container-secondary);
+  height: 40px;
+  padding: 12px;
+  color: var(--text-tertiary);
+}
+
+/* ── Data cells ───────────────────────────────────────────────────────────── */
+.dataCell {
+  background: var(--container-primary);
+  min-height: 48px;
+}
+
+/* ── TableCellTitle ───────────────────────────────────────────────────────── */
+.labelContainer {
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.titleLabel {
+  display: block;
+  font-family: var(--text-body-regular-font-family);
+  font-size:   var(--text-body-regular-font-size);
+  line-height: var(--text-body-regular-line-height);
+  font-weight: var(--text-body-regular-font-weight);
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sortBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: var(--text-tertiary);
+}
+
+/* ── Checkbox cell wrapper (center the checkbox horizontally) ─────────────── */
+.checkboxCell {
+  justify-content: center;
+  padding: 12px;
+}
+
+/* ── Checkbox ─────────────────────────────────────────────────────────────── */
+.checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--checkbox-default-stroke);
+  border-radius: 2.4px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.checkbox:checked {
+  border: none;
+  /* Full Figma SVG: yellow rounded rect + white checkmark polygon. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none'%3E%3Cpath d='M0.777778 0H13.2222C13.6518 0 14 0.348227 14 0.777778V13.2222C14 13.6518 13.6518 14 13.2222 14H0.777778C0.348227 14 0 13.6518 0 13.2222V0.777778C0 0.348227 0.348227 0 0.777778 0ZM6.22424 10.1111L11.724 4.61139L10.6241 3.51145L6.22424 7.91124L4.02439 5.7113L2.92444 6.81131L6.22424 10.1111Z' fill='%23FFB600'/%3E%3Cpath d='M6.22424 10.1111L11.724 4.61139L10.6241 3.51145L6.22424 7.91124L4.02439 5.7113L2.92444 6.81131L6.22424 10.1111Z' fill='white'/%3E%3C/svg%3E");
+  background-size: 100%;
+  background-color: transparent;
+}
+
+.checkbox:indeterminate {
+  border: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14' fill='none'%3E%3Cpath d='M0.777778 0H13.2222C13.6518 0 14 0.348227 14 0.777778V13.2222C14 13.6518 13.6518 14 13.2222 14H0.777778C0.348227 14 0 13.6518 0 13.2222V0.777778C0 0.348227 0.348227 0 0.777778 0Z' fill='%23FFB600'/%3E%3Crect x='3' y='6' width='8' height='2' fill='white'/%3E%3C/svg%3E");
+  background-size: 100%;
+  background-color: transparent;
+}
+
+.checkbox:hover:not(:checked):not(:indeterminate) {
+  border-color: var(--checkbox-hover-stroke);
+}
+
+/* ── TableCellText ────────────────────────────────────────────────────────── */
+.imageCell { height: auto; min-height: 48px; }
+
+.textCell { gap: 12px; }
+
+.imagePlaceholder {
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  background: var(--container-disabled);
+  flex-shrink: 0;
+}
+
+.textContent {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.titleText {
+  font-family: var(--text-body-regular-font-family);
+  font-size:   var(--text-body-regular-font-size);
+  line-height: var(--text-body-regular-line-height);
+  font-weight: var(--text-body-regular-font-weight);
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.titleTextWrap {
+  white-space: normal;
+  word-break: break-word;
+  overflow: visible;
+  text-overflow: unset;
+}
+
+.subtitleText {
+  font-family: var(--text-caption-regular-font-family);
+  font-size:   var(--text-caption-regular-font-size);
+  line-height: var(--text-caption-regular-line-height);
+  font-weight: var(--text-caption-regular-font-weight);
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+/* ── TableCellBadge ───────────────────────────────────────────────────────── */
+.badgeCell {
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  align-content: center;
+  height: auto;
+  min-height: 48px;
+}
+
+.badgeMore {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 6px;
+  background: var(--badge-gray-bg);
+  border-radius: 4px;
+  font-family: var(--text-caption-regular-font-family);
+  font-size:   var(--text-caption-regular-font-size);
+  line-height: var(--text-caption-regular-line-height);
+  font-weight: var(--text-caption-regular-font-weight);
+  color: var(--badge-gray-text);
+  white-space: nowrap;
+}
+
+/* ── TableCellActions ─────────────────────────────────────────────────────── */
+.actionsCell { gap: 8px; }
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 2px;
+  border: none;
+  background: none;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--text-tertiary);
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.actionBtn:hover {
+  background: var(--container-secondary);
+  color: var(--text-primary);
+}
+
+.actionBtn svg { display: block; }

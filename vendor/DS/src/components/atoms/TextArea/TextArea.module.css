@@ -1,0 +1,225 @@
+/* =============================================================================
+   TEXT AREA — CSS Module
+   Reuses --input-* tokens. Label row + resizable field + char counter.
+   ============================================================================= */
+
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+/* ── Label row ─────────────────────────────────────────────────────────────── */
+.labelRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.label {
+  font-family: var(--text-body-regular-font-family);
+  font-size: var(--text-body-regular-font-size);
+  font-weight: var(--text-body-regular-font-weight);
+  line-height: var(--text-body-regular-line-height);
+  color: var(--input-default-label-text);
+  flex: 1 0 0;
+}
+
+.labelHug {
+  flex: none;
+}
+
+.disclaimerIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  color: var(--icon-tertiary);
+  flex-shrink: 0;
+}
+
+.disclaimerIcon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* Disabled label */
+.root.stateDisabled .label,
+.root.stateDisabled .disclaimerIcon {
+  color: var(--input-disabled-label-text);
+}
+
+/* ── Field ─────────────────────────────────────────────────────────────────── */
+.field {
+  --_bg:     var(--input-default-bg);
+  --_stroke: var(--input-default-stroke);
+  --_text:   var(--input-default-placeholder-text);
+  --_radius: var(--input-default-corner-radius);
+
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 12px;
+  border: 1px solid var(--_stroke);
+  border-radius: var(--_radius);
+  background-color: var(--_bg);
+  box-sizing: border-box;
+  min-height: 62px;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+/* ── Real pseudo-class states ─────────────────────────────────────────────── */
+.field:hover:not(.stateDisabled) {
+  --_bg:     var(--input-hover-bg);
+  --_stroke: var(--input-hover-stroke);
+}
+
+.field:focus-within:not(.stateDisabled) {
+  --_bg:     var(--input-focused-bg);
+  --_stroke: var(--input-focused-stroke);
+  --_text:   var(--input-focused-placeholder-text);
+}
+
+.field:focus-within:not(.stateDisabled)::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 2px solid white;
+  border-radius: 8px;
+  filter: blur(0.25px);
+  pointer-events: none;
+}
+
+/* ── Forced visual states (Storybook) ─────────────────────────────────────── */
+.stateHover {
+  --_bg:     var(--input-hover-bg);
+  --_stroke: var(--input-hover-stroke);
+  --_text:   var(--input-hover-placeholder-text);
+}
+
+.stateFocused {
+  --_bg:     var(--input-focused-bg);
+  --_stroke: var(--input-focused-stroke);
+  --_text:   var(--input-focused-placeholder-text);
+}
+
+.stateFocused::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 2px solid white;
+  border-radius: 8px;
+  filter: blur(0.25px);
+  pointer-events: none;
+}
+
+.stateTyping {
+  --_bg:     var(--input-typing-bg);
+  --_stroke: var(--input-typing-stroke);
+  --_text:   var(--input-typing-placeholder-text);
+}
+
+.stateTyping::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 2px solid white;
+  border-radius: 8px;
+  filter: blur(0.25px);
+  pointer-events: none;
+}
+
+.stateEntered {
+  --_bg:     var(--input-entered-bg);
+  --_stroke: var(--input-entered-stroke);
+  --_text:   var(--input-entered-placeholder-text);
+}
+
+.stateSuccess {
+  --_bg:     var(--input-success-bg);
+  --_stroke: var(--input-success-stroke);
+  --_text:   var(--input-success-placeholder-text);
+}
+
+.stateError {
+  --_bg:     var(--input-error-bg);
+  --_stroke: var(--input-error-stroke);
+  --_text:   var(--input-error-placeholder-text);
+}
+
+.stateDisabled {
+  --_bg:     var(--input-disabled-bg);
+  --_stroke: var(--input-disabled-stroke);
+  --_text:   var(--input-disabled-placeholder-text);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Textarea element ─────────────────────────────────────────────────────── */
+.textarea {
+  flex: 1 0 0;
+  min-width: 0;
+  min-height: 20px;
+  border: none;
+  outline: none;
+  background: transparent;
+  resize: none;
+  font-family: var(--text-body-paragraph-font-family);
+  font-size: var(--text-body-paragraph-font-size);
+  font-weight: var(--text-body-paragraph-font-weight);
+  line-height: var(--text-body-paragraph-line-height);
+  color: var(--_text);
+  -webkit-font-smoothing: antialiased;
+}
+
+.textarea::placeholder {
+  color: var(--input-default-placeholder-text);
+}
+
+.textarea:disabled {
+  cursor: not-allowed;
+  color: var(--input-disabled-placeholder-text);
+}
+
+.textarea:disabled::placeholder {
+  color: var(--input-disabled-placeholder-text);
+}
+
+/* ── Character counter ────────────────────────────────────────────────────── */
+.counter {
+  display: flex;
+  justify-content: flex-end;
+  align-self: flex-end;
+  width: 100%;
+  font-family: var(--text-caption-regular-font-family);
+  font-size: var(--text-caption-regular-font-size);
+  font-weight: var(--text-caption-regular-font-weight);
+  line-height: var(--text-caption-regular-line-height);
+  color: var(--input-default-placeholder-text);
+  flex-shrink: 0;
+}
+
+.counterTyped {
+  color: var(--input-default-label-text);
+}
+
+/* ── Supporting text (success / error) ────────────────────────────────────── */
+.supportingText {
+  font-family: var(--text-caption-regular-font-family);
+  font-size: var(--text-caption-regular-font-size);
+  font-weight: var(--text-caption-regular-font-weight);
+  line-height: var(--text-caption-regular-line-height);
+  color: var(--input-default-placeholder-text);
+}
+
+.root.stateSuccess .supportingText {
+  color: var(--input-success-supporting-text);
+}
+
+.root.stateError .supportingText {
+  color: var(--input-error-supporting-text);
+}

@@ -1,0 +1,266 @@
+/* =============================================================================
+   DROPDOWN — CSS Module
+   Figma specs:
+     XL / 46px — complex: avatar(32px) + name(14px) + position(12px) + chevron(20px)
+     M  / 32px — simple:  text(14px) + optional badge + chevron(20px)
+     S  / 24px — simple:  text(14px) + chevron(16px)
+   States: default · hover · focused(::before ring) · open/active · disabled
+   ============================================================================= */
+
+/* ── Root wrapper ─────────────────────────────────────────────────────────────── */
+.root {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: stretch;
+}
+
+/* ── Trigger wrapper — gives the panel an anchor equal to the trigger's width ── */
+.triggerWrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Label above trigger (M / S only) ────────────────────────────────────────── */
+.label {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-18);
+  color: var(--text-secondary);
+}
+
+/* ── Trigger ──────────────────────────────────────────────────────────────────── */
+.trigger {
+  /* cascading local vars — overridden per state below */
+  --_dd-bg:        var(--dropdown-default-bg);
+  --_dd-stroke:    var(--dropdown-default-stroke);
+  --_dd-text:      var(--dropdown-default-text);
+  --_dd-icon:      var(--dropdown-default-icon);
+  --_dd-avatar-bg: var(--container-tertiary);
+
+  /* position:relative kept for the ::before focus ring */
+  box-sizing: border-box;
+  position: relative;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--_dd-stroke);
+  background-color: var(--_dd-bg);
+  color: var(--_dd-text);
+  border-radius: var(--dropdown-default-corner-radius);
+  cursor: pointer;
+  outline: none;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+  transition: background-color 0.1s ease, border-color 0.1s ease;
+}
+
+/* Hover */
+.trigger:hover:not(.disabled):not(.open) {
+  --_dd-bg:        var(--dropdown-hover-bg);
+  --_dd-stroke:    var(--dropdown-hover-stroke);
+  --_dd-text:      var(--dropdown-hover-text);
+  --_dd-icon:      var(--dropdown-hover-icon);
+  --_dd-avatar-bg: var(--container-secondary);
+}
+
+/* Focused (keyboard focus, panel closed) */
+.trigger:focus-visible:not(.disabled):not(.open) {
+  --_dd-bg:        var(--dropdown-focused-bg);
+  --_dd-stroke:    var(--dropdown-focused-stroke);
+  --_dd-text:      var(--dropdown-focused-text);
+  --_dd-icon:      var(--dropdown-focused-icon);
+  --_dd-avatar-bg: var(--container-secondary);
+}
+
+/* Focus ring — white border outside the trigger */
+.trigger:focus-visible:not(.disabled):not(.open)::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 2px solid white;
+  border-radius: 8px;
+  filter: blur(0.25px);
+  pointer-events: none;
+}
+
+/* Open / Active (panel visible) */
+.trigger.open {
+  --_dd-bg:        var(--dropdown-active-bg);
+  --_dd-stroke:    var(--dropdown-active-stroke);
+  --_dd-text:      var(--dropdown-active-text);
+  --_dd-icon:      var(--dropdown-active-icon);
+  --_dd-avatar-bg: var(--container-secondary);
+}
+
+/* Forced hover (Storybook state override) */
+.trigger.stateHover {
+  --_dd-bg:        var(--dropdown-hover-bg);
+  --_dd-stroke:    var(--dropdown-hover-stroke);
+  --_dd-text:      var(--dropdown-hover-text);
+  --_dd-icon:      var(--dropdown-hover-icon);
+  --_dd-avatar-bg: var(--container-secondary);
+}
+
+/* Forced focused (Storybook state override) */
+.trigger.stateFocused {
+  --_dd-bg:        var(--dropdown-focused-bg);
+  --_dd-stroke:    var(--dropdown-focused-stroke);
+  --_dd-text:      var(--dropdown-focused-text);
+  --_dd-icon:      var(--dropdown-focused-icon);
+  --_dd-avatar-bg: var(--container-secondary);
+}
+
+.trigger.stateFocused::before {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border: 2px solid white;
+  border-radius: 8px;
+  filter: blur(0.25px);
+  pointer-events: none;
+}
+
+/* Disabled */
+.trigger.disabled {
+  --_dd-bg:     var(--dropdown-disabled-bg);
+  --_dd-stroke: var(--dropdown-disabled-stroke);
+  --_dd-text:   var(--dropdown-disabled-text);
+  --_dd-icon:   var(--dropdown-disabled-icon);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Sizes ────────────────────────────────────────────────────────────────────── */
+.sizeXl {
+  padding: 8px 12px;
+  min-width: 312px;
+}
+
+.sizeM {
+  height: 32px;
+  padding: 6px 8px;
+  min-width: 120px;
+}
+
+.sizeS {
+  height: 24px;
+  padding: 4px 6px;
+  min-width: 100px;
+}
+
+/* ── XL complex content (avatar + textColumn) ─────────────────────────────────── */
+.xlContent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  overflow: hidden;
+  background-color: var(--_dd-avatar-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.textColumn {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.name {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-18);
+  color: var(--_dd-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.positionText {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-14);
+  color: var(--text-tertiary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ── M / S simple content ─────────────────────────────────────────────────────── */
+.text {
+  flex: 1 0 0;
+  min-width: 0;
+  padding-inline: 4px;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-18);
+  color: var(--_dd-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Badge inside M trigger (caption size, no border) */
+.badge {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 4px;
+  border-radius: 2px;
+  background-color: var(--badge-mint-bg);
+  color: var(--badge-mint-text);
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-14);
+  white-space: nowrap;
+}
+
+.badgeGray {
+  background-color: var(--container-disabled);
+  color: var(--badge-gray-text);
+}
+
+/* ── Chevron icon slot ────────────────────────────────────────────────────────── */
+.chevron {
+  flex-shrink: 0;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--_dd-icon);
+}
+
+/* ── Dropdown panel ───────────────────────────────────────────────────────────── */
+.panel {
+  /* positioned relative to .triggerWrap — left:0/right:0 = exact trigger width */
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 3px);
+  z-index: 100;
+  background-color: var(--container-primary);
+  border-radius: 4px;
+  padding: 4px 0;
+  overflow: hidden;
+  box-shadow:
+    1px 1px 1px 0px rgba(26, 1, 38, 0.02),
+    0px 0px 12px 0px rgba(26, 1, 38, 0.04);
+}

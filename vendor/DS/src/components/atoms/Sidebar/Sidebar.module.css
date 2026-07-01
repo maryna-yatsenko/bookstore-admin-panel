@@ -1,0 +1,203 @@
+/* =============================================================================
+   SIDEBAR — CSS Module  (256px expanded / 56px folded)
+   ============================================================================= */
+
+/* ── Root ──────────────────────────────────────────────────────────────────── */
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--container-secondary);
+  border-right: 1px solid var(--stroke-disable);
+  box-sizing: border-box;
+  height: 100%;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: width 0.2s ease;
+}
+
+.expanded { width: 256px; }
+.folded   { width: 56px; }
+
+/* ── Header ────────────────────────────────────────────────────────────────── */
+.header {
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+/* Expanded: logo + name on left, fold-btn on right */
+.headerExpanded {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  width: 100%;
+}
+
+/* Folded: only the unfold button, centered in 64px tall header */
+.headerFolded {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  height: 64px;
+  padding: 8px 12px;
+  width: 100%;
+}
+
+.logoRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.logo {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo > * { display: block; }
+
+.appName {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-bold, 700);
+  line-height: var(--line-height-20);
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.foldBtn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 2px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 4px;
+  color: var(--icon-secondary);
+  box-sizing: border-box;
+  transition: background-color 0.15s;
+}
+
+.foldBtn:hover { background-color: var(--menu-item-hover-bg); }
+
+/* ── Navigation (grows) ────────────────────────────────────────────────────── */
+.nav {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  padding: 8px 8px 0 8px;
+}
+
+.navList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Each nav item row fills the available width */
+.navItem {
+  width: 100%;
+}
+
+/* ── Footer ────────────────────────────────────────────────────────────────── */
+.footer {
+  flex-shrink: 0;
+  padding: 16px 8px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.footerList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* ── User card (expanded only) ─────────────────────────────────────────────── */
+.userCard {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background-color: var(--container-primary);
+  border: 1px solid var(--stroke-tertiary);
+  border-radius: 8px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.avatar {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 4px;
+  background-color: var(--container-disabled);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1;
+  color: var(--text-white);
+  letter-spacing: -0.02em;
+}
+
+.userInfo {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  overflow: hidden;
+}
+
+.userName {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-14);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-18);
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.userRole {
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-12);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-14);
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Divider ───────────────────────────────────────────────────────────────── */
+.divider {
+  width: 100%;
+  height: 1px;
+  background-color: var(--stroke-secondary);
+  flex-shrink: 0;
+}

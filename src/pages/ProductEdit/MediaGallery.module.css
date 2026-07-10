@@ -1,0 +1,202 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  width: 1200px;
+  max-width: calc(100vw - 40px);
+  height: 676px;
+  max-height: calc(100vh - 40px);
+  background: var(--container-primary, white);
+  border-radius: var(--corner-radius-8, 8px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    1px 1px 1px 0 rgba(26, 1, 38, 0.02),
+    0 0 12px 0 rgba(26, 1, 38, 0.04);
+}
+
+/* Header */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+  padding: 0 20px;
+  background: var(--container-primary, white);
+  border-bottom: 1px solid var(--stroke-tertiary, #f2f2f3);
+  flex-shrink: 0;
+}
+
+.title {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-title-h2-semibold-font-size, 24px);
+  font-weight: var(--text-title-h2-semibold-font-weight, 600);
+  line-height: var(--text-title-h2-semibold-line-height, 30px);
+  color: var(--text-primary, #0a0a0a);
+}
+
+/* Body */
+.body {
+  background: var(--container-secondary, #fafafa);
+  padding: 16px 20px;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  column-gap: 16px;
+  row-gap: 20px;
+}
+
+/* Image card */
+.cardWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 0;
+}
+
+.imageCard {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  background: var(--container-tertiary, #f2f2f3);
+  border: 1px solid #e5e5e5;
+  border-radius: var(--corner-radius-4, 4px);
+  overflow: visible;
+}
+
+.imageCardHovered {
+  border-color: var(--stroke-brand-color, #ffc229);
+}
+
+.cardCheckbox {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 2;
+}
+
+/* Main badge */
+.mainBadge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 3px 7px;
+  background: #fcf0ff;
+  border: 1px solid #e88afb;
+  border-radius: var(--corner-radius-4, 4px);
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.mainBadgeText {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: #ae36c7;
+  padding: 0 4px;
+}
+
+/* Hover action buttons */
+.cardActions {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  z-index: 3;
+}
+
+/* Upload placeholder */
+.uploadCard {
+  height: 100%;
+  background: var(--container-secondary, #fafafa);
+  border: 1px solid #e5e5e5;
+  border-radius: var(--corner-radius-4, 4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.uploadCard:hover {
+  border-color: var(--stroke-brand-color, #ffc229);
+}
+
+/* Footer */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px;
+  background: var(--container-primary, white);
+  border-top: 1px solid var(--stroke-tertiary, #f2f2f3);
+  flex-shrink: 0;
+}
+
+.selectionInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.selectionText {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.selectionCount {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-semibold-font-size, 14px);
+  font-weight: var(--text-body-semibold-font-weight, 600);
+  line-height: var(--text-body-semibold-line-height, 18px);
+  color: var(--text-primary, #0a0a0a);
+}
+
+.selectionTotal {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-tertiary, #747479);
+}
+
+.footerActions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.footerHidden {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.hiddenInput {
+  display: none;
+}

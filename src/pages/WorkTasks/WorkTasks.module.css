@@ -1,0 +1,1139 @@
+/* ── Page shell ────────────────────────────────────────────────────────────── */
+.layout {
+  display: flex;
+  min-height: 100vh;
+  background: var(--container-page-bg, #f2f2f3);
+  font-family: var(--font-family-sans, 'SF Pro Text', system-ui, sans-serif);
+}
+
+.sidebar {
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 100;
+}
+
+.main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  height: 100vh;
+}
+
+/* ── Header ────────────────────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--spacing-12, 12px);
+  padding: 16px var(--spacing-32, 32px) 17px;
+  background: var(--container-primary, white);
+  border-bottom: 1px solid var(--stroke-white, white);
+  box-shadow: 1px 1px 1px 0px rgba(26, 1, 38, 0.06), 0px 0px 6px 0px rgba(26, 1, 38, 0.04);
+  flex-shrink: 0;
+}
+
+.pageTitle {
+  font-family: var(--text-title-h2-semibold-font-family, var(--font-family-sans));
+  font-size: var(--text-title-h2-semibold-font-size, 24px);
+  line-height: var(--text-title-h2-semibold-line-height, 30px);
+  font-weight: var(--text-title-h2-semibold-font-weight, 600);
+  color: var(--text-primary, #0a0a0a);
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+}
+
+.headerSearch {
+  width: 400px;
+  flex-shrink: 0;
+}
+
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8, 8px);
+  flex-shrink: 0;
+}
+
+/* ── Body ──────────────────────────────────────────────────────────────────── */
+.body {
+  flex: 1;
+  padding: var(--spacing-32, 32px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-20, 20px);
+}
+
+/* ── Filter bar ────────────────────────────────────────────────────────────── */
+.filterBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-16, 16px);
+}
+
+.filterActions {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-16, 16px);
+  flex-shrink: 0;
+}
+
+.filterControls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8, 8px);
+}
+
+.dropdownExecutor { width: 140px; }
+
+.iconBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-2, 2px);
+  cursor: pointer;
+}
+.iconBtn:hover { background: var(--container-tertiary, #f2f2f3); }
+
+/* ── View toggle (grid / table icons) ─────────────────────────────────────── */
+.viewToggle {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4, 4px);
+  padding: var(--spacing-2, 2px);
+  background: var(--container-primary, white);
+  border-radius: var(--radius-6, 6px);
+  box-shadow: 1px 1px 1px 0px rgba(26, 1, 38, 0.06),
+              0px 0px 2px 0px rgba(26, 1, 38, 0.04);
+}
+
+.viewBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 6px;
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-2, 2px);
+  cursor: pointer;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  transition: background 0.12s;
+}
+.viewBtn:hover:not(.viewBtnActive) {
+  background: var(--container-secondary, #fafafa);
+}
+.viewBtnActive {
+  background: var(--component-button-transparent-selected-bg, #ffd05c);
+  border-radius: var(--radius-4, 4px);
+}
+
+/* ── Table card ────────────────────────────────────────────────────────────── */
+.tableCard {
+  background: var(--container-primary, white);
+  border-radius: var(--radius-8, 8px);
+  box-shadow: 1px 1px 1px 0px rgba(26, 1, 38, 0.06), 0px 0px 6px 0px rgba(26, 1, 38, 0.04);
+}
+
+/* Clips the grid to the card's rounded top corners without becoming a scroll
+   container — so position:sticky still works. Pagination sits outside this
+   div so its Dropdown panel is not clipped. */
+.tableArea {
+  overflow: clip;
+  border-radius: var(--radius-8, 8px) var(--radius-8, 8px) 0 0;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+/* ── Flat grid table ───────────────────────────────────────────────────────── */
+/*
+  All cells are direct children of .tableGrid so that position:sticky works
+  for frozen columns. CSS Grid sticky requires the scroll container (.tableWrap)
+  to be an ancestor of the grid, not a per-row flex/grid wrapper.
+
+  9 columns:
+  checkbox | task-name | category | priority | responsible | status | deadline | created | actions
+  44px     | flex      | 160px    | 120px    | 328px       | 200px  | 160px    | 160px   | 44px
+*/
+.tableGrid {
+  display: grid;
+  grid-template-columns: 44px 300px 160px 120px 260px 168px 160px 160px 44px;
+  /* Must be explicitly as wide as its content so position:sticky
+     on cells has a proper containing block width to stick within */
+  min-width: max-content;
+  width: 100%;
+}
+
+/* ── Sticky column classes ─────────────────────────────────────────────────── */
+/* Data rows: z-index 2 (above non-sticky cells when scrolling) */
+.stickyL1 {
+  position: sticky;
+  left: 0;
+  z-index: 2;
+}
+
+.stickyL2 {
+  position: sticky;
+  left: 44px;
+  z-index: 2;
+}
+
+.stickyR {
+  position: sticky;
+  right: 0;
+  z-index: 2;
+  border-right: none !important;
+}
+
+/* Header sticky cells: z-index 4 (above data row sticky cells too) */
+.stickyL1H {
+  position: sticky;
+  left: 0;
+  z-index: 4;
+}
+
+.stickyL2H {
+  position: sticky;
+  left: 44px;
+  z-index: 4;
+}
+
+.stickyRH {
+  position: sticky;
+  right: 0;
+  z-index: 4;
+  border-right: none !important;
+}
+
+/* Visual separator: right shadow on task-name sticky column */
+.stickyL2,
+.stickyL2H {
+  box-shadow: 3px 0 6px -2px rgba(26, 1, 38, 0.08);
+  clip-path: inset(0 -8px 0 0); /* show shadow on right only */
+}
+
+/* Visual separator: left shadow on actions sticky column */
+.stickyR,
+.stickyRH {
+  box-shadow: -3px 0 6px -2px rgba(26, 1, 38, 0.08);
+  clip-path: inset(0 0 0 -8px); /* show shadow on left only */
+}
+
+/* ── Row state helpers (applied per-cell in flat grid) ─────────────────────── */
+.cellSelected {
+  background: var(--container-secondary, #fafafa) !important;
+}
+
+/* No bottom border on cells of the last data row */
+.cellLast {
+  border-bottom: none !important;
+}
+
+/* ── Custom data cells (matches DS .cell + .dataCell pattern) ──────────────── */
+.dataCell {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--stroke-tertiary, #f2f2f3);
+  border-right:  1px solid var(--stroke-tertiary, #f2f2f3);
+  background: var(--container-primary, white);
+  min-height: 64px;
+}
+
+/* ── Actions cell ──────────────────────────────────────────────────────────── */
+.actionsCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--stroke-tertiary, #f2f2f3);
+  background: var(--container-primary, white);
+  min-height: 64px;
+}
+
+.moreBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  cursor: pointer;
+  color: var(--btn-ghost-default-icon);
+  flex-shrink: 0;
+  transition: color 0.12s ease;
+}
+.moreBtn:hover:not(.moreBtnActive) {
+  background: transparent;
+  color: var(--btn-ghost-hover-icon);
+}
+.moreBtn:focus-visible {
+  outline: none;
+  color: var(--btn-ghost-focused-icon);
+}
+.moreBtn:active,
+.moreBtnActive {
+  background: transparent;
+  color: var(--btn-ghost-selected-icon);
+}
+
+/* ── More-actions menu panel ───────────────────────────────────────────────── */
+.moreMenu {
+  position: fixed;
+  transform: translateX(-100%);
+  background: var(--container-primary, white);
+  border-radius: 4px;
+  padding: 4px 0;
+  min-width: 160px;
+  box-shadow:
+    1px 1px 1px 0px rgba(26, 1, 38, 0.02),
+    0px 0px 12px 0px rgba(26, 1, 38, 0.04);
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.moreMenuItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-primary, #0a0a0a);
+  box-sizing: border-box;
+  white-space: nowrap;
+  transition: background-color 0.1s ease;
+}
+
+.moreMenuItem:hover {
+  background: var(--dropdown-item-hover-bg, #ffe59f);
+}
+
+.moreMenuItemDanger {
+  color: var(--text-error, #e50003);
+}
+
+.moreMenuItemDanger:hover {
+  background: var(--badge-red-bg, #ffeeee);
+}
+
+/* ── Priority cell ─────────────────────────────────────────────────────────── */
+.priorityCell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.priorityDot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ── Status cell: interactive dropdown trigger — matches DS Dropdown (size M) ── */
+.statusDropdown {
+  /* cascade local vars — same pattern as DS Dropdown.module.css */
+  --_dd-bg:     var(--dropdown-default-bg);
+  --_dd-stroke: var(--dropdown-default-stroke);
+  --_dd-icon:   var(--dropdown-default-icon);
+
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 32px;
+  padding: 6px 8px;
+  background: var(--_dd-bg);
+  border: 1px solid var(--_dd-stroke);
+  border-radius: var(--dropdown-default-corner-radius, 4px);
+  box-sizing: border-box;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  outline: none;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.1s ease, border-color 0.1s ease;
+}
+
+/* Hover state — yellow tint, as in DS */
+.statusDropdown:hover:not(.statusDropdownOpen) {
+  --_dd-bg:     var(--dropdown-hover-bg);
+  --_dd-stroke: var(--dropdown-hover-stroke);
+  --_dd-icon:   var(--dropdown-hover-icon);
+}
+
+/* Open/Active state — stronger yellow, as in DS */
+.statusDropdownOpen {
+  --_dd-bg:     var(--dropdown-active-bg);
+  --_dd-stroke: var(--dropdown-active-stroke);
+  --_dd-icon:   var(--dropdown-active-icon);
+}
+
+.statusBadgeWrap {
+  flex: 1 0 0;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* border-radius: 2px per Figma (not DS Badge 4px) */
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px 8px;
+  border-radius: 2px;
+  font-family: var(--font-family-sans);
+  font-size:   12px;
+  line-height: 14px;
+  white-space: nowrap;
+}
+
+/* Chevron — inherits --_dd-icon from parent trigger */
+.statusArrow {
+  flex-shrink: 0;
+  color: var(--_dd-icon);
+  transition: transform 0.15s ease;
+}
+.statusArrowOpen {
+  transform: rotate(180deg);
+}
+
+/* ── Status dropdown panel — matches DS Dropdown panel ────────────────────── */
+.statusMenu {
+  position: fixed;
+  background: var(--container-primary, white);
+  border-radius: 4px;
+  padding: 4px 0;
+  /* DS panel shadow (no border) */
+  box-shadow:
+    1px 1px 1px 0px rgba(26, 1, 38, 0.02),
+    0px 0px 12px 0px rgba(26, 1, 38, 0.04);
+  overflow: hidden;
+  z-index: 9999;
+}
+
+/* ── Status menu items — matches DS DropdownItem (typeDefault) ────────────── */
+.statusMenuItem {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  box-sizing: border-box;
+  color: var(--dropdown-item-default-text);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.1s ease;
+}
+
+/* Hover: yellow-400 — matches DS dropdown-item-hover-bg */
+.statusMenuItem:hover:not(.statusMenuItemSelected) {
+  background: var(--dropdown-item-hover-bg);
+  color: var(--dropdown-item-hover-text);
+}
+
+/* Selected: yellow-500 — matches DS dropdown-item-selected-bg */
+.statusMenuItemSelected {
+  background: var(--dropdown-item-selected-bg);
+  color: var(--dropdown-item-selected-text);
+}
+
+/* ── Text helpers ──────────────────────────────────────────────────────────── */
+.cellText {
+  font-family: var(--text-body-regular-font-family);
+  font-size:   var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-tertiary, #747479);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.cellTextMuted {
+  font-family: var(--text-body-regular-font-family);
+  font-size:   var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-tertiary, #747479);
+  white-space: nowrap;
+}
+
+/* ── Pagination ────────────────────────────────────────────────────────────── */
+.paginationBar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-16, 16px);
+  padding: var(--spacing-12, 12px) var(--spacing-16, 16px);
+  border-top: 1px solid var(--stroke-tertiary, #f2f2f3);
+}
+
+.paginationLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12, 12px);
+}
+
+.pageSizeDropdown {
+  width: 72px;
+  flex-shrink: 0;
+}
+/* DS size-S trigger has min-width:100px — override so it respects the 72px wrapper */
+.pageSizeDropdown :global([class*="trigger"]) {
+  min-width: 0;
+  width: 100%;
+}
+
+.totalText {
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-secondary, #454548);
+  white-space: nowrap;
+}
+
+.paginationRight {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pageBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  padding: 0 6px;
+  border: 1px solid var(--stroke-tertiary, #f2f2f3);
+  border-radius: var(--radius-4, 4px);
+  background: var(--container-primary, white);
+  color: var(--text-secondary, #454548);
+  font-size: var(--text-body-regular-font-size, 14px);
+  font-family: var(--font-family-sans);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.pageBtn:hover:not(:disabled):not(.pageBtnActive) {
+  background: var(--container-secondary, #fafafa);
+  color: var(--text-primary, #0a0a0a);
+}
+
+.pageBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.pageBtnActive {
+  background: var(--button-primary-default-bg, #ffb600);
+  border-color: var(--button-primary-default-bg, #ffb600);
+  color: var(--button-primary-default-text, #1a0126);
+  font-weight: 600;
+  cursor: default;
+}
+
+.pageDots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 32px;
+  height: 32px;
+  color: var(--text-tertiary, #747479);
+  font-size: var(--text-body-regular-font-size, 14px);
+}
+
+/* ══ Bulk action bar (floating, bottom-centered) ═══════════════════════════ */
+.bulkBar {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  padding: 8px 8px 8px 12px;
+  background: var(--container-primary, white);
+  border-radius: var(--radius-6, 6px);
+  box-shadow: 1px 1px 1px 0px rgba(26, 1, 38, 0.06), 0px 0px 2px 0px rgba(26, 1, 38, 0.04);
+  z-index: 60;
+  white-space: nowrap;
+}
+
+.bulkSelectionInfo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.bulkCloseBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 2px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text-secondary, #454548);
+  border-radius: var(--radius-4, 4px);
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+.bulkCloseBtn:hover {
+  background: var(--container-secondary, #fafafa);
+}
+
+.bulkCount {
+  font-family: var(--font-family-sans);
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-tertiary, #747479);
+  white-space: nowrap;
+}
+.bulkCountNum {
+  font-weight: var(--text-body-semibold-font-weight, 600);
+  color: var(--text-primary, #0a0a0a);
+}
+
+.bulkActionContainer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+}
+
+.bulkActionGroup {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+.bulkDivider {
+  align-self: stretch;
+  width: 1px;
+  background: var(--stroke-tertiary, #f2f2f3);
+  flex-shrink: 0;
+}
+
+/* ══ Kanban board (grid view) ═══════════════════════════════════════════════ */
+.board {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-8, 8px);
+  width: 100%;
+}
+
+.boardColumn {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-width: 0;
+  gap: var(--spacing-16, 16px);
+  padding: var(--spacing-8, 8px);
+  background: var(--container-secondary, #fafafa);
+  border-radius: var(--radius-8, 8px);
+  box-shadow: 1px 1px 1px 0px rgba(26, 1, 38, 0.06), 0px 0px 2px 0px rgba(26, 1, 38, 0.04);
+  transition: background 0.12s;
+}
+
+/* Archive view: no per-stage header, so lay the cards out as a 4-across
+   grid instead of one long single-file column. */
+.boardColumnGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  align-content: start;
+  width: 100%;
+}
+
+.boardColumnDragOver {
+  background: var(--container-tertiary, #f2f2f3);
+  outline: 1.5px dashed var(--stroke-secondary, #b6b6b9);
+  outline-offset: -1px;
+}
+
+.boardColumnHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8, 8px);
+  padding: 0 var(--spacing-4, 4px);
+  /* Cards and the drag placeholder can get a negative `order` (to sit before
+     the first card), so pin the header even lower to guarantee it always
+     stays the very first thing in the column, never pushed down. */
+  order: -9999;
+  flex-shrink: 0;
+}
+
+.boardColumnTitle {
+  flex: 1 0 0;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--text-title-h3-regular-font-family, var(--font-family-sans));
+  font-size: var(--text-title-h3-regular-font-size, 16px);
+  line-height: var(--text-title-h3-regular-line-height, 20px);
+  font-weight: var(--text-title-h3-regular-font-weight, 400);
+  color: var(--text-primary, #0a0a0a);
+}
+
+.boardCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16, 16px);
+  width: 100%;
+  padding: var(--spacing-12, 12px);
+  background: var(--container-primary, white);
+  border: 1px solid var(--stroke-tertiary, #f2f2f3);
+  border-left: 2px solid transparent;
+  border-radius: var(--radius-4, 4px);
+  box-sizing: border-box;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  transition: opacity 0.15s ease;
+}
+
+.boardCardDragging {
+  opacity: 0.4;
+  cursor: grabbing;
+}
+
+.boardCardGhost {
+  position: fixed;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8, 8px);
+  max-width: 260px;
+  padding: 8px 12px;
+  background: var(--container-primary, white);
+  border-radius: var(--radius-4, 4px);
+  box-shadow: 0px 4px 24px 0px rgba(26, 1, 38, 0.18);
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.boardCardGhostTitle {
+  font-family: var(--text-body-semibold-font-family, var(--font-family-sans));
+  font-size: var(--text-body-semibold-font-size, 14px);
+  font-weight: var(--text-body-semibold-font-weight, 600);
+  color: var(--text-primary, #0a0a0a);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.boardCardPlaceholder {
+  width: 100%;
+  border-radius: var(--radius-4, 4px);
+  background: var(--container-tertiary, #f2f2f3);
+  border: 1.5px dashed var(--stroke-secondary, #b6b6b9);
+  box-sizing: border-box;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: height 0.2s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.boardCardTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.boardCardMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12, 12px);
+  width: 100%;
+}
+
+.boardCardDeadline {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4, 4px);
+}
+
+.boardCardDeadlineText {
+  font-family: var(--text-caption-regular-font-family, var(--font-family-sans));
+  font-size: var(--text-caption-regular-font-size, 12px);
+  line-height: var(--text-caption-regular-line-height, 14px);
+  color: var(--text-secondary, #454548);
+  white-space: nowrap;
+}
+.boardCardDeadlineOverdue {
+  color: var(--text-error, #e50003);
+}
+
+.boardCardBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8, 8px);
+  width: 100%;
+}
+
+.boardCardTitle {
+  margin: 0;
+  font-family: var(--text-body-semibold-font-family, var(--font-family-sans));
+  font-size: var(--text-body-semibold-font-size, 14px);
+  line-height: var(--text-body-semibold-line-height, 18px);
+  font-weight: var(--text-body-semibold-font-weight, 600);
+  color: var(--text-primary, #0a0a0a);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.boardCardSubtitle {
+  margin: 0;
+  font-family: var(--text-body-paragraph-font-family, var(--font-family-sans));
+  font-size: var(--text-body-paragraph-font-size, 14px);
+  line-height: var(--text-body-paragraph-line-height, 20px);
+  font-weight: var(--text-body-paragraph-font-weight, 400);
+  color: var(--text-secondary, #454548);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.boardCardFooter {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-6, 6px);
+}
+
+.boardCardAvatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #d1d5dc;
+  border: 1.5px solid var(--stroke-white, white);
+  flex-shrink: 0;
+}
+
+.boardCardResponsible {
+  font-family: var(--font-family-sans);
+  font-size: 14px;
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-primary, #0a0a0a);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ══ Create task drawer ═════════════════════════════════════════════════════ */
+.createTaskBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 25, 27, 0.12);
+  backdrop-filter: blur(2px);
+  z-index: 200;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.createTaskPanel {
+  display: flex;
+  flex-direction: column;
+  width: 600px;
+  max-width: 100vw;
+  height: 100vh;
+  background: var(--container-primary, white);
+  overflow: hidden;
+}
+
+.createTaskHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-12, 12px);
+  padding: var(--spacing-16, 16px);
+  background: var(--container-primary, white);
+  border-bottom: 1px solid var(--stroke-tertiary, #f2f2f3);
+  flex-shrink: 0;
+}
+
+.createTaskHeaderMain {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-24, 24px);
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.createTaskAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-4, 4px);
+  background: var(--container-page-bg, #f2f2f3);
+  flex-shrink: 0;
+}
+
+.createTaskHeaderText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--spacing-4, 4px);
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.createTaskTitle {
+  margin: 0;
+  font-family: var(--text-title-h2-semibold-font-family, var(--font-family-sans));
+  font-size: var(--text-title-h2-semibold-font-size, 24px);
+  line-height: var(--text-title-h2-semibold-line-height, 30px);
+  font-weight: var(--text-title-h2-semibold-font-weight, 600);
+  color: var(--text-primary, #0a0a0a);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.createTaskTitleTooltip {
+  display: block;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.createTaskSubtitle {
+  margin: 0;
+  font-family: var(--text-body-regular-font-family, var(--font-family-sans));
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-tertiary, #747479);
+}
+
+.createTaskCloseBtn {
+  align-self: flex-start !important;
+  flex-shrink: 0;
+}
+
+.createTaskBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24, 24px);
+  flex: 1 0 0;
+  min-height: 0;
+  padding: var(--spacing-32, 32px) var(--spacing-16, 16px);
+  background: var(--container-secondary, #fafafa);
+  overflow-y: auto;
+}
+
+.createTaskField {
+  width: 100%;
+}
+
+.createTaskGrid2 {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-16, 16px);
+  width: 100%;
+}
+
+.createTaskResponsible {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8, 8px);
+  width: 100%;
+}
+
+.createTaskLabel {
+  font-family: var(--text-body-regular-font-family, var(--font-family-sans));
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--input-typing-label-text, #454548);
+}
+
+.createTaskPeopleGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--spacing-16, 16px);
+  row-gap: var(--spacing-8, 8px);
+  width: 100%;
+}
+
+.createTaskFooter {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--spacing-12, 12px);
+  padding: var(--spacing-16, 16px);
+  background: var(--container-primary, white);
+  border-top: 1px solid var(--stroke-tertiary, #f2f2f3);
+  flex-shrink: 0;
+}
+
+/* ── Activity history ─────────────────────────────────────────────────────── */
+.activityHistory {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16, 16px);
+  width: 100%;
+}
+
+.activityItem {
+  display: flex;
+  gap: var(--spacing-16, 16px);
+  align-items: flex-start;
+  width: 100%;
+}
+
+.activityStep {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+.activityStepDot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 3px;
+  box-sizing: border-box;
+  border-radius: 1000px;
+  border: 1px dashed var(--stepper-default-stroke, #ffc229);
+  background: var(--stepper-default-bg, #fffcf5);
+  flex-shrink: 0;
+}
+
+.activityStepLine {
+  flex: 1 0 0;
+  width: 1px;
+  min-height: 20px;
+  background: var(--stroke-secondary, #dadadc);
+}
+
+.activityDetails {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--spacing-20, 20px);
+  flex: 1 0 0;
+  min-width: 0;
+  width: 100%;
+}
+
+.activityRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12, 12px);
+  width: 100%;
+}
+
+.activityMain {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4, 4px);
+  flex: 1 0 0;
+  min-width: 0;
+  justify-content: center;
+}
+
+.activityTitle {
+  margin: 0;
+  font-family: var(--text-title-h3-regular-font-family, var(--font-family-sans));
+  font-size: 16px;
+  line-height: var(--text-title-h3-regular-line-height, 20px);
+  color: var(--text-primary, #0a0a0a);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.activityMeta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4, 4px);
+  width: 100%;
+}
+
+.activityMetaLabel {
+  font-family: var(--text-body-regular-font-family, var(--font-family-sans));
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-tertiary, #747479);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.activityMetaText {
+  font-family: var(--text-body-regular-font-family, var(--font-family-sans));
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-primary, #0a0a0a);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.activityDate {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: var(--spacing-4, 4px);
+  flex-shrink: 0;
+  font-family: var(--text-body-regular-font-family, var(--font-family-sans));
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-primary, #0a0a0a);
+  white-space: nowrap;
+}
+
+.activityTime {
+  color: var(--text-tertiary, #747479);
+}
+
+.deadlineCalendarToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}

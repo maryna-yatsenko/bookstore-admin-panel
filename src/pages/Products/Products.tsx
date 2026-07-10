@@ -495,7 +495,12 @@ export function Products({ onNavigate }: { onNavigate?: (page: string) => void }
                 <TableCellText titleText={product.price} />
                 <TableCellText titleText={product.category} />
                 <div className={styles.actionsCell}>
-                  <button className={styles.moreBtn} type="button" aria-label="More actions">
+                  <button
+                    className={styles.moreBtn}
+                    type="button"
+                    aria-label="More actions"
+                    onClick={() => onNavigate?.('product-edit')}
+                  >
                     <ThreeDotsIcon />
                   </button>
                 </div>

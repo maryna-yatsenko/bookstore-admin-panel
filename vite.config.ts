@@ -4,6 +4,10 @@ import { resolve } from 'path';
 
 export default defineConfig({
   base: process.env.GITHUB_ACTIONS ? '/bookstore-admin-panel/' : '/',
+  server: {
+    port: process.env.PORT ? parseInt(process.env.PORT) : 5176,
+    strictPort: false,
+  },
   plugins: [react()],
   resolve: {
     alias: {

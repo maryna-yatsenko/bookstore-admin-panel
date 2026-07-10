@@ -1,4 +1,4 @@
-import type { CSSProperties } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import type { BadgeColor } from '../Badge/Badge.types';
 import type { StatusStatus } from '../Status/Status.types';
 
@@ -30,9 +30,12 @@ export interface TableCellTextProps {
   statusText?:   string;
   statusType?:   StatusStatus;
   image?:        boolean;
-  titleWrap?:    boolean;
-  className?:    string;
-  style?:        CSSProperties;
+  titleWrap?:      boolean;
+  title?:          string;
+  /** true — auto tooltip from titleText + subtitleText; or custom content */
+  tooltipContent?: boolean | ReactNode;
+  className?:      string;
+  style?:          CSSProperties;
 }
 
 export interface TableCellCheckboxProps {
@@ -46,6 +49,10 @@ export interface TableCellCheckboxProps {
 export interface TableCellBadgeProps {
   badges?:         string[];
   getBadgeColor?:  (label: string, index: number) => BadgeColor;
+  /** Icon rendered at the start of each badge (e.g. a status check mark, a "#" for tags) */
+  getBadgeIcon?:   (label: string, index: number) => ReactNode;
+  /** 'outlined' (default) or 'filled' — filled matches the colored-pill badges used for status/tags */
+  badgeType?:      'outlined' | 'filled';
   className?:      string;
   style?:          CSSProperties;
 }

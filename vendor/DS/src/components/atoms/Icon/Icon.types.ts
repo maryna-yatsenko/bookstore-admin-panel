@@ -29,6 +29,7 @@ export const ICON_NAMES = [
   'expand-up-down',
   'external-link',
   'eye',
+  'eye-view',
   'filter',
   'globe',
   'grid',

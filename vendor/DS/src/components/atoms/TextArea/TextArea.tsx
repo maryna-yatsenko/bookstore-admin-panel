@@ -54,15 +54,20 @@ export function TextArea({
       )}
 
       <div className={cx(styles.field, state !== 'default' && STATE_CLASS[state])}>
-        <textarea
-          className={styles.textarea}
-          value={value}
-          onChange={(e) => onChange?.(e.target.value)}
-          placeholder={placeholder}
-          disabled={effectiveDisabled}
-          maxLength={maxChars}
-          {...rest}
-        />
+        {/* Auto-grow: the textarea and an invisible mirror of its content
+            share the same grid cell, so the cell (and the visible textarea)
+            grow to fit the text — no internal scrollbar needed. */}
+        <div className={styles.growWrap} data-replicated-value={value}>
+          <textarea
+            className={styles.textarea}
+            value={value}
+            onChange={(e) => onChange?.(e.target.value)}
+            placeholder={placeholder}
+            disabled={effectiveDisabled}
+            maxLength={maxChars}
+            {...rest}
+          />
+        </div>
         <div className={styles.counter}>
           {charCount > 0 ? (
             <>

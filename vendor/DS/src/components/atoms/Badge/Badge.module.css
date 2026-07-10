@@ -51,10 +51,11 @@
   flex-shrink: 0;
 }
 
+/* Default dot icon sizes itself inline (width/height="6"); custom icons
+   passed via the `icon` prop control their own size and just get centered
+   in this 12px slot. */
 .iconSlot svg {
   display: block;
-  width: 6px;
-  height: 6px;
 }
 
 /* ── Color variants ───────────────────────────────────────────────────────── */

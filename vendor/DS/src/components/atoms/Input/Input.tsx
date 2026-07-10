@@ -32,6 +32,7 @@ export function Input({
   supportingText = 'supporting text',
   state = 'default',
   disabled,
+  required,
   className,
   ...rest
 }: InputProps) {
@@ -48,7 +49,10 @@ export function Input({
     >
       {label && (
         <div className={styles.labelRow}>
-          <span className={cx(styles.label, disclaimer && styles.labelHug)}>{labelText}</span>
+          <span className={cx(styles.label, disclaimer && styles.labelHug)}>
+            {labelText}
+            {required && <span className={styles.requiredMark}> *</span>}
+          </span>
           {disclaimer && (
             <span className={styles.disclaimerIcon}>
               <InfoIcon />
@@ -70,6 +74,7 @@ export function Input({
           onChange={(e) => onChange?.(e.target.value)}
           placeholder={placeholder}
           disabled={effectiveDisabled}
+          required={required}
           {...rest}
         />
         {trailingIcon && (

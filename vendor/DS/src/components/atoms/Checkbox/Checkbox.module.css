@@ -32,8 +32,9 @@
   background: var(--state-overlay-hover);
 }
 
-/* focus — :focus-within matches when the hidden input is keyboard-focused */
-.wrapper:not(.disabled):focus-within .hitArea {
+/* focus — :focus-visible only (keyboard nav), so a mouse click doesn't leave
+   the hover-like background stuck on after the pointer moves away */
+.wrapper:not(.disabled) .hitArea:has(.input:focus-visible) {
   background: var(--state-overlay-focused);
 }
 
@@ -79,7 +80,7 @@
   border-color: var(--checkbox-hover-stroke);
 }
 
-.wrapper:not(.disabled):focus-within .box {
+.wrapper:not(.disabled) .input:focus-visible ~ .box {
   border-color: var(--checkbox-focused-stroke);
 }
 
@@ -94,7 +95,7 @@
   border-color: var(--checkbox-hover-bg);
 }
 
-.wrapper:not(.disabled):focus-within .boxChecked {
+.wrapper:not(.disabled) .input:focus-visible ~ .boxChecked {
   background: var(--checkbox-focused-bg);
   border-color: var(--checkbox-focused-bg);
 }
@@ -110,7 +111,7 @@
   border-color: var(--checkbox-hover-bg);
 }
 
-.wrapper:not(.disabled):focus-within .boxIndeterminate {
+.wrapper:not(.disabled) .input:focus-visible ~ .boxIndeterminate {
   background: var(--checkbox-focused-bg);
   border-color: var(--checkbox-focused-bg);
 }

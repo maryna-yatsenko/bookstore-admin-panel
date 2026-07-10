@@ -83,3 +83,27 @@
   display: block;
   flex-shrink: 0;
 }
+
+/* ── Portal mode: position:fixed, overrides absolute placement ── */
+.portalBubble {
+  position: fixed;
+  z-index: 9999;
+  /* remove default absolute positioning from position classes */
+  bottom: unset;
+  top: unset;
+  left: unset;
+  right: unset;
+}
+
+/* top/bottom: anchor point is horizontally centered on the trigger, so the
+   bubble needs horizontal centering. left/right: anchor point is already the
+   vertical center of the trigger, so the bubble needs vertical centering. */
+.portalBubble.top,
+.portalBubble.bottom {
+  transform: translateX(-50%);
+}
+
+.portalBubble.left,
+.portalBubble.right {
+  transform: translateY(-50%);
+}

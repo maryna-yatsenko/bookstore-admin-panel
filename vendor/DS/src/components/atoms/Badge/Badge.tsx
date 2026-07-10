@@ -4,7 +4,7 @@ import styles from './Badge.module.css';
 const cx = (...c: (string | undefined | false | null)[]) => c.filter(Boolean).join(' ');
 
 const DotIcon = () => (
-  <svg viewBox="0 0 6 6" fill="none" aria-hidden="true">
+  <svg width="6" height="6" viewBox="0 0 6 6" fill="none" aria-hidden="true">
     <circle cx="3" cy="3" r="3" fill="currentColor" />
   </svg>
 );
@@ -26,6 +26,7 @@ export function Badge({
   labelText = 'label',
   leftIcon = false,
   rightIcon = false,
+  icon,
   className,
 }: BadgeProps) {
   return (
@@ -40,13 +41,13 @@ export function Badge({
     >
       {leftIcon && (
         <span className={styles.iconSlot} aria-hidden="true">
-          <DotIcon />
+          {icon ?? <DotIcon />}
         </span>
       )}
       <span className={styles.label}>{labelText}</span>
       {rightIcon && (
         <span className={styles.iconSlot} aria-hidden="true">
-          <DotIcon />
+          {icon ?? <DotIcon />}
         </span>
       )}
     </span>

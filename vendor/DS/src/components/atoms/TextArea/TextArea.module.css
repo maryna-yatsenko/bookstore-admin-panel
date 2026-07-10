@@ -159,19 +159,41 @@
   pointer-events: none;
 }
 
-/* ── Textarea element ─────────────────────────────────────────────────────── */
-.textarea {
-  flex: 1 0 0;
-  min-width: 0;
-  min-height: 20px;
-  border: none;
-  outline: none;
-  background: transparent;
-  resize: none;
+/* ── Auto-grow wrapper ─────────────────────────────────────────────────────
+   Textarea and its invisible text mirror (::after) occupy the same grid
+   cell; the mirror's height drives the cell's height, so the textarea grows
+   with its content instead of scrolling internally. */
+.growWrap {
+  display: grid;
+  width: 100%;
+}
+
+.growWrap::after {
+  content: attr(data-replicated-value) ' ';
+  white-space: pre-wrap;
+  word-break: break-word;
+  visibility: hidden;
+}
+
+.growWrap > textarea,
+.growWrap::after {
+  grid-area: 1 / 1 / 2 / 2;
   font-family: var(--text-body-paragraph-font-family);
   font-size: var(--text-body-paragraph-font-size);
   font-weight: var(--text-body-paragraph-font-weight);
   line-height: var(--text-body-paragraph-line-height);
+  padding: 0;
+  border: none;
+}
+
+/* ── Textarea element ─────────────────────────────────────────────────────── */
+.textarea {
+  min-width: 0;
+  min-height: 20px;
+  outline: none;
+  background: transparent;
+  resize: none;
+  overflow: hidden;
   color: var(--_text);
   -webkit-font-smoothing: antialiased;
 }

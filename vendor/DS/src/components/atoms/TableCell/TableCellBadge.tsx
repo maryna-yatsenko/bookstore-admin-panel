@@ -9,6 +9,8 @@ const MAX_VISIBLE = 2;
 export function TableCellBadge({
   badges = ['label'],
   getBadgeColor,
+  getBadgeIcon,
+  badgeType = 'outlined',
   className,
   style,
 }: TableCellBadgeProps) {
@@ -17,14 +19,19 @@ export function TableCellBadge({
 
   return (
     <div className={cx(styles.cell, styles.dataCell, styles.badgeCell, className)} style={style}>
-      {visible.map((label, i) => (
-        <Badge
-          key={i}
-          color={getBadgeColor ? getBadgeColor(label, i) : 'gray'}
-          type="outlined"
-          labelText={label}
-        />
-      ))}
+      {visible.map((label, i) => {
+        const icon = getBadgeIcon?.(label, i);
+        return (
+          <Badge
+            key={i}
+            color={getBadgeColor ? getBadgeColor(label, i) : 'gray'}
+            type={badgeType}
+            labelText={label}
+            leftIcon={Boolean(icon)}
+            icon={icon}
+          />
+        );
+      })}
       {overflow > 0 && (
         <span className={styles.badgeMore}>+{overflow}</span>
       )}

@@ -199,3 +199,30 @@
 }
 
 .actionBtn svg { display: block; }
+
+/* ── Tooltip wrapper inside text cell ─────────────────────────────────────── */
+.tooltipWrap {
+  display: block;
+  width: 100%;
+  min-width: 0;
+}
+
+/* ── Tooltip content: full title + subtitle (no truncation) ──────────────── */
+.tooltipTitle {
+  display: block;
+  font-family: var(--text-body-regular-font-family);
+  font-size:   var(--text-body-regular-font-size);
+  line-height: var(--text-body-regular-line-height);
+  font-weight: var(--text-body-regular-font-weight);
+  color: var(--text-primary);
+}
+
+.tooltipSubtitle {
+  display: block;
+  margin-top: var(--spacing-6, 6px);
+  font-family: var(--text-caption-regular-font-family);
+  font-size:   var(--text-caption-regular-font-size);
+  line-height: var(--text-caption-regular-line-height);
+  font-weight: var(--text-caption-regular-font-weight);
+  color: var(--text-tertiary);
+}

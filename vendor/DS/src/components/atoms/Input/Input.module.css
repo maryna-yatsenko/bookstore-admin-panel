@@ -32,6 +32,10 @@
   flex: none;
 }
 
+.requiredMark {
+  color: var(--text-error, #e50003);
+}
+
 .root.stateDisabled .label,
 .root.stateDisabled .disclaimerIcon {
   color: var(--input-disabled-label-text);

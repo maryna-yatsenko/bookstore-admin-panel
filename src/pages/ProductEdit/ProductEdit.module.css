@@ -765,6 +765,7 @@
 }
 .variantsCellName  { /* 300px via grid */ }
 .variantsCellSku   { /* flex via grid */ }
+.variantsCellSkuIcon { flex-shrink: 0; }
 .variantsCellPrice { /* flex via grid */ }
 .variantsCellStock { /* flex via grid */ }
 

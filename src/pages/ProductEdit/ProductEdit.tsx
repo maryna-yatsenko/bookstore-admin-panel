@@ -207,7 +207,7 @@ function VariantsTable({
         </div>
         <div className={cx(styles.variantsCellSku, styles.variantsHeaderCell)}>
           <span className={styles.variantsHeaderText}>SKU</span>
-          <Icon name="ai" size={16} color="var(--icon-accent)" style={{ flexShrink: 0 }} />
+          <Icon name="ai" size={16} color="var(--icon-accent)" className={styles.variantsCellSkuIcon} />
         </div>
         <div className={cx(styles.variantsCellPrice, styles.variantsHeaderCell)}>
           <span className={styles.variantsHeaderText}>Price ₴</span>

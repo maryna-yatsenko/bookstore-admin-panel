@@ -4,6 +4,7 @@ import { Input } from '@components/atoms/Input';
 import { Checkbox } from '@components/atoms/Checkbox/Checkbox';
 import { Button } from '@components/atoms/Button';
 import { Icon } from '@components/atoms/Icon';
+import { BookStoreLogo } from '@components/atoms/Sidebar/BookStoreLogo';
 import styles from './Login.module.css';
 
 const GoogleLogo = () => (
@@ -42,9 +43,14 @@ export function Login({ onNavigate }: { onNavigate?: (page: string) => void } = 
   return (
     <div className={styles.page}>
       <div className={styles.card}>
-        <div className={styles.header}>
-          <h1 className={styles.title}>Log in</h1>
-          <p className={styles.subtitle}>Enter your credentials to access the admin panel</p>
+        <div className={styles.logoBlock}>
+          <div className={styles.logoWrap}>
+            <BookStoreLogo size={64} />
+          </div>
+          <div className={styles.header}>
+            <h1 className={styles.title}>Log in to Book Store</h1>
+            <p className={styles.subtitle}>Enter your credentials to access the admin panel</p>
+          </div>
         </div>
 
         <form className={styles.form} onSubmit={handleSubmit}>

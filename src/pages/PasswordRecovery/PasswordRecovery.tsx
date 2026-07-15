@@ -19,7 +19,7 @@ export function PasswordRecovery({ onNavigate }: { onNavigate?: (page: string) =
         <Button
           variant="ghost"
           size="s"
-          leftIcon={<Icon name="arrow-left" size={20} />}
+          leftIcon={<Icon name="arrow-left-long" size={20} />}
           type="button"
           className={styles.backBtn}
           onClick={() => onNavigate?.('login')}

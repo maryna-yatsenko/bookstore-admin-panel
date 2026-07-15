@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useLayoutEffect } from 'react';
-import type { ReactNode } from 'react';
+import type { ReactNode, KeyboardEvent, RefObject } from 'react';
+import { createPortal } from 'react-dom';
 import { Sidebar } from '@components/atoms/Sidebar';
 import { BookStoreLogo } from '@components/atoms/Sidebar/BookStoreLogo';
 import { Button } from '@components/atoms/Button';
@@ -10,6 +11,11 @@ import { Dropdown } from '@components/atoms/Dropdown';
 import { Badge } from '@components/atoms/Badge';
 import { Checkbox } from '@components/atoms/Checkbox/Checkbox';
 import { Tooltip } from '@components/atoms/Tooltip/Tooltip';
+import { Input } from '@components/atoms/Input';
+import { TextArea } from '@components/atoms/TextArea';
+import { TabGroup, TabItem } from '@components/atoms/Tab';
+import { RadioButton } from '@components/atoms/RadioButton';
+import { Datepicker } from '@components/atoms/Datepicker';
 import { TableCellTitleCheckbox } from '@components/atoms/TableCell/TableCellTitleCheckbox';
 import { TableCellTitle } from '@components/atoms/TableCell/TableCellTitle';
 import { TableCellCheckbox } from '@components/atoms/TableCell/TableCellCheckbox';
@@ -17,6 +23,7 @@ import { TableCellText } from '@components/atoms/TableCell/TableCellText';
 import { TableCellBadge } from '@components/atoms/TableCell/TableCellBadge';
 import type { SidebarNavItem, SidebarUser } from '@components/atoms/Sidebar/Sidebar.types';
 import type { BadgeColor } from '@components/atoms/Badge/Badge.types';
+import type { DateRange } from '@components/atoms/Datepicker/Datepicker.types';
 import styles from './Blog.module.css';
 
 const cx = (...c: (string | undefined | false | null)[]) => c.filter(Boolean).join(' ');
@@ -89,11 +96,15 @@ const CATEGORY_BADGE_COLOR: Record<string, BadgeColor> = {
   'Interviews':      'pink',
 };
 
+const CATEGORY_DROPDOWN_OPTIONS = CATEGORIES.map(c => ({ value: c, label: c }));
+
 const AUTHORS: Author[] = [
   { name: 'Maria Onishchenko', role: 'Author' },
   { name: 'Oleksii Ilkiv',     role: 'Author' },
   { name: 'Oksana Viktiuk',    role: 'Author' },
 ];
+
+const AUTHOR_DROPDOWN_OPTIONS = AUTHORS.map(a => ({ value: a.name, name: a.name, position: a.role }));
 
 const TAG_POOL = ['fantasy', 'new in 2026', 'bestseller', "children's books", 'classics', 'non-fiction'];
 
@@ -188,6 +199,59 @@ const PageBtn = ({
   </button>
 );
 
+/* ── Cover / media gallery dropzone — click or drag-and-drop to select a photo ── */
+function UploadDropzone({
+  previewUrl, iconColor, title, className, inputRef, onFile,
+}: {
+  previewUrl: string | null;
+  iconColor: string;
+  title: string;
+  className?: string;
+  inputRef: RefObject<HTMLInputElement>;
+  onFile: (file: File) => void;
+}) {
+  const handleFiles = (files: FileList | null) => {
+    const file = files?.[0];
+    if (file) onFile(file);
+  };
+
+  return (
+    <div
+      className={cx(styles.postDrawerUpload, className)}
+      onClick={() => inputRef.current?.click()}
+      onDragOver={e => e.preventDefault()}
+      onDrop={e => { e.preventDefault(); handleFiles(e.dataTransfer.files); }}
+      role="button"
+      tabIndex={0}
+    >
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/png,image/jpeg"
+        className={styles.postDrawerUploadInput}
+        onClick={e => e.stopPropagation()}
+        onChange={e => handleFiles(e.target.files)}
+      />
+      {previewUrl ? (
+        <div className={styles.postDrawerUploadPreview}>
+          <img src={previewUrl} alt="" className={styles.postDrawerUploadImg} />
+          <span className={styles.postDrawerUploadChange}>Click to change photo</span>
+        </div>
+      ) : (
+        <>
+          <div className={styles.postDrawerUploadIconWrap}>
+            <Icon name="upload-cloud" size={24} color={iconColor} />
+          </div>
+          <div className={styles.postDrawerUploadText}>
+            <p className={styles.postDrawerUploadTitle}>{title}</p>
+            <p className={styles.postDrawerUploadHint}>PNG, JPG up to 10MB. Recommended 1200x1200px</p>
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
 /* ══ Blog page ═══════════════════════════════════════════════════════════════ */
 export function Blog({ onNavigate }: { onNavigate?: (page: string) => void } = {}) {
   const [sidebarFolded, setSidebarFolded] = useState(() => window.innerWidth < 768);
@@ -198,6 +262,155 @@ export function Blog({ onNavigate }: { onNavigate?: (page: string) => void } = {
   const [selectedRows, setSelectedRows]   = useState<Set<string>>(new Set());
   const [pageSize, setPageSize]           = useState('15');
   const [currentPage, setCurrentPage]     = useState(1);
+
+  /* ── New / edit post drawer ───────────────────────────────────────────────── */
+  const [isPostDrawerOpen, setIsPostDrawerOpen] = useState(false);
+  const [editingPostId, setEditingPostId] = useState<string | null>(null);
+  const [drawerTab, setDrawerTab]         = useState<'content' | 'planning' | 'seo'>('content');
+  const [draftCategory, setDraftCategory] = useState('');
+  const [draftTags, setDraftTags]         = useState<string[]>([]);
+  const [draftTagInput, setDraftTagInput] = useState('');
+  const [draftTitle, setDraftTitle]       = useState('');
+  const [draftSlug, setDraftSlug]         = useState('');
+  const [draftMainText, setDraftMainText] = useState('');
+  const [draftShortDesc, setDraftShortDesc] = useState('');
+  const [draftPublishMode, setDraftPublishMode] = useState<'immediately' | 'schedule'>('immediately');
+  const [draftPublicationDate, setDraftPublicationDate] = useState<DateRange>({});
+  const [draftPublicationTime, setDraftPublicationTime] = useState('');
+  const [draftAuthor, setDraftAuthor] = useState(AUTHORS[0].name);
+  const [draftMetaTitle, setDraftMetaTitle] = useState('');
+  const [draftMetaDescription, setDraftMetaDescription] = useState('');
+  const [draftCoverPreview, setDraftCoverPreview] = useState<string | null>(null);
+  const [draftSeoMediaPreview, setDraftSeoMediaPreview] = useState<string | null>(null);
+  const coverFileInputRef = useRef<HTMLInputElement>(null);
+  const seoFileInputRef = useRef<HTMLInputElement>(null);
+
+  function slugify(title: string): string {
+    return title.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+  }
+
+  function resetDropzones() {
+    setDraftCoverPreview(prev => { if (prev) URL.revokeObjectURL(prev); return null; });
+    setDraftSeoMediaPreview(prev => { if (prev) URL.revokeObjectURL(prev); return null; });
+  }
+  function handleCoverFile(file: File) {
+    setDraftCoverPreview(prev => { if (prev) URL.revokeObjectURL(prev); return URL.createObjectURL(file); });
+  }
+  function handleSeoMediaFile(file: File) {
+    setDraftSeoMediaPreview(prev => { if (prev) URL.revokeObjectURL(prev); return URL.createObjectURL(file); });
+  }
+
+  function openNewPostDrawer() {
+    setEditingPostId(null);
+    setDrawerTab('content');
+    setDraftCategory('');
+    setDraftTags([]);
+    setDraftTagInput('');
+    setDraftTitle('');
+    setDraftSlug('');
+    setDraftMainText('');
+    setDraftShortDesc('');
+    setDraftPublishMode('immediately');
+    setDraftPublicationDate({});
+    setDraftPublicationTime('');
+    setDraftAuthor(AUTHORS[0].name);
+    setDraftMetaTitle('');
+    setDraftMetaDescription('');
+    resetDropzones();
+    setIsPostDrawerOpen(true);
+  }
+  function openEditPostDrawer(post: BlogPost) {
+    setEditingPostId(post.id);
+    setDrawerTab('content');
+    setDraftCategory(post.category);
+    setDraftTags(post.tags);
+    setDraftTagInput('');
+    setDraftTitle(post.title);
+    setDraftSlug(slugify(post.title));
+    setDraftMainText('');
+    setDraftShortDesc(post.excerpt);
+    setDraftPublishMode('immediately');
+    setDraftPublicationDate({});
+    setDraftPublicationTime('');
+    setDraftAuthor(AUTHORS.some(a => a.name === post.author.name) ? post.author.name : AUTHORS[0].name);
+    setDraftMetaTitle('');
+    setDraftMetaDescription('');
+    resetDropzones();
+    setIsPostDrawerOpen(true);
+  }
+  function closeDrawer() {
+    setIsPostDrawerOpen(false);
+  }
+
+  function handleTagInputKeyDown(e: KeyboardEvent<HTMLInputElement>) {
+    if (e.key !== 'Enter') return;
+    e.preventDefault();
+    const raw = draftTagInput.trim().replace(/^#/, '');
+    if (!raw || draftTags.includes(raw)) { setDraftTagInput(''); return; }
+    setDraftTags(prev => [...prev, raw]);
+    setDraftTagInput('');
+  }
+  function removeDraftTag(tag: string) {
+    setDraftTags(prev => prev.filter(t => t !== tag));
+  }
+
+  const completenessFields = [draftCategory, draftTags.length > 0 ? 'x' : '', draftTitle, draftSlug, draftMainText, draftShortDesc, draftAuthor, draftMetaTitle, draftMetaDescription];
+  const completenessPct = Math.round((completenessFields.filter(Boolean).length / completenessFields.length) * 100);
+
+  function resolvedPublicationDate(): string {
+    if (draftPublishMode === 'schedule' && draftPublicationDate.start) {
+      return draftPublicationDate.start.toISOString().slice(0, 10);
+    }
+    return new Date().toISOString().slice(0, 10);
+  }
+  function createDraftPost(status: PostStatus): BlogPost {
+    const authorEntry = AUTHORS.find(a => a.name === draftAuthor) ?? { name: draftAuthor, role: 'Author' };
+    return {
+      id:            `post-${Date.now()}`,
+      title:         draftTitle.trim(),
+      excerpt:       draftShortDesc.trim(),
+      category:      draftCategory || CATEGORIES[0],
+      author:        authorEntry,
+      tags:          draftTags,
+      status,
+      views:         0,
+      publishedDate: status === 'published' ? resolvedPublicationDate() : null,
+    };
+  }
+  function applyDraftToPost(existing: BlogPost, status: PostStatus): BlogPost {
+    const authorEntry = AUTHORS.find(a => a.name === draftAuthor) ?? { name: draftAuthor, role: 'Author' };
+    return {
+      ...existing,
+      title:         draftTitle.trim(),
+      excerpt:       draftShortDesc.trim(),
+      category:      draftCategory || CATEGORIES[0],
+      author:        authorEntry,
+      tags:          draftTags,
+      status,
+      publishedDate: status === 'published' ? (existing.publishedDate ?? resolvedPublicationDate()) : existing.publishedDate,
+    };
+  }
+  function saveDrawerPost(status: PostStatus) {
+    if (!draftTitle.trim()) return;
+    if (editingPostId) {
+      setPosts(prev => prev.map(p => p.id === editingPostId ? applyDraftToPost(p, status) : p));
+    } else {
+      setPosts(prev => [createDraftPost(status), ...prev]);
+    }
+    closeDrawer();
+  }
+  function handleSaveAsDraft() {
+    saveDrawerPost('draft');
+  }
+  function handleDrawerContinue() {
+    if (drawerTab === 'content') { setDrawerTab('planning'); return; }
+    if (drawerTab === 'planning') { setDrawerTab('seo'); return; }
+    saveDrawerPost('published');
+  }
+  function handleDrawerBack() {
+    if (drawerTab === 'seo') { setDrawerTab('planning'); return; }
+    if (drawerTab === 'planning') { setDrawerTab('content'); return; }
+  }
 
   /* ── Keep the pagination controls visually stable when the page size (or
      page) changes and the resulting content is a different height — anchor
@@ -393,6 +606,7 @@ export function Blog({ onNavigate }: { onNavigate?: (page: string) => void } = {
         navItems={makeNavItems(onNavigate)}
         bottomItems={BOTTOM_ITEMS}
         user={SIDEBAR_USER}
+        onLogout={() => onNavigate?.('login')}
         className={styles.sidebar}
       />
 
@@ -409,7 +623,7 @@ export function Blog({ onNavigate }: { onNavigate?: (page: string) => void } = {
             className={styles.headerSearch}
           />
           <div className={styles.headerActions}>
-            <Button variant="primary" size="l" leftIcon={<Icon name="add" size={20} />} type="button">
+            <Button variant="primary" size="l" leftIcon={<Icon name="add" size={20} />} type="button" onClick={openNewPostDrawer}>
               New post
             </Button>
           </div>
@@ -681,7 +895,7 @@ export function Blog({ onNavigate }: { onNavigate?: (page: string) => void } = {
                           type="button"
                           className={styles.postCardEditBtn}
                           aria-label="Edit post"
-                          onClick={e => e.stopPropagation()}
+                          onClick={e => { e.stopPropagation(); openEditPostDrawer(post); }}
                         >
                           <Icon name="edit" size={20} />
                         </button>
@@ -816,6 +1030,364 @@ export function Blog({ onNavigate }: { onNavigate?: (page: string) => void } = {
           </Button>
         </div>
       </div>
+    )}
+
+    {/* ══ NEW POST DRAWER ═════════════════════════════════════════════════════ */}
+    {isPostDrawerOpen && createPortal(
+      <div
+        className={styles.postDrawerBackdrop}
+        onMouseDown={e => { if (e.target === e.currentTarget) closeDrawer(); }}
+      >
+        <div className={styles.postDrawerPanel}>
+          <div className={styles.postDrawerHeaderBlock}>
+            <div className={styles.postDrawerHeader}>
+              <div className={styles.postDrawerHeaderMain}>
+                <div className={styles.postDrawerAvatar} aria-hidden="true" />
+                <div className={styles.postDrawerHeaderText}>
+                  <h2 className={styles.postDrawerTitle}>Publication</h2>
+                  <p className={styles.postDrawerSubtitle}>Editing</p>
+                </div>
+              </div>
+              <Button
+                variant="transparent"
+                size="m"
+                iconOnly
+                leftIcon={<Icon name="close-large" size={20} />}
+                onClick={closeDrawer}
+                type="button"
+                aria-label="Close"
+              />
+            </div>
+            <div className={styles.postDrawerTabsWrap}>
+              <TabGroup value={drawerTab} onChange={v => setDrawerTab(v as typeof drawerTab)} label="Publication sections">
+                <TabItem value="content">Content & Media</TabItem>
+                <TabItem value="planning">Planning</TabItem>
+                <TabItem value="seo">SEO</TabItem>
+              </TabGroup>
+            </div>
+          </div>
+
+          <div className={styles.postDrawerBody}>
+            {drawerTab === 'content' ? (
+              <>
+                <div className={styles.postDrawerSection}>
+                  <p className={styles.postDrawerSectionLabel}>Cover</p>
+                  <div className={styles.postDrawerCoverRow}>
+                    <UploadDropzone
+                      previewUrl={draftCoverPreview}
+                      iconColor="var(--icon-accent, #69388f)"
+                      title="Drag a photo or click to select"
+                      inputRef={coverFileInputRef}
+                      onFile={handleCoverFile}
+                    />
+
+                    <div className={styles.postDrawerCategoryCol}>
+                      <Dropdown
+                        size="m"
+                        label="Category"
+                        value={draftCategory}
+                        onChange={setDraftCategory}
+                        options={CATEGORY_DROPDOWN_OPTIONS}
+                        placeholder="Choose or create your own"
+                        className={styles.postDrawerField}
+                      />
+                      <div className={styles.postDrawerTagsBlock}>
+                        <span className={styles.postDrawerFieldLabel}>Tags</span>
+                        <div className={styles.postDrawerTagsInput}>
+                          {draftTags.map(tag => (
+                            <span key={tag} className={styles.postDrawerTagChip}>
+                              <Icon name="hashtag" size={12} color="var(--badge-gray-icon, #747479)" />
+                              {tag}
+                              <button
+                                type="button"
+                                className={styles.postDrawerTagRemove}
+                                aria-label={`Remove ${tag}`}
+                                onClick={() => removeDraftTag(tag)}
+                              >
+                                <Icon name="close-small" size={12} color="var(--badge-gray-icon, #747479)" />
+                              </button>
+                            </span>
+                          ))}
+                          <input
+                            type="text"
+                            className={styles.postDrawerTagsField}
+                            placeholder={draftTags.length === 0 ? 'Enter a tag' : ''}
+                            value={draftTagInput}
+                            onChange={e => setDraftTagInput(e.target.value)}
+                            onKeyDown={handleTagInputKeyDown}
+                          />
+                        </div>
+                        <span className={styles.postDrawerFieldHint}>Start with # for autocomplete or create a new tag</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className={styles.postDrawerDivider} />
+
+                <div className={styles.postDrawerSection}>
+                  <p className={styles.postDrawerSectionLabel}>General information</p>
+                  <div className={styles.postDrawerGeneralGrid}>
+                    <div className={styles.postDrawerGeneralRow}>
+                      <Input
+                        required
+                        labelText="Post title"
+                        placeholder="Enter the article title"
+                        value={draftTitle}
+                        onChange={setDraftTitle}
+                        state={draftTitle ? 'entered' : 'default'}
+                        className={styles.postDrawerField}
+                      />
+                      <div className={styles.postDrawerSlugWrap}>
+                        <Input
+                          required
+                          labelText="URL slug"
+                          disclaimer
+                          placeholder="kobzar-taras-shevchenko"
+                          value={draftSlug}
+                          onChange={setDraftSlug}
+                          state={draftSlug ? 'entered' : 'default'}
+                          className={styles.postDrawerField}
+                        />
+                        <span className={styles.postDrawerAiBtn} aria-hidden="true">
+                          <Icon name="ai" size={16} />
+                        </span>
+                      </div>
+                    </div>
+
+                    <div className={styles.postDrawerEditor}>
+                      <span className={styles.postDrawerFieldLabel}>Main text</span>
+                      <div className={styles.postDrawerEditorBox}>
+                        <div className={styles.postDrawerEditorToolbar}>
+                          <Icon name="bold" size={20} />
+                          <Icon name="italic" size={20} />
+                          <span className={styles.postDrawerEditorDivider} />
+                          <Icon name="list-ordered" size={20} />
+                          <Icon name="list-check" size={20} />
+                          <span className={styles.postDrawerEditorDivider} />
+                          <Icon name="double-quotes" size={20} />
+                          <Icon name="link" size={20} />
+                        </div>
+                        <div className={styles.postDrawerEditorInputWrap}>
+                          <textarea
+                            className={styles.postDrawerEditorTextarea}
+                            placeholder="Start writing your article"
+                            value={draftMainText}
+                            onChange={e => setDraftMainText(e.target.value)}
+                            maxLength={1000}
+                          />
+                          <span className={styles.postDrawerEditorCounter}>{draftMainText.length}/1000</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className={styles.postDrawerShortDescWrap}>
+                      <TextArea
+                        labelText="Short description"
+                        placeholder="Short description for post preview (1-2 sentences)"
+                        value={draftShortDesc}
+                        onChange={setDraftShortDesc}
+                        maxChars={80}
+                        supporting={false}
+                        state={draftShortDesc ? 'entered' : 'default'}
+                        className={styles.postDrawerField}
+                      />
+                      <span className={styles.postDrawerAiBtnBottom} aria-hidden="true">
+                        <Icon name="ai" size={16} />
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </>
+            ) : drawerTab === 'planning' ? (
+              <div className={styles.planSection}>
+                <p className={styles.postDrawerSectionLabel}>
+                  Planning details
+                </p>
+
+                <div className={styles.planCardRow}>
+                  <div
+                    className={cx(styles.planCard, draftPublishMode === 'immediately' && styles.planCardSelected)}
+                    onClick={() => setDraftPublishMode('immediately')}
+                  >
+                    <span className={styles.planCardText}>Publish immediately</span>
+                    <RadioButton
+                      selected={draftPublishMode === 'immediately'}
+                      name="publish-mode"
+                      value="immediately"
+                      onChange={() => setDraftPublishMode('immediately')}
+                    />
+                  </div>
+                  <div
+                    className={cx(styles.planCard, draftPublishMode === 'schedule' && styles.planCardSelected)}
+                    onClick={() => setDraftPublishMode('schedule')}
+                  >
+                    <span className={styles.planCardText}>Schedule publication</span>
+                    <RadioButton
+                      selected={draftPublishMode === 'schedule'}
+                      name="publish-mode"
+                      value="schedule"
+                      onChange={() => setDraftPublishMode('schedule')}
+                    />
+                  </div>
+                </div>
+
+                {draftPublishMode === 'schedule' && (
+                  <div className={styles.planScheduleRow}>
+                    <Datepicker
+                      value={draftPublicationDate}
+                      onChange={setDraftPublicationDate}
+                      label="Publication Date"
+                      placeholder="dd.mm — dd.mm"
+                      className={styles.planFixedField}
+                    />
+                    <Input
+                      labelText="Publication Time"
+                      placeholder="00:00"
+                      value={draftPublicationTime}
+                      onChange={setDraftPublicationTime}
+                      state={draftPublicationTime ? 'entered' : 'default'}
+                      className={styles.planFixedField}
+                    />
+                  </div>
+                )}
+
+                <div className={styles.planAuthorBlock}>
+                  <span className={styles.postDrawerFieldLabel}>Author</span>
+                  <Dropdown
+                    size="xl"
+                    value={draftAuthor}
+                    onChange={setDraftAuthor}
+                    options={AUTHOR_DROPDOWN_OPTIONS}
+                    placeholder="Choose an author"
+                    className={styles.planFixedField}
+                  />
+                </div>
+              </div>
+            ) : (
+              <>
+                <div className={styles.postDrawerSection}>
+                  <p className={styles.postDrawerSectionLabel}>Media gallery</p>
+                  <UploadDropzone
+                    previewUrl={draftSeoMediaPreview}
+                    iconColor="var(--icon-accent, #69388f)"
+                    title="Drag and drop a photo or click to select"
+                    className={styles.postDrawerUploadFull}
+                    inputRef={seoFileInputRef}
+                    onFile={handleSeoMediaFile}
+                  />
+                </div>
+
+                <div className={styles.postDrawerDivider} />
+
+                <div className={styles.postDrawerSection}>
+                  <div className={styles.seoHeading}>
+                    <p className={styles.postDrawerSectionLabel}>Search engine optimization</p>
+                    <Icon name="info" size={18} color="var(--icon-tertiary, #929297)" />
+                  </div>
+
+                  <div className={styles.postDrawerShortDescWrap}>
+                    <TextArea
+                      labelText="Meta Title"
+                      placeholder="For example: Books and stationery for study and work"
+                      value={draftMetaTitle}
+                      onChange={setDraftMetaTitle}
+                      maxChars={80}
+                      supporting={false}
+                      state={draftMetaTitle ? 'entered' : 'default'}
+                      className={styles.postDrawerField}
+                    />
+                    <span className={styles.postDrawerAiBtnBottom} aria-hidden="true">
+                      <Icon name="ai" size={16} />
+                    </span>
+                  </div>
+
+                  <div className={styles.seoFullDescWrap}>
+                    <TextArea
+                      labelText="Full description"
+                      placeholder="For example: A wide selection of books and stationery for study, work, and creativity. Tips for choosing quality products that enhance productivity and comfort in daily work."
+                      value={draftMetaDescription}
+                      onChange={setDraftMetaDescription}
+                      maxChars={200}
+                      supporting={false}
+                      state={draftMetaDescription ? 'entered' : 'default'}
+                      className={cx(styles.postDrawerField, styles.seoFullDescField)}
+                    />
+                    <span className={styles.postDrawerAiBtnBottom} aria-hidden="true">
+                      <Icon name="ai" size={16} />
+                    </span>
+                  </div>
+                </div>
+
+                <div className={styles.postDrawerDivider} />
+
+                <div className={styles.postDrawerSection}>
+                  <p className={styles.postDrawerSectionLabel}>Google preview</p>
+                  <div className={styles.seoPreviewCard}>
+                    <div className={styles.seoPreviewUrlRow}>
+                      <span className={styles.seoPreviewDot} aria-hidden="true" />
+                      <span className={styles.seoPreviewDomain}>bookstore.com</span>
+                    </div>
+                    <div className={styles.seoPreviewBody}>
+                      <p className={styles.seoPreviewTitle}>{draftMetaTitle || draftTitle || 'Publication Title'}</p>
+                      <p className={styles.seoPreviewLink}>
+                        {`https://bookstore.com/products/${draftSlug || 'url-slug'}`}
+                      </p>
+                      <p className={styles.seoPreviewDesc}>
+                        {draftMetaDescription || draftShortDesc || 'Product description will appear here...'}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+
+          <div className={styles.postDrawerCompleteness}>
+            <div className={styles.postDrawerCompletenessRow}>
+              <span className={styles.postDrawerCompletenessLabel}>Field Completeness</span>
+              <span className={styles.postDrawerCompletenessPct}>{completenessPct}%</span>
+            </div>
+            <div className={styles.postDrawerProgressTrack}>
+              <div className={styles.postDrawerProgressFill} style={{ width: `${completenessPct}%` }} />
+            </div>
+          </div>
+
+          <div className={styles.postDrawerFooter}>
+            <div className={styles.postDrawerFooterLeft}>
+              <Button variant="secondary" size="l" leftIcon={<Icon name="eye-fill" size={20} />} type="button" className={styles.postDrawerBtnPreview}>
+                Preview
+              </Button>
+              <Button variant="secondary" size="l" type="button" onClick={handleSaveAsDraft} disabled={!draftTitle.trim()} className={styles.postDrawerBtnDraft}>
+                Save as Draft
+              </Button>
+            </div>
+            <div className={styles.postDrawerFooterRight}>
+              {drawerTab === 'content' ? (
+                <Button variant="secondary" size="l" type="button" onClick={closeDrawer} className={styles.postDrawerBtnCancel}>
+                  Cancel
+                </Button>
+              ) : (
+                <Button variant="secondary" size="l" leftIcon={<Icon name="arrow-left" size={20} />} type="button" onClick={handleDrawerBack} className={styles.postDrawerBtnBack}>
+                  Back
+                </Button>
+              )}
+              <Button
+                variant="primary"
+                size="l"
+                leftIcon={drawerTab === 'seo' ? <Icon name="globe" size={20} /> : undefined}
+                type="button"
+                onClick={handleDrawerContinue}
+                disabled={drawerTab === 'seo' && !draftTitle.trim()}
+                className={drawerTab === 'seo' ? styles.postDrawerBtnPublish : styles.postDrawerBtnContinue}
+              >
+                {drawerTab === 'seo' ? 'Publish' : 'Continue'}
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>,
+      document.body,
     )}
     </>
   );

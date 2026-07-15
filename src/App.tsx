@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Login } from './pages/Login/Login';
+import { PasswordRecovery } from './pages/PasswordRecovery/PasswordRecovery';
 import { Dashboard } from './pages/Dashboard/Dashboard';
 import { Orders } from './pages/Orders/Orders';
 import { Users } from './pages/Users/Users';
@@ -7,14 +9,14 @@ import { ProductEdit } from './pages/ProductEdit/ProductEdit';
 import { WorkTasks } from './pages/WorkTasks/WorkTasks';
 import { Blog } from './pages/Blog/Blog';
 
-type Page = 'dashboard' | 'orders' | 'users' | 'products' | 'product-edit' | 'tasks' | 'blog';
+type Page = 'login' | 'password-recovery' | 'dashboard' | 'orders' | 'users' | 'products' | 'product-edit' | 'tasks' | 'blog';
 
 export function App() {
-  const [currentPage, setCurrentPage] = useState<Page>('dashboard');
+  const [currentPage, setCurrentPage] = useState<Page>('login');
 
   const navigate = (page: string) => {
     if (
-      page === 'dashboard' || page === 'orders' || page === 'users' ||
+      page === 'login' || page === 'password-recovery' || page === 'dashboard' || page === 'orders' || page === 'users' ||
       page === 'products' || page === 'product-edit' || page === 'tasks' ||
       page === 'blog'
     ) {
@@ -23,6 +25,10 @@ export function App() {
   };
 
   switch (currentPage) {
+    case 'login':
+      return <Login onNavigate={navigate} />;
+    case 'password-recovery':
+      return <PasswordRecovery onNavigate={navigate} />;
     case 'orders':
       return <Orders onNavigate={navigate} />;
     case 'users':

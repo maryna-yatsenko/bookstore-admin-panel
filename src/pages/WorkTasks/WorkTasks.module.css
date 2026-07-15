@@ -669,12 +669,18 @@
 }
 
 /* Archive view: no per-stage header, so lay the cards out as a 4-across
-   grid instead of one long single-file column. */
+   grid instead of one long single-file column. The column's own
+   background/shadow/padding are Kanban-column chrome — drop them here so
+   trailing empty cells in the last row don't render as a visible empty box. */
 .boardColumnGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   align-content: start;
   width: 100%;
+  padding: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
 }
 
 .boardColumnDragOver {

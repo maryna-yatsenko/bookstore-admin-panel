@@ -387,21 +387,21 @@
   --btn-secondary-default-corner-radius: var(--space-4);
 
   /* hover */
-  --btn-secondary-hover-bg:            var(--color-primary-yellow-500);
-  --btn-secondary-hover-stroke:        var(--color-gray-700);
+  --btn-secondary-hover-bg:            var(--color-gray-300);
+  --btn-secondary-hover-stroke:        var(--color-gray-800);
   --btn-secondary-hover-text:          var(--color-gray-1100);
   --btn-secondary-hover-icon:          var(--color-gray-1000);
   --btn-secondary-hover-corner-radius: var(--space-4);
 
   /* focused */
-  --btn-secondary-focused-bg:            var(--color-primary-yellow-400);
-  --btn-secondary-focused-stroke:        var(--color-gray-800);
+  --btn-secondary-focused-bg:            var(--color-gray-400);
+  --btn-secondary-focused-stroke:        var(--color-gray-700);
   --btn-secondary-focused-text:          var(--color-gray-1100);
   --btn-secondary-focused-icon:          var(--color-gray-1000);
   --btn-secondary-focused-corner-radius: var(--space-4);
 
   /* selected */
-  --btn-secondary-selected-bg:            var(--color-primary-yellow-500);
+  --btn-secondary-selected-bg:            var(--color-gray-300);
   --btn-secondary-selected-stroke:        var(--color-gray-800);
   --btn-secondary-selected-text:          var(--color-gray-1100);
   --btn-secondary-selected-icon:          var(--color-gray-1000);
@@ -424,19 +424,19 @@
   --btn-transparent-default-corner-radius: var(--space-2);
 
   /* hover */
-  --btn-transparent-hover-bg:            var(--color-primary-yellow-500);
+  --btn-transparent-hover-bg:            var(--color-gray-300);
   --btn-transparent-hover-text:          var(--color-gray-1100);
   --btn-transparent-hover-icon:          var(--color-gray-900);
   --btn-transparent-hover-corner-radius: var(--space-4);
 
   /* focused */
-  --btn-transparent-focused-bg:            var(--color-primary-yellow-400);
+  --btn-transparent-focused-bg:            var(--color-gray-400);
   --btn-transparent-focused-text:          var(--color-gray-1100);
   --btn-transparent-focused-icon:          var(--color-gray-900);
   --btn-transparent-focused-corner-radius: var(--space-4);
 
   /* selected */
-  --btn-transparent-selected-bg:            var(--color-primary-yellow-500);
+  --btn-transparent-selected-bg:            var(--color-gray-300);
   --btn-transparent-selected-text:          var(--color-gray-1100);
   --btn-transparent-selected-icon:          var(--color-gray-900);
   --btn-transparent-selected-corner-radius: var(--space-4);

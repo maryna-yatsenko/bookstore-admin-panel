@@ -757,3 +757,702 @@
     gap: var(--spacing-8);
   }
 }
+
+/* ══ New post drawer ═══════════════════════════════════════════════════════ */
+.postDrawerBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 25, 27, 0.12);
+  backdrop-filter: blur(2px);
+  z-index: 200;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.postDrawerPanel {
+  display: flex;
+  flex-direction: column;
+  width: 1000px;
+  max-width: 100vw;
+  height: 100vh;
+  background: var(--container-primary, white);
+  overflow: hidden;
+}
+
+/* ── Header ────────────────────────────────────────────────────────────────── */
+.postDrawerHeaderBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-32, 32px);
+  padding: var(--spacing-16, 16px);
+  background: var(--container-primary, white);
+  border-bottom: 1px solid var(--stroke-secondary, #dadadc);
+  flex-shrink: 0;
+}
+
+.postDrawerHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-12, 12px);
+  width: 100%;
+}
+
+.postDrawerHeaderMain {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-24, 24px);
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.postDrawerAvatar {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-4, 4px);
+  background: var(--container-page-bg, #eceae8);
+  flex-shrink: 0;
+}
+
+.postDrawerHeaderText {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--spacing-4, 4px);
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.postDrawerTitle {
+  margin: 0;
+  font-family: var(--text-title-h2-semibold-font-family, var(--font-family-sans));
+  font-size: var(--text-title-h2-semibold-font-size, 24px);
+  line-height: var(--text-title-h2-semibold-line-height, 30px);
+  font-weight: var(--text-title-h2-semibold-font-weight, 600);
+  color: var(--text-primary, #0a0a0a);
+}
+
+.postDrawerSubtitle {
+  margin: 0;
+  font-family: var(--text-body-regular-font-family, var(--font-family-sans));
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-tertiary, #747479);
+}
+
+.postDrawerTabsWrap {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px;
+  gap: var(--spacing-4, 4px);
+  border: 1px solid var(--stroke-tertiary, #f2f2f3);
+  border-radius: var(--radius-6, 6px);
+  background: var(--container-primary, white);
+}
+
+/* ── Body ──────────────────────────────────────────────────────────────────── */
+.postDrawerBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-24, 24px);
+  flex: 1 0 0;
+  min-height: 0;
+  padding: var(--spacing-24, 24px) var(--spacing-16, 16px);
+  background: var(--container-secondary, #fafafa);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.postDrawerSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-20, 20px);
+  width: 100%;
+}
+
+.postDrawerSectionLabel {
+  margin: 0;
+  font-family: var(--text-title-h3-semibold-font-family, var(--font-family-sans));
+  font-size: var(--text-title-h3-semibold-font-size, 16px);
+  line-height: var(--text-title-h3-semibold-line-height, 20px);
+  font-weight: var(--text-title-h3-semibold-font-weight, 600);
+  color: var(--text-primary, #0a0a0a);
+}
+
+.postDrawerField {
+  width: 100%;
+}
+
+.postDrawerFieldLabel {
+  font-family: var(--text-body-regular-font-family, var(--font-family-sans));
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--input-default-label-text, #454548);
+}
+
+.postDrawerFieldHint {
+  font-family: var(--text-caption-regular-font-family, var(--font-family-sans));
+  font-size: var(--text-caption-regular-font-size, 12px);
+  line-height: var(--text-caption-regular-line-height, 14px);
+  color: var(--input-default-placeholder-text, #747479);
+}
+
+.postDrawerDivider {
+  width: 100%;
+  height: 1px;
+  border-top: 1px dashed var(--stroke-secondary, #dadadc);
+}
+
+/* ── Cover ─────────────────────────────────────────────────────────────────── */
+.postDrawerCoverRow {
+  display: flex;
+  align-items: stretch;
+  gap: var(--spacing-24, 24px);
+  width: 100%;
+}
+
+.postDrawerUpload {
+  position: relative;
+  display: flex;
+  flex: 1 0 0;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-32, 32px);
+  flex-direction: column;
+  min-width: 0;
+  padding: var(--spacing-40, 40px);
+  border: 1px dashed var(--stroke-primary, #b6b6b9);
+  border-radius: 10px;
+  background: var(--container-primary, white);
+  cursor: pointer;
+  box-sizing: border-box;
+}
+
+.postDrawerUploadInput {
+  display: none;
+}
+
+.postDrawerUploadPreview {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 126px;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.postDrawerUploadImg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.postDrawerUploadChange {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding: var(--spacing-8, 8px);
+  background: rgba(10, 10, 10, 0.6);
+  color: white;
+  text-align: center;
+  font-family: var(--text-caption-regular-font-family, var(--font-family-sans));
+  font-size: var(--text-caption-regular-font-size, 12px);
+  line-height: var(--text-caption-regular-line-height, 14px);
+}
+
+.postDrawerUploadIconWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--stroke-secondary, #dadadc);
+  border-radius: var(--radius-4, 4px);
+  background: var(--container-secondary, #fafafa);
+}
+
+.postDrawerUploadText {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-8, 8px);
+  text-align: center;
+}
+
+.postDrawerUploadTitle {
+  margin: 0;
+  font-family: var(--text-title-h3-semibold-font-family, var(--font-family-sans));
+  font-size: var(--text-title-h3-semibold-font-size, 16px);
+  line-height: var(--text-title-h3-semibold-line-height, 20px);
+  font-weight: var(--text-title-h3-semibold-font-weight, 600);
+  color: var(--text-primary, #0a0a0a);
+}
+
+.postDrawerUploadHint {
+  margin: 0;
+  font-family: var(--text-body-regular-font-family, var(--font-family-sans));
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-secondary, #454548);
+}
+
+.postDrawerCategoryCol {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  gap: var(--spacing-20, 20px);
+  min-width: 0;
+}
+
+.postDrawerTagsBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6, 6px);
+}
+
+.postDrawerTagsInput {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  align-items: center;
+  gap: var(--spacing-8, 8px);
+  height: 120px;
+  padding: var(--spacing-8, 8px) var(--spacing-12, 12px);
+  border: 1px solid var(--input-default-stroke, #d3d3d5);
+  border-radius: var(--radius-4, 4px);
+  background: var(--input-default-bg, white);
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-width: thin;
+}
+
+.postDrawerTagsInput::-webkit-scrollbar {
+  width: 4px;
+}
+
+.postDrawerTagsInput::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.postDrawerTagsInput::-webkit-scrollbar-thumb {
+  background: var(--stroke-secondary, #dadadc);
+  border-radius: 1000px;
+}
+
+.postDrawerTagChip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-4, 4px);
+  padding: 3px 7px;
+  border: 1px solid var(--badge-gray-stroke, #929297);
+  border-radius: var(--radius-4, 4px);
+  background: var(--badge-gray-bg, #f2f2f3);
+  color: var(--badge-gray-text, #242425);
+  font-family: var(--text-body-regular-font-family, var(--font-family-sans));
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  white-space: nowrap;
+}
+
+.postDrawerTagRemove {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.postDrawerTagsField {
+  flex: 1 0 0;
+  min-width: 80px;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-family: var(--text-body-paragraph-font-family, var(--font-family-sans));
+  font-size: var(--text-body-paragraph-font-size, 14px);
+  line-height: var(--text-body-paragraph-line-height, 20px);
+  color: var(--text-primary, #0a0a0a);
+}
+
+.postDrawerTagsField::placeholder {
+  color: var(--input-default-placeholder-text, #747479);
+}
+
+/* ── General information ──────────────────────────────────────────────────── */
+.postDrawerGeneralGrid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-20, 20px);
+  width: 100%;
+}
+
+.postDrawerGeneralRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-16, 16px);
+  width: 100%;
+}
+
+.postDrawerGeneralRow > .postDrawerField,
+.postDrawerGeneralRow > .postDrawerSlugWrap {
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.postDrawerSlugWrap {
+  position: relative;
+  flex: 1 0 0;
+  min-width: 0;
+}
+
+.postDrawerAiBtn {
+  position: absolute;
+  top: 0;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-2, 2px);
+  color: var(--icon-accent, #69388f);
+}
+
+.postDrawerAiBtnBottom {
+  position: absolute;
+  top: 0;
+  right: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-2, 2px);
+  color: var(--icon-accent, #69388f);
+}
+
+.postDrawerShortDescWrap {
+  position: relative;
+  width: 100%;
+}
+
+/* ── Main text editor ─────────────────────────────────────────────────────── */
+.postDrawerEditor {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6, 6px);
+  width: 100%;
+}
+
+.postDrawerEditorBox {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--input-default-stroke, #d3d3d5);
+  border-radius: var(--radius-4, 4px);
+  overflow: hidden;
+}
+
+.postDrawerEditorToolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12, 12px);
+  padding: var(--spacing-12, 12px);
+  background: var(--container-secondary, #fafafa);
+  border-bottom: 1px solid var(--stroke-secondary, #dadadc);
+  color: var(--icon-secondary, #454548);
+}
+
+.postDrawerEditorToolbar svg,
+.postDrawerEditorToolbar span[class] {
+  flex-shrink: 0;
+}
+
+.postDrawerEditorDivider {
+  width: 1px;
+  height: 20px;
+  background: var(--stroke-secondary, #dadadc);
+}
+
+.postDrawerEditorInputWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: var(--spacing-4, 4px);
+  height: 332px;
+  padding: var(--spacing-8, 8px) var(--spacing-12, 12px);
+  background: var(--input-default-bg, white);
+}
+
+.postDrawerEditorTextarea {
+  flex: 1 0 0;
+  min-height: 0;
+  border: none;
+  outline: none;
+  resize: none;
+  background: transparent;
+  font-family: var(--text-body-paragraph-font-family, var(--font-family-sans));
+  font-size: var(--text-body-paragraph-font-size, 14px);
+  line-height: var(--text-body-paragraph-line-height, 20px);
+  color: var(--text-primary, #0a0a0a);
+}
+
+.postDrawerEditorTextarea::placeholder {
+  color: var(--input-default-placeholder-text, #747479);
+}
+
+.postDrawerEditorCounter {
+  align-self: flex-end;
+  font-family: var(--text-caption-regular-font-family, var(--font-family-sans));
+  font-size: var(--text-caption-regular-font-size, 12px);
+  line-height: var(--text-caption-regular-line-height, 14px);
+  color: var(--input-default-placeholder-text, #747479);
+  flex-shrink: 0;
+}
+
+.postDrawerPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 300px;
+  font-family: var(--text-body-regular-font-family, var(--font-family-sans));
+  font-size: var(--text-body-regular-font-size, 14px);
+  color: var(--text-tertiary, #747479);
+}
+
+/* ── SEO tab ───────────────────────────────────────────────────────────────── */
+.postDrawerUploadFull {
+  width: 100%;
+  flex: none;
+}
+
+.seoHeading {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8, 8px);
+}
+
+.seoFullDescWrap {
+  position: relative;
+  width: 100%;
+}
+
+.seoFullDescField textarea {
+  min-height: 76px;
+}
+
+.seoPreviewCard {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-16, 16px);
+  width: 100%;
+  padding: var(--spacing-20, 20px);
+  border: 1px solid var(--stroke-accent, #69388f);
+  border-radius: var(--radius-4, 4px);
+  background: var(--container-accent, #f5f2f8);
+  box-sizing: border-box;
+}
+
+.seoPreviewUrlRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-8, 8px);
+  width: 100%;
+}
+
+.seoPreviewDot {
+  width: 16px;
+  height: 16px;
+  border-radius: 1000px;
+  background: var(--icon-accent, #69388f);
+  flex-shrink: 0;
+}
+
+.seoPreviewDomain {
+  font-family: var(--text-caption-regular-font-family, var(--font-family-sans));
+  font-size: var(--text-caption-regular-font-size, 12px);
+  line-height: var(--text-caption-regular-line-height, 14px);
+  color: var(--text-tertiary, #747479);
+}
+
+.seoPreviewBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8, 8px);
+  width: 100%;
+}
+
+.seoPreviewTitle {
+  margin: 0;
+  font-family: var(--text-title-h3-semibold-font-family, var(--font-family-sans));
+  font-size: var(--text-title-h3-semibold-font-size, 16px);
+  line-height: var(--text-title-h3-semibold-line-height, 20px);
+  font-weight: var(--text-title-h3-semibold-font-weight, 600);
+  color: var(--text-primary, #0a0a0a);
+}
+
+.seoPreviewLink {
+  margin: 0;
+  font-family: var(--text-caption-regular-font-family, var(--font-family-sans));
+  font-size: var(--text-caption-regular-font-size, 12px);
+  line-height: var(--text-caption-regular-line-height, 14px);
+  color: var(--btn-link-default-text, #212fe3);
+}
+
+.seoPreviewDesc {
+  margin: 0;
+  font-family: var(--font-family-sans);
+  font-size: 14px;
+  line-height: 20px;
+  color: #404040;
+}
+
+/* ── Planning tab ──────────────────────────────────────────────────────────── */
+.planSection {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-32, 32px);
+  width: 100%;
+}
+
+.planCardRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-16, 16px);
+  width: 100%;
+}
+
+.planCard {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12, 12px);
+  width: 312px;
+  box-sizing: border-box;
+  padding: var(--spacing-8, 8px) var(--spacing-12, 12px);
+  border: 1px solid var(--stroke-tertiary, #f2f2f3);
+  border-radius: var(--radius-4, 4px);
+  background: var(--container-primary, white);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.planCardSelected {
+  border-color: var(--stroke-secondary, #dadadc);
+  outline: 1px solid var(--stroke-brand-color, #ffc229);
+  outline-offset: 1px;
+}
+
+.planCardText {
+  flex: 1 0 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--text-body-regular-font-family, var(--font-family-sans));
+  font-size: var(--text-body-regular-font-size, 14px);
+  line-height: var(--text-body-regular-line-height, 18px);
+  color: var(--text-primary, #0a0a0a);
+}
+
+.planScheduleRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-16, 16px);
+  width: 100%;
+}
+
+.planFixedField {
+  width: 312px;
+  flex-shrink: 0;
+}
+
+.planAuthorBlock {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6, 6px);
+  width: 312px;
+}
+
+/* ── Field completeness ───────────────────────────────────────────────────── */
+.postDrawerCompleteness {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-8, 8px);
+  padding: var(--spacing-12, 12px) var(--spacing-16, 16px);
+  background: var(--container-primary, white);
+  border-top: 1px solid var(--stroke-tertiary, #f2f2f3);
+  flex-shrink: 0;
+}
+
+.postDrawerCompletenessRow {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12, 12px);
+}
+
+.postDrawerCompletenessLabel {
+  flex: 1 0 0;
+  font-family: var(--text-caption-regular-font-family, var(--font-family-sans));
+  font-size: var(--text-caption-regular-font-size, 12px);
+  line-height: var(--text-caption-regular-line-height, 14px);
+  color: var(--text-secondary, #454548);
+}
+
+.postDrawerCompletenessPct {
+  font-family: var(--text-caption-semibold-font-family, var(--font-family-sans));
+  font-size: var(--text-caption-semibold-font-size, 12px);
+  line-height: var(--text-caption-semibold-line-height, 14px);
+  font-weight: var(--text-caption-semibold-font-weight, 600);
+  color: var(--text-secondary, #454548);
+}
+
+.postDrawerProgressTrack {
+  width: 100%;
+  height: 6px;
+  border-radius: 1000px;
+  background: var(--container-tertiary, #f2f2f3);
+  overflow: hidden;
+}
+
+.postDrawerProgressFill {
+  height: 100%;
+  border-radius: 1000px;
+  background: var(--status-success, #28b420);
+  transition: width 0.2s ease;
+}
+
+/* ── Bottom buttons ────────────────────────────────────────────────────────── */
+.postDrawerFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-12, 12px);
+  padding: var(--spacing-16, 16px);
+  background: var(--container-primary, white);
+  border-top: 1px solid var(--stroke-tertiary, #f2f2f3);
+  flex-shrink: 0;
+}
+
+.postDrawerFooterLeft,
+.postDrawerFooterRight {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-12, 12px);
+}
+
+/* Fixed widths matching the Figma footer button spec exactly */
+.postDrawerBtnPreview  { width: 110px; }
+.postDrawerBtnDraft    { width: 126px; }
+.postDrawerBtnCancel   { width: 83px; }
+.postDrawerBtnBack     { width: 90px; }
+.postDrawerBtnContinue { width: 97px; }
+.postDrawerBtnPublish  { width: 106px; }
+
+@media (max-width: 1080px) {
+  .postDrawerPanel {
+    width: 100vw;
+  }
+}

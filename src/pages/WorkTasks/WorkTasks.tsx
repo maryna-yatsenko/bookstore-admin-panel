@@ -750,6 +750,7 @@ export function WorkTasks({ onNavigate }: WorkTasksProps) {
         navItems={makeNavItems(onNavigate)}
         bottomItems={BOTTOM_ITEMS}
         user={SIDEBAR_USER}
+        onLogout={() => onNavigate?.('login')}
         className={styles.sidebar}
       />
 

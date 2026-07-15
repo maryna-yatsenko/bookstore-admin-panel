@@ -458,6 +458,7 @@ export function Dashboard({ onNavigate }: { onNavigate?: (page: string) => void 
         navItems={makeNavItems(onNavigate)}
         bottomItems={BOTTOM_ITEMS}
         user={USER}
+        onLogout={() => onNavigate?.('login')}
         className={styles.sidebar}
       />
 

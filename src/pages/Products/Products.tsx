@@ -306,6 +306,7 @@ export function Products({ onNavigate }: { onNavigate?: (page: string) => void }
         navItems={makeNavItems(onNavigate)}
         bottomItems={BOTTOM_ITEMS}
         user={SIDEBAR_USER}
+        onLogout={() => onNavigate?.('login')}
         className={styles.sidebar}
       />
 
